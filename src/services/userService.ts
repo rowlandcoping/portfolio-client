@@ -1,10 +1,10 @@
-import type { ProfileTypes } from '../types/profileTypes';
+import type { UserTypes } from '../types/userTypes';
 
 const BASE_URL = import.meta.env.MODE === 'production' 
     ? 'https://TBC' 
-    : 'http://localhost:3500/personal/provider';
+    : 'http://localhost:3500/users/provider';
 
-export const getProfile = async (): Promise<ProfileTypes> => {
+export const getUser = async (): Promise<UserTypes> => {
     const response = await fetch(BASE_URL, {
         headers: {
             'x-user-uuid': import.meta.env.VITE_USER_UUID,

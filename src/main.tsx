@@ -2,7 +2,6 @@ import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import './App.css';
 import { RouterProvider } from '@tanstack/react-router';
 import { router } from './app/router';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
@@ -10,7 +9,7 @@ import { queryClient } from './app/queryClient';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 
-export const asyncStoragePersister = createAsyncStoragePersister({
+const asyncStoragePersister = createAsyncStoragePersister({
   storage: AsyncStorage,
 })
 

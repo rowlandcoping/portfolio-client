@@ -5,7 +5,7 @@ import { useNavigate } from '@tanstack/react-router';
 export default function KeyboardNavProvider({ children }: { children: React.ReactNode }) {
 
     const store = useKeyboardNavStore();
-    const { enabled, elements, focusedIndex, next, prev } = store;
+    const { enabled, elements, focusedIndex, next, prev, incrementPage, decrementPage } = store;
 
     const navigate = useNavigate();
 
@@ -55,6 +55,14 @@ export default function KeyboardNavProvider({ children }: { children: React.Reac
                     prev();
                     e.preventDefault();
                     break;
+                 case 'ArrowRight':                    
+                    incrementPage();
+                    e.preventDefault();
+                    break;
+                case 'ArrowLeft':
+                    decrementPage();
+                    e.preventDefault();
+                    break;                
                 case 'Enter':
                     const active = document.activeElement;
                     if (active?.tagName === 'A') {
@@ -79,7 +87,7 @@ export default function KeyboardNavProvider({ children }: { children: React.Reac
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [next, prev]);
+    }, [next, prev, incrementPage, decrementPage]);
 
     useLayoutEffect(() => {
         if (elements.length > 0) {

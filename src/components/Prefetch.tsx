@@ -17,32 +17,32 @@ const Prefetch = ({children}: PrefetchProps) => {
         queryClient.prefetchQuery({
             queryKey: ['project-types'],
             queryFn: getProjectTypes,
-            staleTime: 1000 * 60 * 30,
+            staleTime: 1000 * 60 * 1,
         });
         queryClient.prefetchQuery({
             queryKey: ['ecosystem-types'],
             queryFn: getEcoTypes,
-            staleTime: 1000 * 60 * 30,
+            staleTime: 1000 * 60 * 1,
         });
         queryClient.prefetchQuery({
             queryKey: ['tech-types'],
             queryFn: getTechTypes,
-            staleTime: 1000 * 60 * 30,
+            staleTime: 1000 * 60 * 1,
         });
         queryClient.prefetchQuery({
             queryKey: ['user'],
             queryFn: getUser,
-            staleTime: 1000 * 60 * 30,
+            staleTime: 1000 * 60 * 1,
         });
         queryClient.prefetchQuery({
             queryKey: ['profile'],
             queryFn: getProfile,
-            staleTime: 1000 * 60 * 30,
+            staleTime: 1000 * 60 * 1,
         });
         queryClient.prefetchQuery({
             queryKey: ['projects'],
             queryFn: getProjects,
-            staleTime: 1000 * 60 * 30,
+            staleTime: 1000 * 60 * 1,
         });
     }, []);
     

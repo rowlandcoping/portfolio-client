@@ -31,18 +31,20 @@ const Home = () => {
 
                 </Link>
             </div>
-            <div className="control-box">
-                <div>
-                    next<br />
-                    &darr;                    
-                </div>
-                <div>
-                    prev<br />
-                    &uarr;                   
-                </div>
-                <div>
-                    slct<br />
-                    &crarr;
+            <div className="control-container">
+                <div className="control-box">
+                    <div>
+                        next<br />
+                        &darr;                    
+                    </div>
+                    <div>
+                        prev<br />
+                        &uarr;                   
+                    </div>
+                    <div>
+                        slct<br />
+                        &crarr;
+                    </div>
                 </div>
             </div>
         </main>

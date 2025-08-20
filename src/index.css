@@ -51,6 +51,14 @@ h2 {
     line-height: 1.2em;
 }
 
+.selected {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+
 
 /*------------ Project CSS -----------------*/
 
@@ -59,6 +67,8 @@ h2 {
 }
 
 .screen-top {
+    display:flex;
+    place-items: center;
     height: 50px;
     background-image: linear-gradient(to bottom,#AA9261, #D0BF9E);
     border-radius: 20px 20px 0 0;
@@ -75,19 +85,19 @@ main {
     display:flex;
     flex-direction: column;
     justify-content: space-between;
-    margin: 25px 100px;
+    padding: 25px 100px;
     width:100%;
 }
 
 .screen-left {
-    width:50px;
+    min-width:50px;
     background-color: #D0BF9E;  
     height: calc(100vh - 210px);
     flex-grow: 0;   
 }
 
 .screen-right {
-    width:50px;
+    min-width:50px;
     background-color: #D0BF9E;    
     height: calc(100vh - 210px);
     flex-grow: 0;
@@ -97,6 +107,11 @@ main {
     height: 100px;
     background-image: linear-gradient(to top,#AA9261, #D0BF9E);
     border-radius: 0 0 20px 20px;
+}
+
+.control-container {
+    display:flex;
+    justify-content: space-between
 }
 
 .control-box {
@@ -116,6 +131,14 @@ main {
     margin-right:20px;
 }
 
+.control-box div:last-child {
+    margin-right:0px;
+}
+
+.control-right {
+    justify-content: right;
+}
+
 :focus {
     border:none;
     outline: none;
@@ -124,4 +147,9 @@ main {
 :focus h2 {
     color: black;
     background-color: rgb(61, 250, 77);
+}
+
+.current-page {
+    text-align:right;
+    margin-bottom: 10px;
 }

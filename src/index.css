@@ -42,13 +42,21 @@ body {
 }
 
 h1 {
-  line-height: 1.5;
+    font-size: 1.6em;
+    line-height: 1.5;
 }
 
 h2 {
-    margin:0 4px;
+    font-size: 1.4em;
+    margin:0;
     padding-top:4px;
     line-height: 1.2em;
+}
+
+p {
+    margin:0;
+    padding:0;
+    line-height: 1.4em; 
 }
 
 .selected {
@@ -85,7 +93,7 @@ main {
     display:flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 25px 100px;
+    padding: 15px 100px;
     width:100%;
 }
 
@@ -152,4 +160,11 @@ main {
 .current-page {
     text-align:right;
     margin-bottom: 10px;
+}
+
+.skills-wrapper p:first-child {
+    margin-top: 10px;
+}
+.skills-wrapper p:last-child {
+    margin-bottom: 5px;
 }

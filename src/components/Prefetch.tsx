@@ -4,7 +4,10 @@ import { getUser } from '../services/userService';
 import { getProfile } from '../services/profileService';
 import { getProjects } from '../services/projectService';
 import { getProjectTypes } from '../services/projectTypeService';
+
+import { getEcosystems } from '../services/ecosystemService';
 import { getEcoTypes } from '../services/ecoTypeService';
+import { getTech } from '../services/techService';
 import { getTechTypes } from '../services/techTypeService';
 
 type PrefetchProps = {
@@ -17,22 +20,32 @@ const Prefetch = ({children}: PrefetchProps) => {
         queryClient.prefetchQuery({
             queryKey: ['project-types'],
             queryFn: getProjectTypes,
-            staleTime: 1000 * 60 * 1,
+            staleTime: 1000 * 60 * 120,
+        });
+        queryClient.prefetchQuery({
+            queryKey: ['ecosystems'],
+            queryFn: getEcosystems,
+            staleTime: 1000 * 60 * 120,
         });
         queryClient.prefetchQuery({
             queryKey: ['ecosystem-types'],
             queryFn: getEcoTypes,
-            staleTime: 1000 * 60 * 1,
+            staleTime: 1000 * 60 * 120,
         });
         queryClient.prefetchQuery({
-            queryKey: ['tech-types'],
+            queryKey: ['tech'],
+            queryFn: getTech,
+            staleTime: 1000 * 60 * 120,
+        });
+        queryClient.prefetchQuery({
+            queryKey: ['tech-types'], 
             queryFn: getTechTypes,
-            staleTime: 1000 * 60 * 1,
+            staleTime: 1000 * 60 * 120,
         });
         queryClient.prefetchQuery({
             queryKey: ['user'],
             queryFn: getUser,
-            staleTime: 1000 * 60 * 1,
+            staleTime: 1000 * 60 * 120,
         });
         queryClient.prefetchQuery({
             queryKey: ['profile'],

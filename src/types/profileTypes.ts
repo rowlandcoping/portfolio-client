@@ -1,3 +1,5 @@
+import type { TechTypes } from './techTypes'
+
 export type Link = {
     id: number;
     name: string;
@@ -13,8 +15,7 @@ export type Skill = {
     id: number;
     name: string;
     ecoId: number;
-    techId: number;          
-    competency: string;
+    tech: TechTypes[];
     personId: number;
     userId: number;
 }

@@ -1,17 +1,33 @@
 import { Link } from '@tanstack/react-router';
-import { useKeyboardNav } from '../hooks/useKeyboardNav';
+import { useEffect } from "react";
+import { useKeyboardNavStore } from "../stores/keyboardNavStore";
 import { useUser } from '../features/profile/useUserApi';
 
 const Home = () => {
 
-    const profileRef = useKeyboardNav();
-    const projectsRef = useKeyboardNav();
-    const contactRef = useKeyboardNav();    
+    const focusedIndex = useKeyboardNavStore((s) => s.focusedIndex);
+    const setLinkCount = useKeyboardNavStore((s) => s.setLinkCount);
+    const setFocusedIndex = useKeyboardNavStore((s) => s.setFocusedIndex);
 
     const {
         data: user,
         isError,
     } = useUser();
+
+    useEffect(() => {
+        if (!user) return;
+        const pageLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('a'));
+        setFocusedIndex(0);
+        setLinkCount(pageLinks.length-1);
+        pageLinks[0].focus();
+    }, [user]);
+
+    useEffect(() => {
+        const pageLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('a'));
+        const current = pageLinks[focusedIndex % pageLinks.length];            
+        if (current) current.focus();
+    }, [focusedIndex])
+   
 
     if (isError || !user) return <p>Error loading user data...</p>;
 
@@ -20,13 +36,22 @@ const Home = () => {
             <div className="content">
                 <h1>Welcome to {user.name}'s Portfolio</h1>
             
-                <Link to="/profile" ref={profileRef}>
+                <Link 
+                    to="/profile"
+                    className={focusedIndex === 0 ? 'focussed' : ''}
+                >
                     <h2>View Profile</h2>
                 </Link>
-                <Link to="/projects" ref={projectsRef}>
+                <Link 
+                    to="/projects"
+                    className={focusedIndex === 1 ? 'focussed' : ''}
+                >
                     <h2>Explore Projects</h2>
                 </Link>
-                <Link to="/contact" ref={contactRef}>
+                <Link 
+                    to="/contact"
+                    className={focusedIndex === 2 ? 'focussed' : ''}
+                >
                     <h2>Contact {user.name}</h2>
 
                 </Link>

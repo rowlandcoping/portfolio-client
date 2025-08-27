@@ -2,14 +2,16 @@ import { create } from 'zustand';
 import type { RefObject } from 'react';
 
 export type NavElement = {
-    id: string;
     ref: RefObject<HTMLAnchorElement | null>; // match the hook
+    pageId: string;
 };
 
 type KeyboardNavState = {
   enabled: boolean;
-  elements: NavElement[];
   focusedIndex: number;
+  setFocusedIndex: (index: number) => void;
+  linkCount: number;         // new
+  setLinkCount: (count: number) => void;
   previousPage: string;
   activePage: number;
   setActivePage: (index: number) => void;
@@ -17,43 +19,37 @@ type KeyboardNavState = {
   setMaxIndex: (index: number) => void;
   incrementPage: () => void;
   decrementPage: () => void;
-  register: (el: NavElement) => void;
-  unregister: (id: string) => void;
   setEnabled: (enabled: boolean) => void;
   setPreviousPage: (previousPage: string) => void;
   next: () => void;
   prev: () => void;
 };
 
-export const useKeyboardNavStore = create<KeyboardNavState>((set) => ({
+export const useKeyboardNavStore = create<KeyboardNavState>((set, get) => ({
     enabled: true,
-    elements: [],
     focusedIndex: 0,
+    setFocusedIndex: (focusedIndex) => set({ focusedIndex }),
+    linkCount: 0,         // new
+    setLinkCount: (linkCount) => set({ linkCount }),   
     activePage: 0,
     maxIndex: 0,
     previousPage: '/',
-    register: (el) => set((state) => ({ elements: [...state.elements, el] })),
-    unregister: (id) =>
-        set((state) => ({ elements: state.elements.filter((e) => e.id !== id) })),
     setEnabled: (enabled) => set({ enabled }),
     setPreviousPage: (previousPage) => set({ previousPage }),
     setActivePage: (activePage) => set({ activePage }),
     setMaxIndex: (maxIndex) => set({ maxIndex }),
-    next: () =>
-        set((state) => {
-            if (!state.enabled || state.elements.length === 0) return {};
-            const nextIndex = (state.focusedIndex + 1) % state.elements.length;
-            state.elements[nextIndex].ref.current?.focus();
-            return { focusedIndex: nextIndex };
-    }),
-    prev: () =>
-        set((state) => {
-        if (!state.enabled || state.elements.length === 0) return {};
-        const prevIndex =
-            (state.focusedIndex - 1 + state.elements.length) % state.elements.length;
-        state.elements[prevIndex].ref.current?.focus();
-        return { focusedIndex: prevIndex };
-    }),
+    next: () => {
+        const state = get();
+        if (!state.enabled) return;
+        const nextIndex = (state.focusedIndex + 1) % (state.linkCount + 1);
+        set({ focusedIndex: nextIndex });
+    },
+    prev: () => {
+        const state = get();
+        if (!state.enabled) return;
+        const prevIndex = (state.focusedIndex - 1 + (state.linkCount + 1)) % (state.linkCount + 1);
+        set({ focusedIndex: prevIndex });
+    },
     incrementPage: () =>
         //setActivePage(Math.min(activePage + 1, maxIndex));
         //NB in zustand we use set to update state if we're calling function in the store

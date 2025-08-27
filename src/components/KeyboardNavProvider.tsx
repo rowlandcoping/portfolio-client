@@ -1,28 +1,12 @@
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 import { useKeyboardNavStore } from '../stores/keyboardNavStore';
 import { useNavigate } from '@tanstack/react-router';
 
 export default function KeyboardNavProvider({ children }: { children: React.ReactNode }) {
 
-    const store = useKeyboardNavStore();
-    const { enabled, elements, focusedIndex, next, prev, incrementPage, decrementPage } = store;
+    const enabled = useKeyboardNavStore.getState().enabled;
 
-    const navigate = useNavigate();
-
-    useEffect(() => {
-    if (!enabled) return;
-
-    const keepFocus = (e: FocusEvent) => {
-        const active = elements[focusedIndex]?.ref.current;
-        if (active && document.activeElement !== active) {
-        active.focus();
-        e.preventDefault();
-        }
-    };
-
-    window.addEventListener('blur', keepFocus, true);
-    return () => window.removeEventListener('blur', keepFocus, true);
-    }, [enabled, elements, focusedIndex]);
+    const navigate = useNavigate();    
 
     // 2️⃣ Block mouse events
     useEffect(() => {
@@ -46,21 +30,22 @@ export default function KeyboardNavProvider({ children }: { children: React.Reac
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
+            const state = useKeyboardNavStore.getState();
             switch (e.key) {
                 case 'ArrowDown':
-                    next();
+                    state.next();
                     e.preventDefault();
                     break;
                 case 'ArrowUp':
-                    prev();
+                    state.prev();
                     e.preventDefault();
                     break;
                  case 'ArrowRight':                    
-                    incrementPage();
+                    state.incrementPage();
                     e.preventDefault();
                     break;
                 case 'ArrowLeft':
-                    decrementPage();
+                    state.decrementPage();
                     e.preventDefault();
                     break;                
                 case 'Enter':
@@ -87,15 +72,7 @@ export default function KeyboardNavProvider({ children }: { children: React.Reac
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [next, prev, incrementPage, decrementPage]);
-
-    useLayoutEffect(() => {
-        if (elements.length > 0) {
-            elements[0].ref.current?.focus();
-        }
-    }, [elements]);
-
-    
+    }, []);    
 
     return <>{children}</>;
 }

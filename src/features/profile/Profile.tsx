@@ -1,5 +1,4 @@
-
-import { useEffect } from 'react';
+import { useEffect,  } from 'react';
 import { useProfile } from './useProfileApi';
 import { useUser } from './useUserApi';
 import { useKeyboardNavStore } from '../../stores/keyboardNavStore';
@@ -7,11 +6,20 @@ import About from './About';
 import Skills from './Skills';
 import Links from './Links';
 
+
+
 const Profile = () => {
 
+    const setMaxIndex = useKeyboardNavStore.getState().setMaxIndex;
+    const setActivePage = useKeyboardNavStore.getState().setActivePage;
     const activePage = useKeyboardNavStore((s) => s.activePage);
-    const setActivePage= useKeyboardNavStore((s) => s.setActivePage);
-    const setMaxIndex = useKeyboardNavStore((s) => s.setMaxIndex);
+
+    useEffect (() => {
+        //resets the active page to the first in the pages array
+        setActivePage(0);
+        //max index is the length of the pages array, sets this in the store for navigation purposes
+        setMaxIndex(2);
+    }, [])
 
     const {
         data: profile,
@@ -23,6 +31,7 @@ const Profile = () => {
         isError: isUserError,
     } = useUser();
 
+    
     if (isProfileError || isUserError || !profile || !user) return <p>Error loading profile data...</p>;
     
     const pages = [
@@ -45,12 +54,7 @@ const Profile = () => {
             )
         }
     ];
-
-    useEffect(() => {
-        setActivePage(0);
-        setMaxIndex(pages.length - 1);
-    }, []);
-
+   
     return (
         <main>
             <div>                

@@ -1,4 +1,4 @@
-
+import { Fragment } from 'react';
 import type { ProfileTypes } from '../../types/profileTypes';
 import type { EcoTypes } from '../../types/ecoTypes';
 import type { EcoTypeTypes } from '../../types/ecoTypeTypes';
@@ -77,10 +77,10 @@ const Skills = ({ skills }: SkillsProps) => {
             <h2>Languages</h2>
             <div className="skills-wrapper">
                 <p>
-                    {languages.map((s, i) => (<>                    
+                    {languages.map((s, i) => (<Fragment key={s.id}>                    
                         {s.name} <kbd>({s.tech.map(t => t.name).join(', ')})</kbd>
                         {i < languages.length - 1 ? ', ' : ''}                    
-                    </>))}
+                    </Fragment>))}
                 </p>
             </div>
             
@@ -91,10 +91,10 @@ const Skills = ({ skills }: SkillsProps) => {
             <h2>Databases</h2>
             <div className="skills-wrapper">
                 <p>
-                    {databases.map((s, i) => (<>                    
+                    {databases.map((s, i) => (<Fragment key={s.id}>                    
                         {s.name} <kbd>({s.tech.map(t => t.name).join(', ')})</kbd>
                         {i < databases.length - 1 ? ', ' : ''}                    
-                    </>))}
+                    </Fragment>))}
                 </p>
             </div>
 

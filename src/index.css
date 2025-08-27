@@ -152,7 +152,7 @@ main {
     outline: none;
 }
 
-:focus h2 {
+.focussed h2 {
     color: black;
     background-color: rgb(61, 250, 77);
 }
@@ -167,4 +167,20 @@ main {
 }
 .skills-wrapper p:last-child {
     margin-bottom: 5px;
+}
+
+.profile-links h2 {
+    display:flex;
+    align-items: center;
+    padding: 4px 5px;
+
+}
+
+.profile-links img {
+    width: 50px;
+    margin-right: 20px;
+}
+
+.link-text {
+    margin-top:4px;
 }

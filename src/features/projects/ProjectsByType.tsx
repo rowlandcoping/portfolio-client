@@ -1,0 +1,93 @@
+
+import { Link, useParams } from '@tanstack/react-router';
+import { projectsByTypeRoute } from '../../app/router';
+import { useEffect, useMemo, type CSSProperties } from "react";
+import { useKeyboardNavStore } from "../../stores/keyboardNavStore";
+import { useProjects } from './useProjectsApi';
+
+const ProjectsByType = () => {
+
+    const { id } = useParams({from: projectsByTypeRoute.id})
+    const focusedIndex = useKeyboardNavStore((s) => s.focusedIndex);
+    const setLinkCount = useKeyboardNavStore((s) => s.setLinkCount);
+    const setFocusedIndex = useKeyboardNavStore((s) => s.setFocusedIndex);
+    const setPreviousPage = useKeyboardNavStore((s) => s.setPreviousPage);
+
+    const {
+        data: projects,
+        isError,
+    } = useProjects();
+
+    const filteredProjects = useMemo(() => {
+        if (!projects) return [];
+            return projects.filter(project =>
+            (project.typeId === Number(id))
+        );
+    }, [projects]);
+
+    useEffect(() => {
+        if (filteredProjects.length === 0) return;
+        const pageLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('a'));
+        setPreviousPage('/projects');
+        setFocusedIndex(0);
+        setLinkCount(pageLinks.length-1);
+        pageLinks[0].focus();
+    }, [filteredProjects]);
+
+    useEffect(() => {
+        const pageLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('a'));
+        const current = pageLinks[focusedIndex % pageLinks.length];            
+        if (current) current.focus();
+    }, [focusedIndex]);
+
+    if (isError || !projects) return <p>Error loading project data...</p>;
+
+    return (
+        <main>
+            <div className="content">
+                <h1>Select a Project to View</h1>
+                {filteredProjects.map((project, i) => (
+                    <div className = "profile-links" key={project.id}>
+                        <Link 
+                            to={`/projects/${project.id}`}
+                            className={focusedIndex === i ? 'focussed' : ''}
+                        >                                                
+                            <h2>
+                                <span
+                                    className="image-container"
+                                    style={{ '--image-url': `url(http://localhost:3500${project.imageGrn})` } as CSSProperties}
+                                >
+                                </span>
+                                <span className="link-text">{project.name}</span>
+                            </h2>
+                        
+                        </Link>
+                    </div>
+                ))}
+                
+            </div>
+            <div className="control-container">
+                <div className="control-box">
+                    <div>
+                        exit<br />
+                        <kbd>Esc</kbd>
+                    </div>
+                    <div>
+                        next<br />
+                        &darr;                    
+                    </div>
+                    <div>
+                        prev<br />
+                        &uarr;                   
+                    </div>
+                    <div>
+                        slct<br />
+                        &crarr;
+                    </div>
+                </div>
+            </div>
+        </main>
+    )
+}
+
+export default ProjectsByType

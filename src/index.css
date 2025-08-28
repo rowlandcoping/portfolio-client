@@ -24,7 +24,6 @@ body {
   pointer-events: none; /* disables clicks, hovers, etc */
 }
 
-
 a {
   color: rgb(61, 250, 77);
   text-decoration: inherit;
@@ -67,6 +66,37 @@ p {
     display: none;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+}
+
+input {
+    font-family: ocr;
+    font-size: 1.2em;
+    border: 1px solid rgb(61, 250, 77);
+    background-color: #1b2019;
+    color: rgb(61, 250, 77);
+    padding:5px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 5px;
+}
+
+input::placeholder {
+    font-size: 0.8em;
+}
+
+input:focus {
+    outline: 5px solid rgb(61, 250, 77);
+
+}
 
 /*------------ Project CSS -----------------*/
 
@@ -184,3 +214,19 @@ main {
 .link-text {
     margin-top:4px;
 }
+
+.image-container {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    margin-right:20px;
+    background-image: var(--image-url);
+    background-size: cover;
+    background-position: center;
+}
+
+#search {
+    margin-bottom: 10px;
+}
+
+

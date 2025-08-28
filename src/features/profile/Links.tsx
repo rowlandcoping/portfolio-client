@@ -29,15 +29,15 @@ const Links = ({ links }: LinksProps) => {
 
     return (
         <>
-            {links.map((s, i) => (
-                <div className = "profile-links" key={s.id}>
+            {links.map((link, i) => (
+                <div className = "profile-links" key={link.id}>
                     <Link 
-                        to={s.url}
+                        to={link.url}
                         className={focusedIndex === i ? 'focussed' : ''}
                     >                                                
                         <h2>
-                            <img src={`http://localhost:3500${s.logoGrn}`} alt={s.logoAlt} />
-                            <span className="link-text">{s.name}</span>
+                            <img src={`http://localhost:3500${link.logoGrn}`} alt={link.logoAlt} />
+                            <span className="link-text">{link.name}</span>
                         </h2>
                     
                     </Link>

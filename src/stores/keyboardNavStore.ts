@@ -1,16 +1,10 @@
 import { create } from 'zustand';
-import type { RefObject } from 'react';
-
-export type NavElement = {
-    ref: RefObject<HTMLAnchorElement | null>; // match the hook
-    pageId: string;
-};
 
 type KeyboardNavState = {
   enabled: boolean;
   focusedIndex: number;
   setFocusedIndex: (index: number) => void;
-  linkCount: number;         // new
+  linkCount: number;
   setLinkCount: (count: number) => void;
   previousPage: string;
   activePage: number;
@@ -40,6 +34,7 @@ export const useKeyboardNavStore = create<KeyboardNavState>((set, get) => ({
     setMaxIndex: (maxIndex) => set({ maxIndex }),
     next: () => {
         const state = get();
+        console.log(state.linkCount);
         if (!state.enabled) return;
         const nextIndex = (state.focusedIndex + 1) % (state.linkCount + 1);
         set({ focusedIndex: nextIndex });

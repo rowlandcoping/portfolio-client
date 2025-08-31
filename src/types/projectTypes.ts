@@ -1,3 +1,6 @@
+import type { EcosystemTypes } from './ecosystemTypes'
+
+
 export type Feature = {
     id: number;
     description: string
@@ -17,6 +20,7 @@ export type Tech = {
 export type ProjectEcosystem = {
     id: number;
     name: string;
+    ecosystem: EcosystemTypes
     ecoId: number;
     tech: Tech [];
 }
@@ -27,6 +31,7 @@ export type ProjectTypes = {
     name: string;
     overview: string;
     url: string;
+    repo:string;
     imageOrg: string;
     imageGrn: string;
     imageAlt: string;

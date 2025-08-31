@@ -60,7 +60,7 @@ const projectTypesRoute = createRoute({
 const searchProjectsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/projects/search-projects',
-  component: SearchProjects,
+  component: SearchProjects
 });
 
 export const viewProjectRoute = createRoute({

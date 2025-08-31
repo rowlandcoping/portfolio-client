@@ -19,6 +19,16 @@ const SearchProjects = () => {
         isError,
     } = useProjects();
 
+
+    //reset initial values, focus page on search input
+    useEffect(() => {
+        setPreviousPage('/projects');
+        setFocusedIndex(0);
+        searchInputRef.current?.focus();
+    },[])
+
+
+    //update search results when search changes
     useEffect(() => {
         if (projects && search) {
             const results = projects.filter(project =>
@@ -29,13 +39,9 @@ const SearchProjects = () => {
             setFilteredProjects([]); // If no search term, clear results
         }
     }, [search, projects]);
-
-    useEffect(() => {
-        setPreviousPage('/projects');
-        setFocusedIndex(0);
-        searchInputRef.current?.focus();
-    },[])
-
+    
+    
+    //update linkCount when search results change
     useEffect(() => {
         const pageLinks = Array.from(
         document.querySelectorAll<HTMLInputElement | HTMLAnchorElement>(
@@ -45,19 +51,18 @@ const SearchProjects = () => {
         setLinkCount(pageLinks.length - 1); // 0 = input, 1..n = results
     }, [filteredProjects, setLinkCount]);
 
-    // Focus the correct element whenever focusedIndex changes
+    // Focus the correct element whenever focusedIndex changes (via navigation)
     useEffect(() => {
             const pageLinks = Array.from(
-            document.querySelectorAll<HTMLInputElement | HTMLAnchorElement>(
-                'input, a'
-            )
+                document.querySelectorAll<HTMLInputElement | HTMLAnchorElement>(
+                    'input, a'
+                )
             );
             const current = pageLinks[focusedIndex];
             current?.focus();
     }, [focusedIndex]);
 
-    if (isError) return <p>Error loading projects...</p>;
-    if (!projects) return <p>Loading...</p>;
+    if (isError || !projects) return <p>Error loading projects...</p>;
 
     return (
         <main>
@@ -124,8 +129,7 @@ const SearchProjects = () => {
                                 &crarr;
                             </div>
                         </>
-                    )}
-                   
+                    )}                   
                 </div>
             </div>
         </main>

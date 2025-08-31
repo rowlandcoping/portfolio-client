@@ -54,6 +54,8 @@ export default function KeyboardNavProvider({ children }: { children: React.Reac
                         const href = (active as HTMLAnchorElement).href;
                         if (href) {
                             if (href.startsWith(window.location.origin)) {
+                                //sets Previous Page
+                                useKeyboardNavStore.getState().setPreviousPage(window.location.pathname);
                                 // Internal link
                                 navigate({ to: new URL(href).pathname });
                             } else {

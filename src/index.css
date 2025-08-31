@@ -83,10 +83,10 @@ input {
     border: 1px solid rgb(61, 250, 77);
     background-color: #1b2019;
     color: rgb(61, 250, 77);
-    padding:5px;
-    width: 100%;
+    padding:5px 0 5px 5px;
+    width: 75%;
     box-sizing: border-box;
-    margin: 0 5px;
+    margin: 5px 5px 10px 5px;
 }
 
 input::placeholder {
@@ -101,7 +101,8 @@ input:focus {
 /*------------ Project CSS -----------------*/
 
 .screen-container {
-    margin: 30px 200px;
+    margin: 30px 300px;
+    overflow:hidden;
 }
 
 .screen-top {
@@ -123,7 +124,7 @@ main {
     display:flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 15px 100px;
+    padding: 15px 150px;
     width:100%;
 }
 
@@ -159,7 +160,7 @@ main {
     width: 100%;
     background-color: rgb(61, 250, 77);
     min-height: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 25px;
     color: black;
     padding: 0 20px;
 }
@@ -225,8 +226,29 @@ main {
     background-position: center;
 }
 
-#search {
-    margin-bottom: 10px;
+.project-image {
+    width: 300px;
+    height: 200px;
+    margin-bottom:10px;
+    object-fit: cover;
+}
+
+.project-image-container {
+    width: 300px;
+    height:250px;
+    text-align: right;
+    margin-left:15px;
+    flex-shrink: 0; 
+}
+
+.project-overview {
+    display: flex;
+    flex: 1;   
+    overflow: hidden;
+}
+
+.details-container {
+    margin: 10px 0;
 }
 
 

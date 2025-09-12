@@ -1,9 +1,10 @@
 import type { ProjectTypes } from '../../types/projectTypes';
+import type { ProjectTypeTypes } from '../../types/projectTypeTypes';
 
-type ProjectProps = Pick<ProjectTypes, 'overview' | 'imageGrn' | 'imageAlt' | 'dateMvp' | 'dateProd'>;
+type ProjectProps = Pick<ProjectTypes, 'overview' | 'imageGrn' | 'imageAlt' | 'dateMvp' | 'dateProd'> &
+Pick<ProjectTypeTypes, 'name'>;
 
-const Overview = ( {overview, imageGrn, imageAlt, dateMvp, dateProd}:ProjectProps ) => {
-
+const Overview = ( {name, overview, imageGrn, imageAlt, dateMvp, dateProd}:ProjectProps ) => {    
     function formatDate(dateInput: string | Date): string {
         const date = new Date(dateInput);
         const day = String(date.getDate()).padStart(2, '0');
@@ -13,28 +14,34 @@ const Overview = ( {overview, imageGrn, imageAlt, dateMvp, dateProd}:ProjectProp
     }    
     
     return (
-        <div className = "project-overview">
-            <div className="project-text">
-
-                {overview}
-
-            </div>
+        <div className = "project-overview">            
             <div className="project-image-container">
                 <img 
                     src = {`http://localhost:3500${imageGrn}` }
                     alt = {imageAlt}
                     className="project-image"
                 />
-                {dateMvp && (
-                    <>
-                    <br />MVP: {formatDate(dateMvp)}
-                    </>
-                )}
-                {dateProd && (
-                    <>
-                        <br />Production: {formatDate(dateProd)}
-                    </>
-                )}
+                <div className="">
+                    <h2>
+                        TYPE: {name}
+                    </h2> 
+                    <h2>
+                        MVP: {formatDate(dateMvp)}
+                    </h2>                    
+                    <h2>
+                        PROD: {dateProd ? (
+                            <>{formatDate(dateProd)}</>
+                        ): (
+                            <>
+                                TBC
+                            </>
+                        )}
+                    </h2>                    
+                </div>
+            </div>
+            <div className="project-text">
+
+                {overview}
 
             </div>
         </div>

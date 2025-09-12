@@ -1,22 +1,25 @@
 import { create } from 'zustand';
 
-type KeyboardNavState = {
-  enabled: boolean;
-  focusedIndex: number;
-  setFocusedIndex: (index: number) => void;
-  linkCount: number;
-  setLinkCount: (count: number) => void;
-  previousPage: string;
-  activePage: number;
-  setActivePage: (index: number) => void;
-  maxIndex: number;
-  setMaxIndex: (index: number) => void;
-  incrementPage: () => void;
-  decrementPage: () => void;
-  setEnabled: (enabled: boolean) => void;
-  setPreviousPage: (previousPage: string) => void;
-  next: () => void;
-  prev: () => void;
+export type KeyboardNavState = {
+    enabled: boolean;
+    focusedIndex: number;
+    setFocusedIndex: (index: number) => void;
+    linkCount: number;
+    setLinkCount: (count: number) => void;
+    returnPage: string;
+    setReturnPage: (last: string) => void;
+    previousPages: string[];
+    pushPage: (path: string) => void
+    popPage: () => string | undefined
+    activePage: number;
+    setActivePage: (index: number) => void;
+    maxIndex: number;
+    setMaxIndex: (index: number) => void;
+    incrementPage: () => void;
+    decrementPage: () => void;
+    setEnabled: (enabled: boolean) => void;
+    next: () => void;
+    prev: () => void;
 };
 
 export const useKeyboardNavStore = create<KeyboardNavState>((set, get) => ({
@@ -27,14 +30,14 @@ export const useKeyboardNavStore = create<KeyboardNavState>((set, get) => ({
     setLinkCount: (linkCount) => set({ linkCount }),   
     activePage: 0,
     maxIndex: 0,
-    previousPage: '/',
+    returnPage: '',
+    previousPages: ['/'],
     setEnabled: (enabled) => set({ enabled }),
-    setPreviousPage: (previousPage) => set({ previousPage }),
     setActivePage: (activePage) => set({ activePage }),
+    setReturnPage: (returnPage) => set({ returnPage }),
     setMaxIndex: (maxIndex) => set({ maxIndex }),
     next: () => {
         const state = get();
-        console.log(state.linkCount);
         if (!state.enabled) return;
         const nextIndex = (state.focusedIndex + 1) % (state.linkCount + 1);
         set({ focusedIndex: nextIndex });
@@ -54,5 +57,18 @@ export const useKeyboardNavStore = create<KeyboardNavState>((set, get) => ({
     decrementPage: () => 
         set((state) => ({
             activePage: Math.max(state.activePage - 1, 0),
-        })),    
+        })),
+    pushPage: (path) =>
+        set((state) => ({
+            previousPages: [...state.previousPages, path],
+        })),
+
+    popPage: () => {
+        let last: string | undefined
+        set((state) => {
+            last = state.previousPages[state.previousPages.length - 1]
+            return { previousPages: state.previousPages.slice(0, -1) }
+        })
+        return last
+    },    
 }));

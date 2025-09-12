@@ -7,8 +7,7 @@ const Home = () => {
 
     const focusedIndex = useKeyboardNavStore((s) => s.focusedIndex);
     const setLinkCount = useKeyboardNavStore((s) => s.setLinkCount);
-    const setFocusedIndex = useKeyboardNavStore((s) => s.setFocusedIndex);
-    const setPreviousPage = useKeyboardNavStore((s) => s.setPreviousPage);    
+    const setFocusedIndex = useKeyboardNavStore((s) => s.setFocusedIndex);   
     
     const {
         data: user,
@@ -18,7 +17,6 @@ const Home = () => {
     useEffect(() => {
         if (!user) return;
         const pageLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('a'));
-        setPreviousPage('/');
         setFocusedIndex(0);
         setLinkCount(pageLinks.length-1);
         pageLinks[0].focus();

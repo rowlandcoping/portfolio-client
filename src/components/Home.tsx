@@ -49,7 +49,7 @@ const Home = () => {
                     <h2>Explore Projects</h2>
                 </Link>
                 <Link 
-                    to="/contact"
+                    to="/profile/contact"
                     className={focusedIndex === 2 ? 'focussed' : ''}
                 >
                     <h2>Contact {user.name}</h2>

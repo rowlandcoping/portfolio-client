@@ -3,9 +3,10 @@ import { viewProjectRoute } from '../../app/router';
 import { useEffect } from "react";
 import { useKeyboardNavStore } from "../../stores/keyboardNavStore";
 import { useProjects } from './useProjectsApi';
+import { useProjectTypes } from './useProjectTypesApi';
 import Overview from './Overview';
 import Details from './Details';
-import Links from './Links'
+import Links from './Links';
 
 
 
@@ -15,32 +16,44 @@ const ViewProject = () => {
     const setMaxIndex = useKeyboardNavStore.getState().setMaxIndex;
     const setActivePage = useKeyboardNavStore.getState().setActivePage;
     const activePage = useKeyboardNavStore((s) => s.activePage);
-
-    
+    const returnPage = useKeyboardNavStore((s) => s.returnPage);    
 
     const {
         data: projects,
         isError,
     } = useProjects();
-    
+
+    const {
+        data: projectTypes,
+        isError: isTypesError,
+    } = useProjectTypes();
 
     const project = projects?.find((p) => Number(p.id) === Number(id));
-    console.log(project);
-
+    const type = projectTypes?.find((type) => Number(type.id) === project?.typeId);
+    const page = returnPage.split("/")[2];
+    
     useEffect (() => {
         //resets the active page to the first in the pages array
-        setActivePage(0);
+        //also returns user to the page they were on if they return from specific routes
+        if (page === "contact") {
+            setActivePage(2);
+        } else {
+            setActivePage(0);
+        }
         //max index is the length of the pages array, sets this in the store for navigation purposes
         setMaxIndex(2);
     }, [])
 
-    if (isError || !project) return <p>Error loading projects...</p>;
+    if (isError || !project || isTypesError || !type) return <p>Error loading projects...</p>;
+
+    
 
     const pages = [
         {
             title: `About ${project.name}`,
             content: (
                 <Overview
+                    name={type.name}
                     overview={project.overview}
                     imageGrn={project.imageGrn}
                     imageAlt={project.imageAlt}
@@ -63,6 +76,7 @@ const ViewProject = () => {
             title: `${project.name} Links`,
             content: (
                 <Links
+                    activePage={activePage}
                     id={project.id}
                     name={project.name}
                     url={project.url}

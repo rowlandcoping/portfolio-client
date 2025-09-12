@@ -8,10 +8,9 @@ export default function KeyboardNavProvider({ children }: { children: React.Reac
 
     const navigate = useNavigate();    
 
-    // 2️⃣ Block mouse events
+    // Block mouse events
     useEffect(() => {
         if (!enabled) return;
-
         const stopMouse = (e: MouseEvent) => {
             e.preventDefault();
             e.stopPropagation();
@@ -30,7 +29,16 @@ export default function KeyboardNavProvider({ children }: { children: React.Reac
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
+            if (!enabled) return;
+
+            // Disable Tab
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                return;
+            }
             const state = useKeyboardNavStore.getState();
+
+            
             switch (e.key) {
                 case 'ArrowDown':
                     state.next();
@@ -50,12 +58,13 @@ export default function KeyboardNavProvider({ children }: { children: React.Reac
                     break;                
                 case 'Enter':
                     const active = document.activeElement;
-                    if (active?.tagName === 'A') {
-                        const href = (active as HTMLAnchorElement).href;
+                    if (active instanceof HTMLAnchorElement) {
+                        const href = active.href;
                         if (href) {
                             if (href.startsWith(window.location.origin)) {
                                 //sets Previous Page
-                                useKeyboardNavStore.getState().setPreviousPage(window.location.pathname);
+                                const pathname = window.location.pathname
+                                useKeyboardNavStore.getState().pushPage(pathname)
                                 // Internal link
                                 navigate({ to: new URL(href).pathname });
                             } else {
@@ -66,7 +75,9 @@ export default function KeyboardNavProvider({ children }: { children: React.Reac
                     }
                     break;
                 case 'Escape':
-                    const target = useKeyboardNavStore.getState().previousPage;
+                    const target = useKeyboardNavStore.getState().popPage();
+                    const last = window.location.pathname
+                    useKeyboardNavStore.getState().setReturnPage(last)
                     if (target) navigate({ to: target });
                     break;
             }

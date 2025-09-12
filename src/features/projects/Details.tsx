@@ -8,7 +8,6 @@ type DetailProps = {
 }
 
 const Details = ({ features, issues, projectEcosystem }:DetailProps) => {
-    console.log(projectEcosystem)
     return (
         <>
         <div className="skills-wrapper">

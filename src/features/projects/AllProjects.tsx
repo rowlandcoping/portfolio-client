@@ -1,6 +1,6 @@
 
 import { Link } from '@tanstack/react-router';
-import { useEffect, type CSSProperties } from "react";
+import { useEffect } from "react";
 import { useKeyboardNavStore } from "../../stores/keyboardNavStore";
 import { useProjects } from './useProjectsApi';
 
@@ -9,7 +9,6 @@ const AllProjects = () => {
     const focusedIndex = useKeyboardNavStore((s) => s.focusedIndex);
     const setLinkCount = useKeyboardNavStore((s) => s.setLinkCount);
     const setFocusedIndex = useKeyboardNavStore((s) => s.setFocusedIndex);
-    const setPreviousPage = useKeyboardNavStore((s) => s.setPreviousPage);
 
     const {
         data: projects,
@@ -19,7 +18,6 @@ const AllProjects = () => {
     useEffect(() => {
         if (!projects) return;
         const pageLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('a'));
-        setPreviousPage('/projects');
         setFocusedIndex(0);
         setLinkCount(pageLinks.length-1);
         pageLinks[0].focus();
@@ -44,11 +42,11 @@ const AllProjects = () => {
                             className={focusedIndex === i ? 'focussed' : ''}
                         >                                                
                             <h2>
-                                <span
-                                    className="image-container"
-                                    style={{ '--image-url': `url(http://localhost:3500${project.imageGrn})` } as CSSProperties}
-                                >
-                                </span>
+                                <img 
+                                    src = {`http://localhost:3500${project.imageGrn}` }
+                                    alt = {project.imageAlt}
+                                    className="project-image-thumb"
+                                />
                                 <span className="link-text">{project.name}</span>
                             </h2>
                         

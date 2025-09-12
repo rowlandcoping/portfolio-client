@@ -10,6 +10,10 @@ import ProjectTypes from '../features/projects/ProjectTypes';
 import SearchProjects from '../features/projects/SearchProjects';
 import ViewProject from '../features/projects/ViewProject';
 
+import ProfileContact from '../features/profile/ProfileContact';
+
+import ProjectContact from '../features/projects/ProjectContact';
+
 import ProjectsByType from '../features/projects/ProjectsByType';
 
 
@@ -75,6 +79,18 @@ export const projectsByTypeRoute = createRoute({
   component: ProjectsByType,
 });
 
+export const contactRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/profile/contact',
+  component: ProfileContact,
+});
+
+export const contactProjectRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/projects/contact/$id',
+  component: ProjectContact,
+});
+
 const router = createRouter({
     routeTree: rootRoute.addChildren([
         homeRoute,
@@ -84,7 +100,9 @@ const router = createRouter({
         projectTypesRoute,
         projectsByTypeRoute,
         searchProjectsRoute,
-        viewProjectRoute
+        viewProjectRoute,
+        contactRoute,
+        contactProjectRoute
     ])
 });
 

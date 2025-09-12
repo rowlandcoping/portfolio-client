@@ -1,23 +1,30 @@
 import type {  ProjectTypes } from '../../types/projectTypes';
+import type { KeyboardNavState } from '../../stores/keyboardNavStore';
 import { useKeyboardNavStore } from "../../stores/keyboardNavStore";
 import { useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
 
-type LinksProps = Pick<ProjectTypes, 'id' | 'name' | 'url' | 'repo'>;
+type LinksProps = Pick<ProjectTypes, 'id' | 'name' | 'url' | 'repo'>  & {
+  activePage: KeyboardNavState['activePage'];
+};
 
-const Links = ({ id, name, url, repo }:LinksProps) => {
+const Links = ({ id, name, url, repo, activePage }:LinksProps) => {
 
+    //try passing activePage as a prop instead
+    
     const focusedIndex = useKeyboardNavStore((s) => s.focusedIndex);
     const setLinkCount = useKeyboardNavStore((s) => s.setLinkCount);
     const setFocusedIndex = useKeyboardNavStore((s) => s.setFocusedIndex);
 
     
     useEffect(() => {
-        const pageLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('a'));
-        setFocusedIndex(0);
-        setLinkCount(pageLinks.length-1);
-        pageLinks[0].focus();
-    }, []);
+        if (activePage === 2) {
+            const pageLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('a'));
+            setFocusedIndex(0);
+            setLinkCount(pageLinks.length-1);
+            pageLinks[0].focus();
+        }
+    }, [activePage]);
 
     useEffect(() => {
         const pageLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('a'));
@@ -40,7 +47,7 @@ const Links = ({ id, name, url, repo }:LinksProps) => {
                 <h2>Open Github Repo</h2>
             </Link>
             <Link 
-                to={`/contact/${id}`}
+                to={`/projects/contact/${id}`}
                 className={focusedIndex === 2 ? 'focussed' : ''}
             >
                 <h2>{ name } Feedback</h2>

@@ -12,7 +12,6 @@ const ProjectTypes = () => {
     const focusedIndex = useKeyboardNavStore((s) => s.focusedIndex);
     const setLinkCount = useKeyboardNavStore((s) => s.setLinkCount);
     const setFocusedIndex = useKeyboardNavStore((s) => s.setFocusedIndex);
-    const setPreviousPage = useKeyboardNavStore((s) => s.setPreviousPage); 
 
     const {
         data: projectTypes,
@@ -36,7 +35,6 @@ const ProjectTypes = () => {
     useEffect(() => {
         if (filteredCategories.length === 0) return;
         const pageLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('a'));
-        setPreviousPage('/projects')
         setFocusedIndex(0);
         setLinkCount(pageLinks.length-1);
         pageLinks[0].focus();

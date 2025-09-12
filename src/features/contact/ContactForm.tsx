@@ -10,11 +10,17 @@ interface ContactFormProps {
   projectId?: ContactTypes['projectId'];
 };
 
+const EMAIL_REGEX = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
 
 const ContactForm = ({ projectId }: ContactFormProps) => {
     const [message, setMessage] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [validEmail, setValidEmail] = useState(false);
+    const [messageLength, setMessageLength] = useState(0);
+    const characterMinimum = 20;
+    const characterLimit = 200;
     const mutation = usePostContact();
 
     const focusedIndex = useKeyboardNavStore((s) => s.focusedIndex);
@@ -34,8 +40,7 @@ const ContactForm = ({ projectId }: ContactFormProps) => {
     const project = projects?.find((p) => Number(p.id) === Number(projectId));
     console.log(Number(projectId))
     const handleSubmit = (e: React.FormEvent) => {
-        //e.preventDefault();
-        console.log("do something else")
+        e.preventDefault();
         const payload: ContactTypes = {
             projectId: projectId,
             message,
@@ -44,6 +49,19 @@ const ContactForm = ({ projectId }: ContactFormProps) => {
         };
         mutation.mutate(payload);
     };
+
+    useEffect(() => {
+        setValidEmail(EMAIL_REGEX.test(email))
+    }, [email])
+
+    useEffect(() => {
+        if (message.length > characterLimit) {
+            setMessage(message.slice(0, characterLimit));
+            setMessageLength(characterLimit);
+        } else {
+            setMessageLength(message.length);
+        }
+    }, [message, characterLimit])
 
     useEffect(() => {
         if (!user && !projectId) return;
@@ -115,6 +133,9 @@ const ContactForm = ({ projectId }: ContactFormProps) => {
                             placeholder="enter name"
                         >
                         </input>
+                        {!name &&
+                        <span className = "form-info"><kbd>Name Required</kbd></span>
+                        }
                         <label className="sr-only" htmlFor='search'>Enter Email</label>
                         <input
                             id="email"
@@ -127,29 +148,35 @@ const ContactForm = ({ projectId }: ContactFormProps) => {
                             placeholder="enter email"
                         >
                         </input>
-                        <label className="sr-only" htmlFor='search'>Write a Message (200 characters Max)</label>
+                        {!validEmail &&
+                        <span className = "form-info"><kbd>Invalid Email Address</kbd></span>
+                        }
+                        <label className="sr-only" htmlFor='search'>Write a Message ({characterMinimum} - {characterLimit} characters)</label>
                         <textarea
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
                             className={focusedIndex === 2 ? 'input-focus' : ''}
-                            placeholder="write message (200 characters max)"
+                            placeholder={`write message (${characterMinimum} - ${characterLimit} characters)`}
                         />
+                        
+                        <span className = "form-info"><kbd>{messageLength}/{characterLimit}</kbd></span>
                         <button
-                            className={focusedIndex === 3 ? 'form-button button-focus' : 'form-button'}
-                            disabled={mutation.isPending}
+                            className={
+                                !name || mutation.isPending || !validEmail || !(messageLength >= characterMinimum)
+                                ? focusedIndex === 3 ? `form-button button-focus-dark`:`submit-dark form-button`
+                                : focusedIndex === 3 ? 'form-button button-focus' 
+                                : 'form-button'
+                            }
                             type='submit'
                             onKeyDown={(e) => {
                                 // Only handle arrow keys here; other keys behave normally
-                                if (e.key === 'Enter') {
-                                    console.log("do something")
+                                if (e.key === 'Enter' && name && mutation.isPending && validEmail && messageLength >= characterMinimum) {
                                     handleSubmit(e)
-                                    // prevent cursor movement
-                                    // Delegate to your global keyboard nav
                                 }
                             }}
                         >
                             <h2>Submit Message</h2>       
-                        </button>            
+                        </button>       
                     </form>
                 </div>
                 <div className="control-container">

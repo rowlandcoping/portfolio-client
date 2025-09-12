@@ -77,6 +77,10 @@ p {
   overflow: hidden;
 }
 
+textarea {
+    height: 150px;
+    resize: none;
+}
 input, textarea {
     font-family: ocr;
     font-size: 1.2em;
@@ -112,9 +116,18 @@ input::placeholder, textarea::placeholder {
     width: 100%;    
 }
 
-.form-button:focus, .button-focus {        
+.button-focus {        
     color: black;
     background-color: rgb(61, 250, 77);
+}
+
+.submit-dark {
+    color:#283622;
+}
+
+.button-focus-dark {
+    color:#283622;
+    background-color: #242424;
 }
 
 /*------------ Project CSS -----------------*/
@@ -273,6 +286,18 @@ main {
 
 .details-container {
     margin: 10px 0;
+}
+.form-info {
+    margin: -13px 4px 10px;
+    display:block
+}
+
+.submit-dark {
+    color:#283622;
+}
+
+.button-focus-dark {
+
 }
 
 

@@ -4,16 +4,15 @@ import Prefetch from '../components/Prefetch';
 import Home from '../components/Home';
 
 import Profile from '../features/profile/Profile';
+import AboutPage from '../features/about/AboutPage';
+
 import Projects from '../features/projects/Projects';
 import AllProjects from '../features/projects/AllProjects';
 import ProjectTypes from '../features/projects/ProjectTypes';
 import SearchProjects from '../features/projects/SearchProjects';
 import ViewProject from '../features/projects/ViewProject';
-
 import ProfileContact from '../features/profile/ProfileContact';
-
 import ProjectContact from '../features/projects/ProjectContact';
-
 import ProjectsByType from '../features/projects/ProjectsByType';
 
 
@@ -41,6 +40,12 @@ const profileRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: '/profile',
     component: Profile,
+});
+
+const aboutRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/about',
+    component: AboutPage,
 });
 
 const projectsRoute = createRoute({
@@ -96,6 +101,7 @@ const router = createRouter({
         homeRoute,
         profileRoute,
         projectsRoute,
+        aboutRoute,
         allProjectsRoute,
         projectTypesRoute,
         projectsByTypeRoute,

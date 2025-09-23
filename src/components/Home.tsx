@@ -53,7 +53,12 @@ const Home = () => {
                     className={focusedIndex === 2 ? 'focussed' : ''}
                 >
                     <h2>Contact {user.name}</h2>
-
+                </Link>
+                <Link 
+                    to="/about"
+                    className={focusedIndex === 3 ? 'focussed' : ''}
+                >
+                    <h2>About This Site</h2>
                 </Link>
             </div>
             <div className="control-container">

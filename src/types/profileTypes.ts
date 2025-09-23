@@ -38,6 +38,10 @@ export type ProfileTypes = {
     id: number;
     userId: number;
     description: string;
+    starSign: string;
+    favColor: string;
+    imageGrn: string;
+    imageAlt: string;
     skills: Skill[];
     links: Link[];
     contact: Contact[];

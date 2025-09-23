@@ -98,7 +98,7 @@ input::placeholder, textarea::placeholder {
     font-size: 0.8em;
 }
 
-.input-focus,input:focus,textarea:focus {
+.input-focus, input:focus, textarea:focus {
     border: 1px solid rgb(61, 250, 77);
     outline: 4px solid rgb(61, 250, 77);
 }
@@ -294,10 +294,6 @@ main {
 
 .submit-dark {
     color:#283622;
-}
-
-.button-focus-dark {
-
 }
 
 

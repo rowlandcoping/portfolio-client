@@ -4,7 +4,7 @@ import { getUser } from '../services/userService';
 import { getProfile } from '../services/profileService';
 import { getProjects } from '../services/projectService';
 import { getProjectTypes } from '../services/projectTypeService';
-
+import { getAbout } from '../services/aboutService';
 import { getEcosystems } from '../services/ecosystemService';
 import { getEcoTypes } from '../services/ecoTypeService';
 import { getTech } from '../services/techService';
@@ -57,6 +57,11 @@ const Prefetch = ({children}: PrefetchProps) => {
             queryFn: getProjects,
             staleTime: 1000 * 60 * 1,
         });
+        queryClient.prefetchQuery({
+            queryKey: ['about'],
+            queryFn: getAbout,
+            staleTime: 1000 * 60 * 1,
+        });        
     }, []);
     
     return <>{children}</>

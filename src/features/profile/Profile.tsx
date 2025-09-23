@@ -1,4 +1,4 @@
-import { useEffect,  } from 'react';
+import { useEffect } from 'react';
 import { useProfile } from './useProfileApi';
 import { useUser } from './useUserApi';
 import { useKeyboardNavStore } from '../../stores/keyboardNavStore';
@@ -38,7 +38,14 @@ const Profile = () => {
         {
             title: `About ${user.name}`,
             content: (
-                <About description={profile.description} />
+                <About
+                    name={user.name}
+                    description={profile.description}
+                    imageGrn={profile.imageGrn}
+                    imageAlt={profile.imageAlt}
+                    starSign={profile.starSign}
+                    favColor={profile.favColor} 
+                />
             )
         },
         {

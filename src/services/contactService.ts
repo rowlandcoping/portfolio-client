@@ -1,8 +1,6 @@
 import type { ContactTypes } from '../types/contactTypes';
 
-const BASE_URL = import.meta.env.MODE === 'production' 
-    ? 'https://TBC' 
-    : 'http://localhost:3500/personal/contacts';
+const BASE_URL = import.meta.env.VITE_SERVER_URL + '/personal/contacts';
 
 export const postContact = async (payload: ContactTypes): Promise<ContactTypes[]> => {
     const response = await fetch(BASE_URL, {

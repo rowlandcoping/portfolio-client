@@ -3,6 +3,11 @@
   src: url("assets/OCRAStd.otf");
 }
 
+@font-face {
+  font-family: monitor;
+  src: url("assets/YieldingTimberItalic-JRoDM.otf");
+}
+
 :root {
     font-family: ocr;
     font-style: normal;
@@ -134,7 +139,6 @@ input::placeholder, textarea::placeholder {
 
 .screen-container {
     margin: 30px 300px;
-    overflow:hidden;
 }
 
 .screen-top {
@@ -143,7 +147,6 @@ input::placeholder, textarea::placeholder {
     height: 50px;
     background-image: linear-gradient(to bottom,#AA9261, #D0BF9E);
     border-radius: 20px 20px 0 0;
-    
 }
 
 .view-area {
@@ -158,6 +161,7 @@ main {
     justify-content: space-between;
     padding: 15px 150px;
     width:100%;
+    overflow:hidden;
 }
 
 .screen-left {
@@ -175,10 +179,91 @@ main {
 }
 
 .screen-bottom {
+    font-family: monitor;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
     height: 100px;
     background-image: linear-gradient(to top,#AA9261, #D0BF9E);
     border-radius: 0 0 20px 20px;
 }
+
+.power-light {
+    margin-left: 65px;
+    height: 10px;
+    width: 20px;
+    background: radial-gradient(ellipse, #ff0b0b 20%, #ff0000 60%, #b30000 100%); /* Vivid, tight gradient */
+    /* Rounded corners for capsule shape */
+    border: 1px solid rgba(32, 32, 32, 0.2); /* Subtle casing */
+    filter: brightness(300%) saturate(150%); /* Super bright and vivid */
+    opacity: 0.92; /* Slight translucency */
+    box-shadow: 
+    0 0 8px rgba(255, 0, 0, 0.8), /* Inner glow */
+    0 0 15px rgba(255, 0, 0, 0.5), /* Medium glow */
+    0 0 25px rgba(255, 0, 0, 0.3); /* Outer glow */
+    display: inline-block;
+    position: relative;
+    animation: flicker 0.1s ease-in-out infinite; /* Faster, more frequent flicker */
+}
+
+/* Flicker animation for monitor light */
+@keyframes flicker {
+  0%, 100% { 
+    filter: brightness(250%) saturate(150%); 
+    opacity: 0.92; 
+    box-shadow: 
+      0 0 5px rgba(153, 0, 0, 0.6),
+      0 0 10px rgba(153, 0, 0, 0.3);
+  }
+  25% { 
+    filter: brightness(260%) saturate(155%); 
+    opacity: 0.94; 
+    box-shadow: 
+      0 0 6px rgba(153, 0, 0, 0.65),
+      0 0 12px rgba(153, 0, 0, 0.35);
+  }
+  50% { 
+    filter: brightness(240%) saturate(145%); 
+    opacity: 0.91; 
+    box-shadow: 
+      0 0 4px rgba(153, 0, 0, 0.55),
+      0 0 9px rgba(153, 0, 0, 0.25);
+  }
+  75% { 
+    filter: brightness(255%) saturate(152%); 
+    opacity: 0.93; 
+    box-shadow: 
+      0 0 5px rgba(153, 0, 0, 0.6),
+      0 0 11px rgba(153, 0, 0, 0.3);
+  }
+}
+
+.monitor-logo {
+    border: inset 1px #e7d3ac;
+    background-color:#bbaa89;
+    padding: 5px;
+    filter: blur(0.7px);
+    opacity: 0.85;
+    color: #614734;
+    font-size: 1.5em;
+}
+
+.button {
+    margin-right: 65px;
+    margin-left: -10px;
+    height: 20px;
+    width: 30px;
+
+    background-color:#D0BF9E;
+    border-radius: 3px; /* Slightly rounded for capsule shape */
+    /* Dark edge for definition */
+    box-shadow: 
+    0 -2px 3px rgba(255, 255, 255, 0.2) inset, /* Top highlight */
+    0 2px 3px rgba(26, 19, 10, 0.2) inset, /* Bottom shadow */
+    0 3px 5px rgba(26, 19, 10, 0.3), /* Outer shadow for depth */
+    0 -1px 2px rgba(255, 255, 255, 0.1); /* Top edge highlight */
+}
+
 
 .control-container {
     display:flex;
@@ -219,8 +304,6 @@ main {
     color: black;
     background-color: rgb(61, 250, 77);
 }
-
-
 
 .current-page {
     text-align:right;
@@ -295,6 +378,92 @@ main {
 .submit-dark {
     color:#283622;
 }
+
+@media screen and (max-width:1630px)  {
+    .screen-container {
+        margin: 30px 150px;
+    }
+    main {        
+        padding: 15px 100px;
+    }
+}
+
+@media screen and (max-width:1460px) {
+    .screen-container {
+        margin: 30px 100px;
+    }
+    main {        
+        padding: 15px 50px;
+    }
+}
+
+@media screen and (max-width:1260px) {
+    .screen-container {
+        margin: 30px 50px;
+    }
+    main {        
+        padding: 15px 25px;
+    }
+}
+
+@media screen and (max-width:1126px) {
+    .screen-container {
+        margin: 30px 25px;
+    }
+    
+
+    .screen-top {
+        height: 30px;
+    }
+    .screen-left {
+        min-width:30px; 
+        height: calc(100vh - 165px);
+    }
+    .screen-right {
+        min-width:30px;
+        height: calc(100vh - 165px);
+    }
+    .screen-bottom {
+        height: 75px;
+    }
+}
+
+@media screen and (max-width:786px) {
+    main {        
+        overflow: hidden;
+        max-height: calc(100vh - 180px - 60px); /* Ensure consistent height */
+    }
+}
+
+@media screen and (max-width:450px) {
+    .power-light, .monitor-logo, .button {
+        display: none;
+    }
+}
+
+@media screen and (max-height:805px) {
+   main {        
+        overflow: hidden;
+        max-height: calc(100vh - 180px - 60px); /* Ensure consistent height */
+    }
+}
+
+@media screen and (max-height:650px) {
+    main {        
+        max-height: calc(100vh - 180px - 60px); /* Ensure consistent height */
+    }
+}
+
+@media screen and (max-height:250px) {
+    .screen-left { 
+        height: 28vh;
+    }
+    .screen-right {
+        height: 28vh;
+    }
+}
+
+/*NB at 786px x 768px the layout breaks but by that point the mobile version will be displaying*/
 
 
 

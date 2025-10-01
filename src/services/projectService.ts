@@ -1,8 +1,6 @@
 import type { ProjectTypes } from '../types/projectTypes';
 
-const BASE_URL = import.meta.env.MODE === 'production' 
-    ? 'https://TBC' 
-    : 'http://localhost:3500/projects/provider';
+const BASE_URL = import.meta.env.VITE_SERVER_URL + '/projects/provider';
 
 export const getProjects = async (): Promise<ProjectTypes[]> => {
     const response = await fetch(BASE_URL, {

@@ -1,8 +1,6 @@
 import type { EcoTypes } from '../types/ecoTypes';
 
-const BASE_URL = import.meta.env.MODE === 'production' 
-    ? 'https://TBC' 
-    : 'http://localhost:3500/tech/ecosystems';
+const BASE_URL = import.meta.env.VITE_SERVER_URL + '/tech/ecosystems';
 
 export const getEcosystems = async (): Promise<EcoTypes[]> => {
     const response = await fetch(BASE_URL)

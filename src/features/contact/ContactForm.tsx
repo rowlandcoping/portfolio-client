@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { usePostContact } from './useContactApi';
 import type { ContactTypes } from '../../types/contactTypes';
-
 import { useUser } from '../../features/profile/useUserApi';
 import { useProjects } from '../../features/projects/useProjectsApi';
 import { useKeyboardNavStore } from "../../stores/keyboardNavStore";
+import { useMobileNavStore } from '../../stores/mobileNavStore';
 
 interface ContactFormProps {
   projectId?: ContactTypes['projectId'];
@@ -23,9 +23,13 @@ const ContactForm = ({ projectId }: ContactFormProps) => {
     const characterLimit = 200;
     const mutation = usePostContact();
 
+    const enabled = useKeyboardNavStore((s) => s.enabled);
     const focusedIndex = useKeyboardNavStore((s) => s.focusedIndex);
     const setLinkCount = useKeyboardNavStore((s) => s.setLinkCount);
     const setFocusedIndex = useKeyboardNavStore((s) => s.setFocusedIndex);
+    
+        
+    const setContentHeight = useMobileNavStore((s) => s.setContentHeight);
 
     const {
         data: user,
@@ -38,7 +42,6 @@ const ContactForm = ({ projectId }: ContactFormProps) => {
     } = useProjects();
 
     const project = projects?.find((p) => Number(p.id) === Number(projectId));
-    console.log(Number(projectId))
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const payload: ContactTypes = {
@@ -84,6 +87,16 @@ const ContactForm = ({ projectId }: ContactFormProps) => {
         const current = pageLinks[focusedIndex % pageLinks.length];            
         if (current) current.focus();
     }, [focusedIndex])
+
+    useEffect(() => {
+        if (!enabled && projects && user) {
+            //NB check the height of the scrollable area to see if we enable it.
+            const scrollable = document.querySelector('.scrollable-content') as HTMLDivElement;
+            if (scrollable) {
+                setContentHeight(scrollable.scrollHeight);
+            }
+        }
+    }, [enabled, projects, user]);
 
 
     if (isError || isUserError || !user || !projects) return <p>Error loading data...</p>;
@@ -170,7 +183,7 @@ const ContactForm = ({ projectId }: ContactFormProps) => {
                             type='submit'
                             onKeyDown={(e) => {
                                 // Only handle arrow keys here; other keys behave normally
-                                if (e.key === 'Enter' && name && mutation.isPending && validEmail && messageLength >= characterMinimum) {
+                                if (e.key === 'Enter' && name && !mutation.isPending && validEmail && messageLength >= characterMinimum) {
                                     handleSubmit(e)
                                 }
                             }}

@@ -1,13 +1,17 @@
 import { Link } from '@tanstack/react-router';
 import { useEffect } from "react";
 import { useKeyboardNavStore } from "../stores/keyboardNavStore";
+import { useMobileNavStore } from '../stores/mobileNavStore';
 import { useUser } from '../features/profile/useUserApi';
 
 const Home = () => {
 
+    const enabled = useKeyboardNavStore((s) => s.enabled);
     const focusedIndex = useKeyboardNavStore((s) => s.focusedIndex);
     const setLinkCount = useKeyboardNavStore((s) => s.setLinkCount);
     const setFocusedIndex = useKeyboardNavStore((s) => s.setFocusedIndex);
+
+    const setContentHeight = useMobileNavStore((s) => s.setContentHeight);
 
     const {
         data: user,
@@ -27,6 +31,16 @@ const Home = () => {
         const current = pageLinks[focusedIndex % pageLinks.length];            
         if (current) current.focus();
     }, [focusedIndex])
+
+    useEffect(() => {
+        if (!enabled && user) {
+            //NB requestAnimationFrame waits for everything to be rendered
+            const scrollable = document.querySelector('.scrollable-content') as HTMLDivElement;
+            if (scrollable) {
+                setContentHeight(scrollable.scrollHeight);
+            }
+        }
+    }, [enabled, user]);
    
 
     if (isError || !user) return <p>Error loading user data...</p>;

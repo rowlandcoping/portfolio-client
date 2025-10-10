@@ -4,7 +4,6 @@ import ContactForm from '../contact/ContactForm';
 
 const ProjectContact = () => {
     const { id } = useParams({from: contactProjectRoute.id})
-    console.log(id)
     const projectId = Number(id)    
     return (
         <ContactForm 

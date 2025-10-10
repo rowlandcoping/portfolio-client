@@ -8,6 +8,7 @@ import { useProjects } from './useProjectsApi';
 const ProjectsByType = () => {
 
     const { id } = useParams({from: projectsByTypeRoute.id})
+    const server = import.meta.env.VITE_SERVER_URL
     const focusedIndex = useKeyboardNavStore((s) => s.focusedIndex);
     const setLinkCount = useKeyboardNavStore((s) => s.setLinkCount);
     const setFocusedIndex = useKeyboardNavStore((s) => s.setFocusedIndex);
@@ -52,7 +53,7 @@ const ProjectsByType = () => {
                         >                                                
                             <h2>
                                 <img 
-                                    src = {`http://localhost:3500${project.imageGrn}` }
+                                    src = {server+project.imageGrn}
                                     alt = {project.imageAlt}
                                     className="project-image-thumb"
                                 />

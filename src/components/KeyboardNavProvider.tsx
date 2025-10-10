@@ -4,7 +4,7 @@ import { useNavigate } from '@tanstack/react-router';
 
 export default function KeyboardNavProvider({ children }: { children: React.ReactNode }) {
 
-    const enabled = useKeyboardNavStore.getState().enabled;
+    const enabled = useKeyboardNavStore(state => state.enabled);
 
     const navigate = useNavigate();    
 
@@ -29,7 +29,6 @@ export default function KeyboardNavProvider({ children }: { children: React.Reac
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (!enabled) return;
 
             // Disable Tab
             if (e.key === 'Tab') {

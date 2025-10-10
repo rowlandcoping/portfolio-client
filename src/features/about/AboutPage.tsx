@@ -2,14 +2,14 @@ import { useEffect, Fragment } from 'react';
 import { useAbout } from './useAboutApi';
 import { Link } from '@tanstack/react-router';
 import { useKeyboardNavStore } from '../../stores/keyboardNavStore';
-
-
-
-
+import { useMobileNavStore } from '../../stores/mobileNavStore';
 
 const AboutPage = () => {
 
+    const enabled = useKeyboardNavStore((s) => s.enabled);
     const setFocusedIndex = useKeyboardNavStore((s) => s.setFocusedIndex);
+
+    const setContentHeight = useMobileNavStore((s) => s.setContentHeight);
 
     const {
         data: about,
@@ -22,6 +22,16 @@ const AboutPage = () => {
         setFocusedIndex(0);
         pageLinks[0].focus();
     }, [about]);
+
+    useEffect(() => {
+        if (!enabled && about) {
+            //NB requestAnimationFrame waits for everything to be rendered
+            const scrollable = document.querySelector('.scrollable-content') as HTMLDivElement;
+            if (scrollable) {
+                setContentHeight(scrollable.scrollHeight);
+            }
+        }
+    }, [enabled, about]);
 
     if (isError || !about) return <p>Error loading profile data...</p>;
     

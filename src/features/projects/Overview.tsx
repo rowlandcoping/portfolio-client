@@ -5,6 +5,7 @@ type ProjectProps = Pick<ProjectTypes, 'overview' | 'imageGrn' | 'imageAlt' | 'd
 Pick<ProjectTypeTypes, 'name'>;
 
 const Overview = ( {name, overview, imageGrn, imageAlt, dateMvp, dateProd}:ProjectProps ) => {    
+    const server = import.meta.env.VITE_SERVER_URL
     function formatDate(dateInput: string | Date): string {
         const date = new Date(dateInput);
         const day = String(date.getDate()).padStart(2, '0');
@@ -17,11 +18,10 @@ const Overview = ( {name, overview, imageGrn, imageAlt, dateMvp, dateProd}:Proje
         <div className = "project-overview">            
             <div className="project-image-container">
                 <img 
-                    src = {`http://localhost:3500${imageGrn}` }
+                    src = {server+imageGrn}
                     alt = {imageAlt}
-                    className="project-image"
                 />
-                <div className="">
+                <div>
                     <h2>
                         TYPE: {name}
                     </h2> 

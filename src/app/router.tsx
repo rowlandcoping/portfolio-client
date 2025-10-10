@@ -1,5 +1,5 @@
 import { createRoute, createRootRoute, createRouter } from '@tanstack/react-router';
-import Layout from '../components/Layout';
+import DeviceModeWrapper from '../components/DeviceModeWrapper';
 import Prefetch from '../components/Prefetch';
 import Home from '../components/Home';
 
@@ -24,7 +24,7 @@ const rootRoute = createRootRoute({
         
         <Prefetch>
             <KeyboardNavProvider>
-                <Layout />
+                <DeviceModeWrapper />
             </KeyboardNavProvider>
         </Prefetch>
     )

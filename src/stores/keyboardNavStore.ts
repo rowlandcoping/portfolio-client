@@ -15,6 +15,7 @@ export type KeyboardNavState = {
     setActivePage: (index: number) => void;
     maxIndex: number;
     setMaxIndex: (index: number) => void;
+    itemsPerPage: number;
     incrementPage: () => void;
     decrementPage: () => void;
     setEnabled: (enabled: boolean) => void;
@@ -24,9 +25,10 @@ export type KeyboardNavState = {
 
 export const useKeyboardNavStore = create<KeyboardNavState>((set, get) => ({
     enabled: true,
+    itemsPerPage: 5,
     focusedIndex: 0,
     setFocusedIndex: (focusedIndex) => set({ focusedIndex }),
-    linkCount: 0,         // new
+    linkCount: 0,       // new
     setLinkCount: (linkCount) => set({ linkCount }),   
     activePage: 0,
     maxIndex: 0,
@@ -38,13 +40,11 @@ export const useKeyboardNavStore = create<KeyboardNavState>((set, get) => ({
     setMaxIndex: (maxIndex) => set({ maxIndex }),
     next: () => {
         const state = get();
-        if (!state.enabled) return;
         const nextIndex = (state.focusedIndex + 1) % (state.linkCount + 1);
         set({ focusedIndex: nextIndex });
     },
     prev: () => {
         const state = get();
-        if (!state.enabled) return;
         const prevIndex = (state.focusedIndex - 1 + (state.linkCount + 1)) % (state.linkCount + 1);
         set({ focusedIndex: prevIndex });
     },

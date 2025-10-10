@@ -7,11 +7,13 @@ type AboutProps = Pick<ProfileTypes, 'description' | 'imageGrn' | 'imageAlt' | '
 Pick<UserTypes, 'name'>;
 
 const About = ({ name, description, imageGrn, imageAlt, starSign, favColor }: AboutProps) => {
+    const server = import.meta.env.VITE_SERVER_URL
+
     return (
         <div className = "project-overview">            
             <div className="project-image-container">
                 <img 
-                    src = {`http://localhost:3500${imageGrn}` }
+                    src = {server+imageGrn}
                     alt = {imageAlt}
                     className="project-image"
                 />

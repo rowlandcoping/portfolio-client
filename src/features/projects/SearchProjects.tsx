@@ -8,6 +8,7 @@ const SearchProjects = () => {
 
     const [search, setSearch] = useState('');
     const [filteredProjects, setFilteredProjects] = useState<ProjectTypes[]>([]);
+    const server = import.meta.env.VITE_SERVER_URL
     const searchInputRef = useRef<HTMLInputElement>(null);
     const focusedIndex = useKeyboardNavStore((s) => s.focusedIndex);
     const setLinkCount = useKeyboardNavStore((s) => s.setLinkCount);
@@ -97,7 +98,7 @@ const SearchProjects = () => {
                         >                                                
                             <h2 className="link-text">
                                 <img 
-                                    src = {`http://localhost:3500${project.imageGrn}` }
+                                    src = {server+project.imageGrn}
                                     alt = {project.imageAlt}
                                     className="project-image-thumb"
                                 />

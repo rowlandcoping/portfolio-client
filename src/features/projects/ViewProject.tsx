@@ -2,6 +2,7 @@ import { useParams } from '@tanstack/react-router';
 import { viewProjectRoute } from '../../app/router';
 import { useEffect } from "react";
 import { useKeyboardNavStore } from "../../stores/keyboardNavStore";
+import { useMobileNavStore } from '../../stores/mobileNavStore';
 import { useProjects } from './useProjectsApi';
 import { useProjectTypes } from './useProjectTypesApi';
 import Overview from './Overview';
@@ -15,8 +16,12 @@ const ViewProject = () => {
     const { id } = useParams({from: viewProjectRoute.id});
     const setMaxIndex = useKeyboardNavStore.getState().setMaxIndex;
     const setActivePage = useKeyboardNavStore.getState().setActivePage;
+
     const activePage = useKeyboardNavStore((s) => s.activePage);
-    const returnPage = useKeyboardNavStore((s) => s.returnPage);    
+    const returnPage = useKeyboardNavStore((s) => s.returnPage);
+    const enabled = useKeyboardNavStore((s) => s.enabled);
+    
+    const setContentHeight = useMobileNavStore((s) => s.setContentHeight);
 
     const {
         data: projects,
@@ -44,10 +49,22 @@ const ViewProject = () => {
         setMaxIndex(2);
     }, [])
 
+    useEffect(() => {
+        if (!enabled && projects && projectTypes) {
+            //NB requestAnimationFrame waits for everything to be rendered
+            requestAnimationFrame(() => {
+                const scrollable = document.querySelector('.scrollable-content') as HTMLDivElement;
+                if (scrollable) {
+                    setContentHeight(scrollable.scrollHeight);
+                }
+            })
+        }
+    }, [enabled, projects, projectTypes]);
+
     if (isError || !project || isTypesError || !type) return <p>Error loading projects...</p>;
 
     
-
+    
     const pages = [
         {
             title: `About ${project.name}`,

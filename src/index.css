@@ -4,6 +4,11 @@
 }
 
 @font-face {
+  font-family: slate;
+  src: url("assets/slate-regular.ttf");
+}
+
+@font-face {
   font-family: monitor;
   src: url("assets/YieldingTimberItalic-JRoDM.otf");
 }
@@ -25,10 +30,6 @@
     width: 100%;
 }
 
-body {
-  pointer-events: none; /* disables clicks, hovers, etc */
-}
-
 a {
   color: rgb(61, 250, 77);
   text-decoration: inherit;
@@ -37,12 +38,24 @@ a {
 body {
   margin: 0;
   display: flex;
-  min-height: 100vh;
-  background-image:url("assets/desk.jpg");
-  background-color: #283622;
-  background-blend-mode: multiply;
-  background-repeat: no-repeat;
-  background-size: cover;
+  
+}
+
+body.desktop {
+    min-height: 100vh;
+    background-image:url("assets/desk.jpg");
+    background-color: #283622;
+    background-blend-mode: multiply;
+    background-repeat: no-repeat;
+    background-size: cover;
+    pointer-events: none;
+}
+
+body.mobile {
+    height: 100dvh;
+    color: black;
+    font-family: slate;
+
 }
 
 h1 {
@@ -118,7 +131,8 @@ input::placeholder, textarea::placeholder {
     font-size: 1.1em;
     padding:0;
     background-color: #1b2019;
-    width: 100%;    
+    width: 100%;
+    margin-top: 5px;
 }
 
 .button-focus {        
@@ -137,10 +151,91 @@ input::placeholder, textarea::placeholder {
 
 /*------------ Project CSS -----------------*/
 
+/*Mobile Layout*/
+/*
+.mobile-container {
+    height: 100dvh;
+}
+*/
+.mobile-top, .mobile-left, .mobile-right, .mobile-bottom {
+    background-color: rgb(32, 31, 31);
+}
+
+.mobile-top {
+    height: 50px;
+}
+.mobile-view-area {
+    display:flex;
+    justify-content: space-between;
+    background-color: #808080;
+    height: calc(100dvh - 200px);
+}
+/*Manages scrolling content of view-area*/
+
+
+
+.scrollable-content-wrapper {
+    flex: 1; /* fills remaining space in flex container */
+    overflow: hidden; /* your scroll mask */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* add this */
+    justify-content: flex-start; 
+    border: 1px solid red;
+}
+
+.scrollable-content {
+    position: relative;
+    will-change: transform;
+     border: 1px solid blue;
+    /*transition: transform 0.3s ease;*/
+}
+
+/******/
+.mobile-left {
+ min-width: 50px;
+}
+.mobile-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 50px;
+}
+.mobile-bottom {
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 150px;
+}
+
+/*NB this is direct from GPT so we'll see how it looks*/
+.scroll-wheel-bak{
+  position: fixed;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3.5rem;
+  height: 3.5rem;
+  background: #222;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  user-select: none;
+  z-index: 100;
+  transition: transform 0.15s ease-out, background 0.15s ease-out;
+}
+.scroll-wheel-bak:active {
+  background: #444;
+}
+
+/*Desktop Layout*/
 .screen-container {
     margin: 30px 300px;
 }
-
 .screen-top {
     display:flex;
     place-items: center;
@@ -148,36 +243,23 @@ input::placeholder, textarea::placeholder {
     background-image: linear-gradient(to bottom,#AA9261, #D0BF9E);
     border-radius: 20px 20px 0 0;
 }
-
 .view-area {
     display:flex;
     justify-content: space-between;
     background-color: #1b2019;
 }
-
-main {
-    display:flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 15px 150px;
-    width:100%;
-    overflow:hidden;
-}
-
 .screen-left {
     min-width:50px;
     background-color: #D0BF9E;  
     height: calc(100vh - 210px);
     flex-grow: 0;   
 }
-
 .screen-right {
     min-width:50px;
     background-color: #D0BF9E;    
     height: calc(100vh - 210px);
     flex-grow: 0;
 }
-
 .screen-bottom {
     font-family: monitor;
     display:flex;
@@ -187,7 +269,6 @@ main {
     background-image: linear-gradient(to top,#AA9261, #D0BF9E);
     border-radius: 0 0 20px 20px;
 }
-
 .power-light {
     margin-left: 65px;
     height: 10px;
@@ -205,7 +286,6 @@ main {
     position: relative;
     animation: flicker 0.1s ease-in-out infinite; /* Faster, more frequent flicker */
 }
-
 /* Flicker animation for monitor light */
 @keyframes flicker {
   0%, 100% { 
@@ -237,7 +317,6 @@ main {
       0 0 11px rgba(153, 0, 0, 0.3);
   }
 }
-
 .monitor-logo {
     border: inset 1px #e7d3ac;
     background-color:#bbaa89;
@@ -247,7 +326,6 @@ main {
     color: #614734;
     font-size: 1.5em;
 }
-
 .button {
     margin-right: 65px;
     margin-left: -10px;
@@ -264,10 +342,23 @@ main {
     0 -1px 2px rgba(255, 255, 255, 0.1); /* Top edge highlight */
 }
 
+main {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px 150px;
+    width:100%;
+    overflow:hidden;
+}
+
 
 .control-container {
     display:flex;
     justify-content: space-between
+}
+
+body.mobile .control-container {
+    display: none;
 }
 
 .control-box {
@@ -305,9 +396,13 @@ main {
     background-color: rgb(61, 250, 77);
 }
 
-.current-page {
+body.desktop .current-page {
     text-align:right;
     margin-bottom: 10px;
+}
+
+body.mobile .current-page {
+    display: none;
 }
 
 .skills-wrapper p:first-child {
@@ -321,7 +416,6 @@ main {
     display:flex;
     align-items: center;
     padding: 4px 5px;
-
 }
 
 .profile-links img {
@@ -340,12 +434,8 @@ main {
     object-fit: cover;
 }
 
-.project-image {
-    width: 300px;
-    height: 200px;
-    margin-bottom:10px;
-    object-fit: cover;
-}
+
+
 .project-image-container
  {
     display: flex;
@@ -353,18 +443,33 @@ main {
     padding: 10px;
     margin-bottom: 10px;
 }
+
+body.mobile .project-image-container {
+    flex-direction: column;
+    padding-left:0;
+}
+
 .project-image-container img {
     width: 300px;
     height:200px;
     object-fit: cover;
+}
+
+body.desktop .project-image-container img {
     margin-right:25px;
+}
+
+body.mobile .project-image-container img {
+    margin-bottom: 10px;
 }
 
 .project-overview {
     display: flex;
     flex-direction: column;
-    flex: 1;   
-    overflow: hidden;
+}
+
+body.desktop .project-overview {
+    flex: 1;
 }
 
 .details-container {
@@ -379,6 +484,9 @@ main {
     color:#283622;
 }
 
+/*MEDIA QUERIES (DESKTOP)*/
+/*1630*/
+
 @media screen and (max-width:1630px)  {
     .screen-container {
         margin: 30px 150px;
@@ -388,6 +496,82 @@ main {
     }
 }
 
+@media screen and (max-width:1630px) and (max-height:768px) {
+
+    body.desktop main {        
+        padding: 0 100px;
+    }
+    
+    
+    body.desktop h1 {
+        font-size: 1.4em;
+        margin-bottom: 5px;
+    }
+    
+    body.desktop h2 {
+        font-size: 1.2em;
+        padding-top:2px;
+    }
+
+    body.desktop .details-container {
+        margin-top: 3px;
+    }
+
+    body.desktop input, textarea {
+        margin-bottom: 8px;
+    }
+
+    body.desktop .form-info {
+        margin-top: -6px;
+        margin-bottom: 0;
+    }
+
+    body.desktop textarea { 
+        height: 100px;
+    }
+    body.desktop body.desktop .search-form input, body.desktop .search-form textarea {
+        font-size: 0.95em
+    }
+    body.desktop .content, body.desktop .current-page {
+        font-size: 0.95em;   
+    }
+    
+    body.desktop .details-container {
+        font-size: 0.9em;   
+    }
+    body.desktop .project-image-thumb {
+        max-width: 30px;
+        height: 30px;
+    }
+
+    body.desktop .project-image-container img {
+        width: 175px;
+        height:115px;
+        object-fit: cover
+    }
+    
+    body.desktop .screen-container {
+        margin: 10px 50px;
+    } 
+
+    body.desktop .screen-top {
+        height: 30px;
+    }
+    body.desktop .screen-left {
+        min-width:30px;
+
+        height: calc(100vh - 150px);
+    }
+    body.desktop .screen-right {
+        min-width:30px;
+        height: calc(100vh - 150px);
+    }
+    body.desktop .screen-bottom {
+        height: 60px;
+    }
+}
+
+/*1460*/
 @media screen and (max-width:1460px) {
     .screen-container {
         margin: 30px 100px;
@@ -397,6 +581,7 @@ main {
     }
 }
 
+/*1260*/
 @media screen and (max-width:1260px) {
     .screen-container {
         margin: 30px 50px;
@@ -406,66 +591,64 @@ main {
     }
 }
 
-@media screen and (max-width:1126px) {
+@media screen and (max-width:1260px) and (max-height:805px) {
+    
+}
+
+@media screen and (max-width:1260px) and (max-height:600px) {
+    
+}
+
+
+/*1126*/
+@media screen and (max-width:1024px) {
     .screen-container {
         margin: 30px 25px;
-    }
-    
+    } 
 
     .screen-top {
         height: 30px;
     }
-    .screen-left {
-        min-width:30px; 
-        height: calc(100vh - 165px);
-    }
-    .screen-right {
-        min-width:30px;
-        height: calc(100vh - 165px);
-    }
+    
     .screen-bottom {
         height: 75px;
     }
 }
 
-@media screen and (max-width:786px) {
-    main {        
-        overflow: hidden;
-        max-height: calc(100vh - 180px - 60px); /* Ensure consistent height */
+@media screen and (max-width:1024px) and (max-height:805px) {
+    
+}
+
+@media screen and (max-width:1024px) and (max-height:600px) {
+    body.desktop .screen-left {
+        min-width:30px; 
+        height: calc(100vh - 165px);
+    }
+    body.desktop .screen-right {
+        min-width:30px;
+        height: calc(100vh - 165px);
     }
 }
 
 @media screen and (max-width:450px) {
-    .power-light, .monitor-logo, .button {
+    body.desktop .power-light, body.desktop .monitor-logo, body.desktop .button {
         display: none;
     }
 }
 
-@media screen and (max-height:805px) {
-   main {        
-        overflow: hidden;
-        max-height: calc(100vh - 180px - 60px); /* Ensure consistent height */
-    }
-}
-
-@media screen and (max-height:650px) {
-    main {        
-        max-height: calc(100vh - 180px - 60px); /* Ensure consistent height */
+@media screen and (max-height:599px) {
+    body.desktop main {        
+        max-height: calc(100vh - 180px - 60px); /* Ensure consistent height if resizing too much*/
     }
 }
 
 @media screen and (max-height:250px) {
-    .screen-left { 
+    body.desktop .screen-left { 
         height: 28vh;
     }
-    .screen-right {
+    body.desktop .screen-right {
         height: 28vh;
     }
 }
 
-/*NB at 786px x 768px the layout breaks but by that point the mobile version will be displaying*/
-
-
-
-
-
+/* MEDIA QUERIES (Mobile) */

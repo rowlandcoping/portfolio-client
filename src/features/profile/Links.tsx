@@ -7,6 +7,7 @@ type LinksProps = Pick<ProfileTypes, 'links'>;
 
 const Links = ({ links }: LinksProps) => {
 
+    const server = import.meta.env.VITE_SERVER_URL
     const focusedIndex = useKeyboardNavStore((s) => s.focusedIndex);
     const setLinkCount = useKeyboardNavStore((s) => s.setLinkCount);
     const setFocusedIndex = useKeyboardNavStore((s) => s.setFocusedIndex);
@@ -36,7 +37,7 @@ const Links = ({ links }: LinksProps) => {
                         className={focusedIndex === i ? 'focussed' : ''}
                     >                                                
                         <h2>
-                            <img src={`http://localhost:3500${link.logoGrn}`} alt={link.logoAlt} />
+                            <img src={server+link.logoGrn} alt={link.logoAlt} />
                             <span className="link-text">{link.name}</span>
                         </h2>
                     

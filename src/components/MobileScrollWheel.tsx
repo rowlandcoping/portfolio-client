@@ -1,8 +1,5 @@
 import React, { useRef, useState } from 'react';
 
-interface MobileScrollWheelProps {
-  onScroll: (delta: number) => void;
-}
 const frames = [
   '/wheel-frame-0.svg',
   '/wheel-frame-1.svg',
@@ -14,10 +11,25 @@ const frames = [
   '/wheel-frame-7.svg',
 ];
 
-const MobileScrollWheel: React.FC<MobileScrollWheelProps> = ({ onScroll }) => {
+// Base animation speed multiplier (higher = faster)
+const ANIMATION_SPEED = 1.5;
+
+const MobileScrollWheel: React.FC = () => {
   const touchStartY = useRef(0);
   const touchStartTime = useRef(0);
   const [frameIndex, setFrameIndex] = useState(0);
+
+  const animateFrames = (direction: number, totalFrames: number) => {
+    let count = 0;
+
+    const step = () => {
+      setFrameIndex((prev) => (prev + direction + frames.length) % frames.length);
+      count += 1;
+      if (count < totalFrames) requestAnimationFrame(step);
+    };
+
+    requestAnimationFrame(step);
+  };
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartY.current = e.touches[0].clientY;
@@ -29,37 +41,26 @@ const MobileScrollWheel: React.FC<MobileScrollWheelProps> = ({ onScroll }) => {
     const deltaY = touchStartY.current - touchEndY;
     const deltaTime = Date.now() - touchStartTime.current;
 
-    const threshold = 10; // minimal swipe
+    const threshold = 10; // ignore tiny swipes
     if (Math.abs(deltaY) < threshold) return;
 
-    const speed = Math.min(Math.abs(deltaY) / deltaTime, 2); // cap speed
-    const scrollAmount = deltaY > 0 ? -1 : 1;
+    const direction = deltaY > 0 ? -1 : 1; // flip if needed
+    const speed = Math.min(Math.abs(deltaY) / deltaTime, 5); // cap speed multiplier
+    const totalFrames = Math.max(2, Math.ceil((3 + speed * 3) * ANIMATION_SPEED));
 
-    // Animate frames based on swipe direction and speed
-    const direction = scrollAmount > 0 ? 1 : -1;
-    const baseFrames = 2; // base number of frames per swipe (base animation speed)
-    const steps = Math.max(Math.ceil(baseFrames * (1 + speed)), 1);
+    animateFrames(direction, totalFrames);
 
-    let currentFrame = frameIndex;
-    for (let i = 0; i < steps; i++) {
-      currentFrame = (currentFrame + direction + frames.length) % frames.length;
-      setTimeout(() => setFrameIndex(currentFrame), i * 50); // 50ms per frame
-    }
-
-    // Haptic feedback
-    if ('vibrate' in navigator) navigator.vibrate(20 + speed * 20);
-
-    onScroll(scrollAmount * (1 + speed * 0.5)); // call parent
+    // Optional: haptic feedback
+    if ('vibrate' in navigator) navigator.vibrate(10 + speed * 25);
   };
 
   return (
     <div
-        className="scroll-wheel"
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        style={{ width: 18, height: 72 }}
+      className="scroll-wheel"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
-        <img src={frames[frameIndex]} alt="scroll wheel" style={{ width: '100%', height: '100%' }} />
+      <img src={frames[frameIndex]} alt="scroll wheel" />
     </div>
   );
 };

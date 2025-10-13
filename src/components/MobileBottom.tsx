@@ -10,8 +10,9 @@ const MobileBottom = () => {
 
     const handleUp = () => useKeyboardNavStore.getState().prev();
     const handleDown = () => useKeyboardNavStore.getState().next();
+    const handleLeft = () => useKeyboardNavStore.getState().decrementPage();
+    const handleRight = () => useKeyboardNavStore.getState().incrementPage();
     const handleBack = () => {
-        useMobileNavStore.getState().setContentHeight(0);
         const escEvent = new KeyboardEvent('keydown', {
             key: 'Escape',
             code: 'Escape',
@@ -29,7 +30,6 @@ const MobileBottom = () => {
         if (!lastFocused || !(lastFocused instanceof HTMLAnchorElement)) return;
         const href = lastFocused.href;
         if (!href) return;
-        useMobileNavStore.getState().setContentHeight(0);
         if (href.startsWith(window.location.origin)) {
             // sets Previous Page
             const pathname = window.location.pathname;
@@ -73,20 +73,50 @@ const MobileBottom = () => {
                 Back
                 </div>
             </div>
-            <div className="up-button">
-                <div>
-                <button onClick={handleUp}>Up</button>
-                <br />
-                Up
+            <div className="direction-pad">
+                <div className="pad-section">
+                    <div className="pad-button"></div>
+                    <div className="up-button pad-button">
+                        <div>
+                        <button onClick={handleUp}>Up</button>
+                        <br />
+                        Up
+                        </div>
+                    </div>
+                    <div className="pad-button"></div>
                 </div>
+                <div className="pad-section">
+                    <div className="left-button pad-button">
+                        <div>
+                        <button onClick={handleLeft}>Left</button>
+                        <br />
+                        Left
+                        </div>
+                    </div>
+                    <div className="pad-button"></div>
 
-            </div>
-            <div className="down-button">
-                <div>
-                <button onClick={handleDown}>Down</button>
-                <br />              
-                Down
+                    <div className="right-button pad-button">
+                        <div>
+                        <button onClick={handleRight}>Right</button>
+                        <br />
+                        Right
+                        </div>
+                    </div>
+
                 </div>
+                <div className="pad-section">
+                    <div className="pad-button"></div>
+                    <div className="down-button pad-button">
+                    <div>
+                    <button onClick={handleDown}>Down</button>
+                    <br />              
+                    Down
+                    </div>
+                    <div className="pad-button"></div>
+                </div>
+                    
+                </div>
+                
             </div>
             <div className="return-button">
                 <div>
@@ -96,6 +126,8 @@ const MobileBottom = () => {
                 </div>
 
             </div>
+
+            
         </div>
     )
 }

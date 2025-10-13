@@ -10,7 +10,7 @@ const About = ({ name, description, imageGrn, imageAlt, starSign, favColor }: Ab
     const server = import.meta.env.VITE_SERVER_URL
 
     return (
-        <div className = "project-overview">            
+        <div className = "project-overview">           
             <div className="project-image-container">
                 <img 
                     src = {server+imageGrn}

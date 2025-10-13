@@ -2,11 +2,10 @@ import { useEffect } from 'react';
 import { useProfile } from './useProfileApi';
 import { useUser } from './useUserApi';
 import { useKeyboardNavStore } from '../../stores/keyboardNavStore';
-//import { useMobileNavStore } from '../../stores/mobileNavStore';
+import { useMobileNavStore } from '../../stores/mobileNavStore';
 import About from './About';
 import Skills from './Skills';
 import Links from './Links';
-import ProfileMobile from './ProfileMobile'
 
 
 
@@ -16,8 +15,7 @@ const Profile = () => {
     const activePage = useKeyboardNavStore((s) => s.activePage);
     const setMaxIndex = useKeyboardNavStore.getState().setMaxIndex;
     const setActivePage = useKeyboardNavStore.getState().setActivePage;
-
-    //const setContentHeight = useMobileNavStore((s) => s.setContentHeight);
+    const setContentHeight = useMobileNavStore((s) => s.setContentHeight);
 
     const {
         data: profile,
@@ -37,7 +35,7 @@ const Profile = () => {
         setMaxIndex(2);
     }, [profile, user])
 
-    /*
+    
     useEffect(() => {
         if (enabled || !profile || !user) return;
             //NB requestAnimationFrame waits for everything to be rendered
@@ -47,8 +45,7 @@ const Profile = () => {
                 setContentHeight(scrollable.scrollHeight);
             }
         })
-    }, [enabled, profile, user]);
-    */    
+    }, [enabled, profile, user, activePage]);
     
     if (isProfileError || isUserError || !profile || !user) return <p>Error loading profile data...</p>;
     
@@ -82,8 +79,7 @@ const Profile = () => {
    
     return (
         <main>
-            { enabled && (
-                <>
+            
                     <div>                
                         {pages.map((page, index) => (
                             <div
@@ -136,17 +132,6 @@ const Profile = () => {
                             </div>
                         </div>
                     </div>
-                </>
-            )}
-            {!enabled && (
-                <div>            
-                    <ProfileMobile 
-                        profile={profile}
-                        name={user.name}
-                    />
-                </div>
-                
-            )}
         </main>
     )
 }

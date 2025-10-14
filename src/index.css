@@ -344,13 +344,7 @@ main {
     justify-content: space-between;
     padding: 15px 150px;
     width:100%;
-}
-
-body.desktop main {
     overflow:hidden;
-}
-body.mobile main {
-
 }
 
 .control-container {

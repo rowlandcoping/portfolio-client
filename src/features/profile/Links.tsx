@@ -18,14 +18,14 @@ const Links = ({ links }: LinksProps) => {
         const pageLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('a'));
         setFocusedIndex(0);
         setLinkCount(pageLinks.length-1);
-        pageLinks[0].focus();
+        pageLinks[0].focus({ preventScroll: true });
     }, [links, activePage]);
 
     useEffect(() => {
         if (activePage !== 2) return;
         const pageLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('a'));
         const current = pageLinks[focusedIndex % pageLinks.length];            
-        if (current) current.focus();
+        if (current) current.focus({ preventScroll: true });
     }, [focusedIndex, activePage]);
 
     return (

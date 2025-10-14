@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useKeyboardNavStore } from '../stores/keyboardNavStore';
+import { useMobileNavStore } from '../stores/mobileNavStore';
 import { useNavigate } from '@tanstack/react-router';
 
 export default function KeyboardNavProvider({ children }: { children: React.ReactNode }) {
@@ -28,6 +29,12 @@ export default function KeyboardNavProvider({ children }: { children: React.Reac
     }, [enabled]);
 
     useEffect(() => {
+        if(enabled) return
+        const main = document.querySelector('main');
+        if (main) main.scrollTop = 0;
+    }, [useMobileNavStore((s) => s.currentRoutePathname), useKeyboardNavStore((s) => s.activePage)]);
+
+    useEffect(() => {
         if (enabled) return;
         const main = document.querySelector('main'); 
 
@@ -41,40 +48,33 @@ export default function KeyboardNavProvider({ children }: { children: React.Reac
         };
 
         const onTouchMove = (e: TouchEvent) => {
-            const main = document.querySelector('main'); // ✅ get latest main
+            const main = document.querySelector('main');
             if (!main) return;
 
             const currentY = e.touches[0].clientY;
             const deltaY = startY - currentY;
-            main.scrollTop -= deltaY;
-            startY = currentY;
+
+            // Only prevent native scroll / pull-to-refresh when touching the wheel
+            if (e.target instanceof HTMLElement && e.target.closest('.scroll-wheel')) {
+                main.scrollTop -= deltaY;
+                startY = currentY;
+                e.preventDefault(); // ✅ prevent pull-to-refresh
+            }
         };
 
         const handleTouch = (e: TouchEvent) => {
             const target = e.target as HTMLElement;
             if (target.closest('.scroll-wheel') || target.closest('.mobile-bottom button')) return;
-
             e.preventDefault();
             e.stopPropagation();
         };
 
         wheel.addEventListener('touchstart', onTouchStart as EventListener, { passive: true });
-        wheel.addEventListener('touchmove', onTouchMove as EventListener, { passive: true });
+        wheel.addEventListener('touchmove', onTouchMove as EventListener, { passive: false });
 
         window.addEventListener('touchstart', handleTouch, { passive: false });
         window.addEventListener('touchmove', handleTouch, { passive: false });
         window.addEventListener('touchend', handleTouch, { passive: false });
-
-        const observer = new MutationObserver(() => {
-            const main = document.querySelector('main');
-            if (main) main.scrollTop = 0; // reset scroll to top
-        });
-
-        if (main) observer.observe(main, { 
-            childList: true, 
-            subtree: true, 
-            characterData: true 
-        });
 
         return () => {
             wheel.removeEventListener('touchstart', onTouchStart as EventListener);
@@ -134,10 +134,15 @@ export default function KeyboardNavProvider({ children }: { children: React.Reac
                     }
                     break;
                 case 'Escape':
+                    console.log('[Escape] pressed');
                     const target = useKeyboardNavStore.getState().popPage();
+                    console.log('[Escape] target:', target);
                     const last = window.location.pathname
                     useKeyboardNavStore.getState().setReturnPage(last)
-                    if (target) navigate({ to: target });
+                    if (target) {
+                        console.log('[Escape] navigating to:', target);
+                        navigate({ to: target });
+                    };
                     break;
             }
         };

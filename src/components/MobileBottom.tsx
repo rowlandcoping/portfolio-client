@@ -20,6 +20,7 @@ const MobileBottom = () => {
             cancelable: true,
         });    
         window.dispatchEvent(escEvent);
+        useMobileNavStore.getState().setCurrentRoutePathname(window.location.pathname);
     };
 
     // Capture the currently focused element before the button itself steals focus
@@ -27,18 +28,41 @@ const MobileBottom = () => {
 
     const handleSelect = () => {
         const lastFocused = useMobileNavStore.getState().lastFocused;
-        if (!lastFocused || !(lastFocused instanceof HTMLAnchorElement)) return;
-        const href = lastFocused.href;
-        if (!href) return;
-        if (href.startsWith(window.location.origin)) {
-            // sets Previous Page
-            const pathname = window.location.pathname;
-            useKeyboardNavStore.getState().pushPage(pathname);
-            // Internal link
-            navigate({ to: new URL(href).pathname });
-        } else {
-            // External link
-            window.open(href, '_blank');
+        if (!lastFocused) return;
+
+        if (lastFocused instanceof HTMLButtonElement && lastFocused.type === 'submit') {
+            const enterEvent = new KeyboardEvent('keydown', {
+                key: 'Enter',
+                code: 'Enter',
+                bubbles: true,
+                cancelable: true,
+            });
+            lastFocused.dispatchEvent(enterEvent);
+            return;
+        }
+
+
+        if (lastFocused instanceof HTMLAnchorElement) {
+            const href = lastFocused.href;
+            if (!href) return;
+            const currentPath = window.location.pathname;
+            const targetPath = href.startsWith(window.location.origin)
+                ? new URL(href).pathname
+                : null;
+            console.log(href)
+            console.log(targetPath)
+            if (href.startsWith(window.location.origin)) {
+                // sets Previous Page
+                const pathname = window.location.pathname;
+                if (currentPath == targetPath) return
+                useKeyboardNavStore.getState().pushPage(pathname);
+                useMobileNavStore.getState().setCurrentRoutePathname(window.location.pathname);
+                // Internal link
+                navigate({ to: new URL(href).pathname });
+            } else {
+                // External link
+                window.open(href, '_blank');
+            }
         }
     }
 
@@ -55,8 +79,11 @@ const MobileBottom = () => {
     useEffect(() => {
         const handleFocusChange = (e: FocusEvent) => {
             const target = e.target as HTMLElement
-            if (!target || target.id === 'mobile-select-button' || target.id === 'mobile-back-button') return
-            setLastFocused(target)
+            if (!target || 
+                target.classList.contains('ignore-focus-change') || // optional: for buttons like left/right/back/select
+                !(target.tagName === 'BUTTON' || target.tagName === 'A')
+            ) return;
+            setLastFocused(target);
         }
         window.addEventListener('focusin', handleFocusChange)
         return () => window.removeEventListener('focusin', handleFocusChange)
@@ -68,7 +95,7 @@ const MobileBottom = () => {
         <div className="mobile-bottom">
             <div className="back-button">
                 <div>
-                <button id="mobile-back-button" onClick={handleBack}>back</button>
+                <button className="ignore-focus-change" onClick={handleBack}>back</button>
                 <br />
                 Back
                 </div>
@@ -88,7 +115,7 @@ const MobileBottom = () => {
                 <div className="pad-section">
                     <div className="left-button pad-button">
                         <div>
-                        <button onClick={handleLeft}>Left</button>
+                        <button className="ignore-focus-change" onClick={handleLeft}>Left</button>
                         <br />
                         Left
                         </div>
@@ -97,7 +124,7 @@ const MobileBottom = () => {
 
                     <div className="right-button pad-button">
                         <div>
-                        <button onClick={handleRight}>Right</button>
+                        <button className="ignore-focus-change" onClick={handleRight}>Right</button>
                         <br />
                         Right
                         </div>
@@ -120,7 +147,7 @@ const MobileBottom = () => {
             </div>
             <div className="return-button">
                 <div>
-                    <button id="mobile-select-button" onClick={handleSelect}>Select</button>
+                    <button className = "ignore-focus-change" onClick={handleSelect}>Select</button>
                     <br />
                     Select
                 </div>

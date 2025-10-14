@@ -2,20 +2,15 @@ import { useEffect } from 'react';
 import { useProfile } from './useProfileApi';
 import { useUser } from './useUserApi';
 import { useKeyboardNavStore } from '../../stores/keyboardNavStore';
-import { useMobileNavStore } from '../../stores/mobileNavStore';
 import About from './About';
 import Skills from './Skills';
 import Links from './Links';
 
-
-
 const Profile = () => {
 
-    const enabled = useKeyboardNavStore((s) => s.enabled);
     const activePage = useKeyboardNavStore((s) => s.activePage);
     const setMaxIndex = useKeyboardNavStore.getState().setMaxIndex;
     const setActivePage = useKeyboardNavStore.getState().setActivePage;
-    const setContentHeight = useMobileNavStore((s) => s.setContentHeight);
 
     const {
         data: profile,
@@ -34,18 +29,6 @@ const Profile = () => {
         //max index is the length of the pages array, sets this in the store for navigation purposes
         setMaxIndex(2);
     }, [profile, user])
-
-    
-    useEffect(() => {
-        if (enabled || !profile || !user) return;
-            //NB requestAnimationFrame waits for everything to be rendered
-        requestAnimationFrame(() => {
-            const scrollable = document.querySelector('.scrollable-content') as HTMLDivElement;
-            if (scrollable) {
-                setContentHeight(scrollable.scrollHeight);
-            }
-        })
-    }, [enabled, profile, user, activePage]);
     
     if (isProfileError || isUserError || !profile || !user) return <p>Error loading profile data...</p>;
     

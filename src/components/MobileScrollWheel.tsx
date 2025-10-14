@@ -57,6 +57,7 @@ const MobileScrollWheel: React.FC = () => {
   return (
     <div
       className="scroll-wheel"
+      id="scroll-wheel"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >

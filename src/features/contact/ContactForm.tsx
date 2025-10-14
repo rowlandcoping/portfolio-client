@@ -4,7 +4,6 @@ import type { ContactTypes } from '../../types/contactTypes';
 import { useUser } from '../../features/profile/useUserApi';
 import { useProjects } from '../../features/projects/useProjectsApi';
 import { useKeyboardNavStore } from "../../stores/keyboardNavStore";
-import { useMobileNavStore } from '../../stores/mobileNavStore';
 
 interface ContactFormProps {
   projectId?: ContactTypes['projectId'];
@@ -22,14 +21,9 @@ const ContactForm = ({ projectId }: ContactFormProps) => {
     const characterMinimum = 20;
     const characterLimit = 200;
     const mutation = usePostContact();
-
-    const enabled = useKeyboardNavStore((s) => s.enabled);
     const focusedIndex = useKeyboardNavStore((s) => s.focusedIndex);
     const setLinkCount = useKeyboardNavStore((s) => s.setLinkCount);
     const setFocusedIndex = useKeyboardNavStore((s) => s.setFocusedIndex);
-    
-        
-    const setContentHeight = useMobileNavStore((s) => s.setContentHeight);
 
     const {
         data: user,
@@ -75,7 +69,7 @@ const ContactForm = ({ projectId }: ContactFormProps) => {
             >('input, button, textarea'));
         setFocusedIndex(0);
         setLinkCount(pageLinks.length-1);
-        pageLinks[0].focus();
+        pageLinks[0].focus({ preventScroll: true });
     }, [user, projectId]);
 
     useEffect(() => {
@@ -85,19 +79,8 @@ const ContactForm = ({ projectId }: ContactFormProps) => {
             HTMLTextAreaElement
             >('input, button, textarea'));
         const current = pageLinks[focusedIndex % pageLinks.length];            
-        if (current) current.focus();
+        if (current) current.focus({ preventScroll: true });
     }, [focusedIndex])
-
-    useEffect(() => {
-        if (!enabled && projects && user) {
-            //NB check the height of the scrollable area to see if we enable it.
-            const scrollable = document.querySelector('.scrollable-content') as HTMLDivElement;
-            if (scrollable) {
-                setContentHeight(scrollable.scrollHeight);
-            }
-        }
-    }, [enabled, projects, user]);
-
 
     if (isError || isUserError || !user || !projects) return <p>Error loading data...</p>;
 

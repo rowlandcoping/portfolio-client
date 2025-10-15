@@ -27,13 +27,13 @@ const AllProjects = () => {
         const pageLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.selected a'));
         setFocusedIndex(0);
         setLinkCount(pageLinks.length-1);
-        if(pageLinks[0]) pageLinks[0].focus();
+        if(pageLinks[0]) pageLinks[0].focus({ preventScroll: true });
     }, [projects, activePage]);
 
     useEffect(() => {
         const pageLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.selected a'));
         const current = pageLinks[focusedIndex % pageLinks.length];            
-        if (current) current.focus();
+        if (current) current.focus({ preventScroll: true });
     }, [focusedIndex, activePage]);
 
     useEffect (() => {

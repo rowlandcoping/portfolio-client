@@ -23,7 +23,7 @@ const SearchProjects = () => {
     //reset initial values, focus page on search input
     useEffect(() => {
         setFocusedIndex(0);
-        searchInputRef.current?.focus();
+        searchInputRef.current?.focus({ preventScroll: true });
     },[])
 
 
@@ -58,7 +58,7 @@ const SearchProjects = () => {
                 )
             );
             const current = pageLinks[focusedIndex];
-            current?.focus();
+            current?.focus({ preventScroll: true });
     }, [focusedIndex]);
 
     if (isError || !projects) return <p>Error loading projects...</p>;

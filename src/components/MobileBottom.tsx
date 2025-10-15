@@ -94,51 +94,41 @@ const MobileBottom = () => {
     return (
         <div className="mobile-bottom">
             <div className="back-button">
-                <div>
-                <button className="ignore-focus-change" onClick={handleBack}>back</button>
-                <br />
-                Back
-                </div>
+                <button className="ignore-focus-change" onClick={handleBack}>
+                    <img src="backButton.svg" className="button-large button-press" alt="Back Button"></img>
+                </button>
             </div>
             <div className="direction-pad">
                 <div className="pad-section">
                     <div className="pad-button"></div>
                     <div className="up-button pad-button">
-                        <div>
-                        <button onClick={handleUp}>Up</button>
-                        <br />
-                        Up
-                        </div>
+                        <button onClick={handleUp}>
+                            <img src="arrow2.svg" className="arrow arrow-up button-press" alt="Up Arrow"></img>
+                        </button>
                     </div>
                     <div className="pad-button"></div>
                 </div>
                 <div className="pad-section">
                     <div className="left-button pad-button">
-                        <div>
-                        <button className="ignore-focus-change" onClick={handleLeft}>Left</button>
-                        <br />
-                        Left
-                        </div>
+                        <button className="ignore-focus-change" onClick={handleLeft}>
+                            <img src="arrow2.svg" className="arrow arrow-left button-press" alt="Left Arrow"></img>
+                        </button>
                     </div>
                     <div className="pad-button"></div>
 
                     <div className="right-button pad-button">
-                        <div>
-                        <button className="ignore-focus-change" onClick={handleRight}>Right</button>
-                        <br />
-                        Right
-                        </div>
+                        <button className="ignore-focus-change" onClick={handleRight}>
+                            <img src="arrow2.svg" className="arrow arrow-right button-press" alt="Right Arrow"></img>
+                        </button>
                     </div>
 
                 </div>
                 <div className="pad-section">
                     <div className="pad-button"></div>
                     <div className="down-button pad-button">
-                    <div>
-                    <button onClick={handleDown}>Down</button>
-                    <br />              
-                    Down
-                    </div>
+                    <button onClick={handleDown}>
+                        <img src="arrow2.svg" className="arrow arrow-down button-press" alt="Down Arrow"></img>
+                    </button>
                     <div className="pad-button"></div>
                 </div>
                     
@@ -147,11 +137,10 @@ const MobileBottom = () => {
             </div>
             <div className="return-button">
                 <div>
-                    <button className = "ignore-focus-change" onClick={handleSelect}>Select</button>
-                    <br />
-                    Select
+                    <button className = "ignore-focus-change" onClick={handleSelect}>
+                        <img src="selectButton.svg" className="button-large button-press" alt="Select Button"></img>
+                    </button>
                 </div>
-
             </div>
 
             

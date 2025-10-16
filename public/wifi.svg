@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Svg Vector Icons : http://www.onlinewebfonts.com/icon -->
+
+<svg
+   version="1.1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 236 118"
+   enable-background="new 0 0 256 256"
+   xml:space="preserve"
+   id="svg12"
+   sodipodi:docname="wifi.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   width="236"
+   height="118"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs16" /><sodipodi:namedview
+   id="namedview14"
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1.0"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   showgrid="false"
+   inkscape:zoom="2.90625"
+   inkscape:cx="118.19355"
+   inkscape:cy="84.645161"
+   inkscape:window-width="1920"
+   inkscape:window-height="1008"
+   inkscape:window-x="1920"
+   inkscape:window-y="0"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg12" />
+<metadata
+   id="metadata2"> Svg Vector Icons : http://www.onlinewebfonts.com/icon </metadata>
+<g
+   id="g10"
+   transform="matrix(1,0,0,0.7195122,-10,-33.097561)"><g
+     id="g8"><path
+       fill="#000000"
+       d="m 180.5,210 c -7.2,0 -13.1,-4.8 -13.1,-10.7 v -114 c 0,-5.9 5.9,-10.7 13.1,-10.7 7.2,0 13.1,4.8 13.1,10.7 v 114 c 0,5.9 -5.9,10.7 -13.1,10.7 z m -52.5,0 c -7.2,0 -13.1,-4.8 -13.1,-10.7 v -85.4 c 0,-5.9 5.9,-10.7 13.1,-10.7 7.2,0 13.1,4.8 13.1,10.7 v 85.5 c 0,5.8 -5.8,10.6 -13.1,10.6 z m -52.4,0 c -7.2,0 -13.1,-4.8 -13.1,-10.7 v -57 c 0,-5.9 5.9,-10.7 13.1,-10.7 7.2,0 13.1,4.8 13.1,10.7 v 57 c 0,5.9 -5.9,10.7 -13.1,10.7 z m -52.5,0 C 15.9,210 10,205.2 10,199.3 v -28.5 c 0,-5.9 5.9,-10.7 13.1,-10.7 7.2,0 13.1,4.8 13.1,10.7 v 28.5 c 0,5.9 -5.9,10.7 -13.1,10.7 z"
+       id="path4" /><path
+       fill="#000000"
+       d="m 232.9,210 c -7.2,0 -13.1,-4.8 -13.1,-10.7 V 56.7 c 0,-5.9 5.9,-10.7 13.1,-10.7 7.2,0 13.1,4.8 13.1,10.7 v 142.6 c 0,5.9 -5.9,10.7 -13.1,10.7 z"
+       id="path6" /></g></g>
+</svg>

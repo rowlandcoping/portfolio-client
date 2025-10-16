@@ -55,13 +55,17 @@ const MobileScrollWheel: React.FC = () => {
   };
 
   return (
-    <div
-      className="scroll-wheel"
-      id="scroll-wheel"
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-    >
-      <img src={frames[frameIndex]} alt="scroll wheel" />
+    <div className="scroll-wheel-container">
+        <div className="scroll-wheel-pit">
+            <div
+            className="scroll-wheel"
+            id="scroll-wheel"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            >
+            <img src={frames[frameIndex]} alt="scroll wheel" />
+            </div>
+        </div>
     </div>
   );
 };

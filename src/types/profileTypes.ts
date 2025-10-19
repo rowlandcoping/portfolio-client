@@ -4,6 +4,7 @@ export type Link = {
     id: number;
     name: string;
     url: string;
+    logoGry: string;
     logoGrn: string;
     logoOrg: string;
     logoAlt: string;
@@ -38,8 +39,9 @@ export type ProfileTypes = {
     id: number;
     userId: number;
     description: string;
-    starSign: string;
-    favColor: string;
+    jobTitle: string;
+    attributes: string;
+    imageGry: string;
     imageGrn: string;
     imageAlt: string;
     skills: Skill[];

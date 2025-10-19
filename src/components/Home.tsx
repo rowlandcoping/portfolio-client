@@ -35,7 +35,7 @@ const Home = () => {
     return (
         <main>
             <div className="content">
-                <h1>Welcome to {user.name}'s Portfolio</h1>
+                <h1>{user.name}'s Portfolio</h1>
             
                 <Link 
                     to="/profile"

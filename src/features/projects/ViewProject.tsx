@@ -57,6 +57,7 @@ const ViewProject = () => {
                     name={type.name}
                     overview={project.overview}
                     imageGrn={project.imageGrn}
+                    imageGry={project.imageGry}
                     imageAlt={project.imageAlt}
                     dateMvp={project.dateMvp}
                     dateProd={project.dateProd}               

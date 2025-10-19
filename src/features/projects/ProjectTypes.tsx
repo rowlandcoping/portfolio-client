@@ -51,7 +51,7 @@ const ProjectTypes = () => {
     return (
         <main>
             <div className="content">
-                <h1>Select Category to View</h1>
+                <h1>Select a Category</h1>
                 {filteredCategories.map((category, i) => (
                     <div className = "profile-links" key={category.id}>
                         <Link 

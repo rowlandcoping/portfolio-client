@@ -40,9 +40,10 @@ const Profile = () => {
                     name={user.name}
                     description={profile.description}
                     imageGrn={profile.imageGrn}
+                    imageGry={profile.imageGry} 
                     imageAlt={profile.imageAlt}
-                    starSign={profile.starSign}
-                    favColor={profile.favColor} 
+                    jobTitle={profile.jobTitle}
+                    
                 />
             )
         },
@@ -63,58 +64,58 @@ const Profile = () => {
     return (
         <main>
             
-                    <div>                
-                        {pages.map((page, index) => (
-                            <div
-                                key={index}
-                                className={index === activePage ? 'selected' : 'hidden'}
-                            >
-                                <h1>{page.title}</h1>
-                                {page.content}
-                            </div>
-                        ))}
+            <div>                
+                {pages.map((page, index) => (
+                    <div
+                        key={index}
+                        className={index === activePage ? 'selected' : 'hidden'}
+                    >
+                        <h1>{page.title}</h1>
+                        {page.content}
                     </div>
-                    <div>
-                        <div className="current-page page-one selected">
-                            page { activePage + 1 } of 3
+                ))}
+            </div>
+            <div>
+                <div className="current-page page-one selected">
+                    page { activePage + 1 } of 3
+                </div>
+                <div className="control-container">
+                    <div className="control-box">
+                        <div>
+                            exit<br />
+                            <kbd>Esc</kbd>
                         </div>
-                        <div className="control-container">
-                            <div className="control-box">
-                                <div>
-                                    exit<br />
-                                    <kbd>Esc</kbd>
-                                </div>
-                                {activePage === 2 && (<>                        
-                                <div>
-                                    next<br />
-                                    &darr;                    
-                                </div>
-                                <div>
-                                    prev<br />
-                                    &uarr;                   
-                                </div>
-                                <div>
-                                    slct<br />
-                                    &crarr;
-                                </div>                      
-                                </>)}
-                            </div>
-                            <div className="control-box control-right">
-                                {activePage > 0 && (
-                                <div>
-                                    back<br />
-                                    &larr;                    
-                                </div>
-                                )}
-                                {activePage < pages.length - 1 && (
-                                <div>
-                                    fwrd<br />
-                                    &rarr;                   
-                                </div>
-                                )}
-                            </div>
+                        {activePage === 2 && (<>                        
+                        <div>
+                            next<br />
+                            &darr;                    
                         </div>
+                        <div>
+                            prev<br />
+                            &uarr;                   
+                        </div>
+                        <div>
+                            slct<br />
+                            &crarr;
+                        </div>                      
+                        </>)}
                     </div>
+                    <div className="control-box control-right">
+                        {activePage > 0 && (
+                        <div>
+                            back<br />
+                            &larr;                    
+                        </div>
+                        )}
+                        {activePage < pages.length - 1 && (
+                        <div>
+                            fwrd<br />
+                            &rarr;                   
+                        </div>
+                        )}
+                    </div>
+                </div>
+            </div>
         </main>
     )
 }

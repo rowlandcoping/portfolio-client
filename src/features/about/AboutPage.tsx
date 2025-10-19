@@ -1,76 +1,104 @@
-import { useEffect, Fragment } from 'react';
+import { useEffect } from 'react';
 import { useAbout } from './useAboutApi';
-import { Link } from '@tanstack/react-router';
 import { useKeyboardNavStore } from '../../stores/keyboardNavStore';
+import Overview from '../about/Overview';
+import Links from '../about/Links';
 
 const AboutPage = () => {
 
-    const setFocusedIndex = useKeyboardNavStore((s) => s.setFocusedIndex);
+    const activePage = useKeyboardNavStore((s) => s.activePage);
+    const setMaxIndex = useKeyboardNavStore.getState().setMaxIndex;
+    const setActivePage = useKeyboardNavStore.getState().setActivePage;
 
     const {
         data: about,
         isError,
     } = useAbout();
 
-    useEffect(() => {
+    useEffect (() => {
         if (!about) return;
-        const pageLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('a'));
-        setFocusedIndex(0);
-        pageLinks[0].focus({ preventScroll: true });
-    }, [about]);
-
-    if (isError || !about) return <p>Error loading profile data...</p>;
+        //resets the active page to the first in the pages array
+        setActivePage(0);
+        //max index is the length of the pages array, sets this in the store for navigation purposes
+        setMaxIndex(1);
+    }, [about])
     
+    if (isError || !about) return <p>Error loading data...</p>;
+    
+    const pages = [
+        {
+            title: `Site Details`,
+            content: (
+                <Overview
+                    overview={about.overview}
+                    copyYear={about.copyYear}
+                    copyName={about.copyName}
+                    projectEcosystem={about.projectEcosystem}        
+                />
+            )
+        },
+        {
+            title: `Related Links`,
+            content: (
+                <Links 
+                    clientRepo={about.clientRepo}
+                    serverRepo={about.serverRepo} 
+                />
+            )
+        }
+    ];   
 
     return (
         <main>
-            <div className="content">
-                <h1>About This Site</h1>
-                <div className="details-container">                
-                    <p>
-                        {about.overview}
-                    </p>
-                </div>
-                <h2>Technologies</h2>
-                <div className="details-container">                
-                    <p>
-                        {about.projectEcosystem.map((s,i) => (
-                            <Fragment key={s.ecosystem.id}>
-                                {i > 0 && ', '}
-                                {s.ecosystem.name}  
-                                <kbd>
-                                    {s.tech.length > 0 && (
-                                    <> ({s.tech.map(t => t.name).join(', ')})</>
-                                    )}
-                                </kbd>
-                            </Fragment>
-                        ))}
-                    </p>
-                </div>
-                <h2>Legal</h2>
-                <div className="details-container">
-                    &#169; {about.copyYear} {about.copyName}
-                </div>  
-                <h2>Links</h2>
-                <div className="details-container">
-                    <Link 
-                        to={about.repo}
-                        className='focussed'
+            <div>                
+                {pages.map((page, index) => (
+                    <div
+                        key={index}
+                        className={index === activePage ? 'selected' : 'hidden'}
                     >
-                        <h2>View Repository</h2>
-                    </Link>
-                </div>              
-            </div>
-            
-            <div className="control-container">
-                <div className="control-box">
-                    <div>
-                        exit<br />
-                        <kbd>Esc</kbd>
+                        <h1>{page.title}</h1>
+                        {page.content}
                     </div>
-                    <div>
-                        slct<br />
-                        &crarr;
+                ))}
+            </div>
+            <div>
+                <div className="current-page page-one selected">
+                    page { activePage + 1 } of 2
+                </div>
+                <div className="control-container">
+                    <div className="control-box">
+                        <div>
+                            exit<br />
+                            <kbd>Esc</kbd>
+                        </div>
+                        {activePage === 2 && (<>                        
+                        <div>
+                            next<br />
+                            &darr;                    
+                        </div>
+                        <div>
+                            prev<br />
+                            &uarr;                   
+                        </div>
+                        <div>
+                            slct<br />
+                            &crarr;
+                        </div>                      
+                        </>)}
+                    </div>
+                    <div className="control-box control-right">
+                        {activePage > 0 && (
+                        <div>
+                            back<br />
+                            &larr;                    
+                        </div>
+                        )}
+                        {activePage < pages.length - 1 && (
+                        <div>
+                            fwrd<br />
+                            &rarr;                   
+                        </div>
+                        )}
                     </div>
                 </div>
             </div>

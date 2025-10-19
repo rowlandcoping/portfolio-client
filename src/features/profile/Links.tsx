@@ -12,6 +12,7 @@ const Links = ({ links }: LinksProps) => {
     const setLinkCount = useKeyboardNavStore((s) => s.setLinkCount);
     const setFocusedIndex = useKeyboardNavStore((s) => s.setFocusedIndex);
     const activePage = useKeyboardNavStore((s) => s.activePage);
+    const enabled = useKeyboardNavStore((s) => s.enabled);
 
     useEffect(() => {
         if (!links || activePage !== 2) return;
@@ -37,7 +38,11 @@ const Links = ({ links }: LinksProps) => {
                         className={focusedIndex === i ? 'focussed' : ''}
                     >                                                
                         <h2>
-                            <img src={server+link.logoGrn} alt={link.logoAlt} />
+                            <img src = { enabled
+                                        ? `${server+link.logoGrn}`
+                                        : `${server+link.logoGry}`   
+                                    } 
+                                alt={link.logoAlt} />
                             <span className="link-text">{link.name}</span>
                         </h2>
                     

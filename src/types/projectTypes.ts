@@ -34,6 +34,7 @@ export type ProjectTypes = {
     repo:string;
     imageOrg: string;
     imageGrn: string;
+    imageGry: string;
     imageAlt: string;
     features: Feature []; //1 to many
     issues: Issue [];

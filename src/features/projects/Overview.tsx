@@ -1,11 +1,15 @@
 import type { ProjectTypes } from '../../types/projectTypes';
 import type { ProjectTypeTypes } from '../../types/projectTypeTypes';
+import { useKeyboardNavStore } from '../../stores/keyboardNavStore';
 
-type ProjectProps = Pick<ProjectTypes, 'overview' | 'imageGrn' | 'imageAlt' | 'dateMvp' | 'dateProd'> &
+type ProjectProps = Pick<ProjectTypes, 'overview' | 'imageGrn' | 'imageGry' | 'imageAlt' | 'dateMvp' | 'dateProd'> &
 Pick<ProjectTypeTypes, 'name'>;
 
-const Overview = ( {name, overview, imageGrn, imageAlt, dateMvp, dateProd}:ProjectProps ) => {    
+const Overview = ( {name, overview, imageGrn, imageGry, imageAlt, dateMvp, dateProd}:ProjectProps ) => {    
+    
     const server = import.meta.env.VITE_SERVER_URL
+    const enabled = useKeyboardNavStore((s) => s.enabled);
+
     function formatDate(dateInput: string | Date): string {
         const date = new Date(dateInput);
         const day = String(date.getDate()).padStart(2, '0');
@@ -18,7 +22,10 @@ const Overview = ( {name, overview, imageGrn, imageAlt, dateMvp, dateProd}:Proje
         <div className = "project-overview">            
             <div className="project-image-container">
                 <img 
-                    src = {server+imageGrn}
+                    src = { enabled
+                        ? `${server+imageGrn}`
+                        : `${server+imageGry}`   
+                    }
                     alt = {imageAlt}
                 />
                 <div>

@@ -14,6 +14,7 @@ const AllProjects = () => {
     const setActivePage = useKeyboardNavStore.getState().setActivePage;
     const activePage = useKeyboardNavStore((s) => s.activePage);
     const itemsPerPage = useKeyboardNavStore((s) => s.itemsPerPage);
+    const enabled = useKeyboardNavStore((s) => s.enabled);
 
     const [totalPages, setTotalPages] = useState(0);
 
@@ -67,9 +68,12 @@ const AllProjects = () => {
                     >
                     <h2>
                         <img
-                        src={server + project.imageGrn}
-                        alt={project.imageAlt}
-                        className="project-image-thumb"
+                            src = { enabled
+                                ? `${server+project.imageGrn}`
+                                : `${server+project.imageGry}`   
+                            }
+                            alt={project.imageAlt}
+                            className="project-image-thumb"
                         />
                         <span className="link-text">{project.name}</span>
                     </h2>

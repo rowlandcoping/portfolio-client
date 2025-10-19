@@ -1,7 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { useEffect } from "react";
 import { useKeyboardNavStore } from "../../stores/keyboardNavStore";
-import { useUser } from '../../features/profile/useUserApi';
 
 const Home = () => {
 
@@ -9,18 +8,12 @@ const Home = () => {
     const setLinkCount = useKeyboardNavStore((s) => s.setLinkCount);
     const setFocusedIndex = useKeyboardNavStore((s) => s.setFocusedIndex);   
     
-    const {
-        data: user,
-        isError,
-    } = useUser();   
-
     useEffect(() => {
-        if (!user) return;
         const pageLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('a'));
         setFocusedIndex(0);
         setLinkCount(pageLinks.length-1);
         pageLinks[0].focus();
-    }, [user]);
+    }, []);
 
     useEffect(() => {
         const pageLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('a'));
@@ -28,12 +21,10 @@ const Home = () => {
         if (current) current.focus();
     }, [focusedIndex])
 
-    if (isError || !user) return <p>Error loading user data...</p>;
-
     return (
         <main>
             <div className="content">
-                <h1>Explore {user.name}'s Projects</h1>
+                <h1>Explore Projects</h1>
             
                 <Link 
                     to="/projects/all-projects"

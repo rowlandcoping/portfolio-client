@@ -12,6 +12,7 @@ const ProjectsByType = () => {
     const focusedIndex = useKeyboardNavStore((s) => s.focusedIndex);
     const setLinkCount = useKeyboardNavStore((s) => s.setLinkCount);
     const setFocusedIndex = useKeyboardNavStore((s) => s.setFocusedIndex);
+    const enabled = useKeyboardNavStore((s) => s.enabled);
 
     const {
         data: projects,
@@ -53,7 +54,10 @@ const ProjectsByType = () => {
                         >                                                
                             <h2>
                                 <img 
-                                    src = {server+project.imageGrn}
+                                    src = { enabled
+                                        ? `${server+project.imageGrn}`
+                                        : `${server+project.imageGry}`   
+                                    }
                                     alt = {project.imageAlt}
                                     className="project-image-thumb"
                                 />

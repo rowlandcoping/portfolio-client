@@ -62,7 +62,8 @@ const SearchProjects = () => {
             current?.focus({ preventScroll: true });
     }, [focusedIndex]);
 
-    if (isError || !projects) return <p>Error loading projects...</p>;
+    if (!projects) return <p>Loading Project Data...</p>;
+    if (isError) return <p>Error Loading Project Data...</p>;
 
     return (
         <main>

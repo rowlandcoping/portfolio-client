@@ -21,7 +21,8 @@ const Skills = ({ skills }: SkillsProps) => {
         isError: isEcoTypeError,
     } = useEcoTypes();
 
-    if (isEcosystemError || isEcoTypeError || !ecosystems || !ecoTypes) return <p>Error loading profile data...</p>;
+    if (!ecosystems || !ecoTypes) return <p>Loading Profile Data...</p>;
+    if (isEcosystemError || isEcoTypeError) return <p>Error Loading Profile Data...</p>;
 
     const ecosystemMap = Object.fromEntries(
         //effectively creates an object of objects sorted by id, passing an id and an object, ie:

@@ -45,7 +45,9 @@ const AllProjects = () => {
         setMaxIndex(total-1);
     }, [])
 
-    if (isError || !projects) return <p>Error loading project data...</p>;
+   
+    if (!projects) return <p>Loading Project Data...</p>;
+    if (isError) return <p>Error Loading Project Data...</p>;
 
     const pages = [];
 

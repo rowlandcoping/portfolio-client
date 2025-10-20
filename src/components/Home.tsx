@@ -30,7 +30,8 @@ const Home = () => {
         if (current) current.focus({ preventScroll: true });
     }, [focusedIndex])
     
-    if (isError || !user) return <p>Error loading user data...</p>;
+    if (!user) return <p>Loading user data...</p>;
+    if (isError) return <p>Error loading user data...</p>;
 
     return (
         <main>

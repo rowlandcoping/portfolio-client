@@ -45,8 +45,8 @@ const ViewProject = () => {
         setMaxIndex(2);
     }, [])
 
-    if (isError || !project || isTypesError || !type) return <p>Error loading projects...</p>;
-
+    if (!project || !type) return <p>Loading Project Data...</p>;
+    if (isError || isTypesError) return <p>Error Loading Project Data...</p>;
     
     
     const pages = [

@@ -30,8 +30,9 @@ const Profile = () => {
         setMaxIndex(2);
     }, [profile, user])
     
-    if (isProfileError || isUserError || !profile || !user) return <p>Error loading profile data...</p>;
-    
+    if (!profile || !user) return <p>Loading Profile Data...</p>;
+    if (isProfileError || isUserError) return <p>Error Loading Profile Data...</p>;
+
     const pages = [
         {
             title: `About ${user.name}`,

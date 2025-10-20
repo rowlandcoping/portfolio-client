@@ -40,7 +40,8 @@ const ProjectsByType = () => {
         if (current) current.focus({ preventScroll: true });
     }, [focusedIndex]);
 
-    if (isError || !projects) return <p>Error loading project data...</p>;
+    if (!projects) return <p>Loading Project Data...</p>;
+    if (isError) return <p>Error Loading Project Data...</p>;
 
     return (
         <main>

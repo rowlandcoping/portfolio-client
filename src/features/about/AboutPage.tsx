@@ -23,7 +23,8 @@ const AboutPage = () => {
         setMaxIndex(1);
     }, [about])
     
-    if (isError || !about) return <p>Error loading data...</p>;
+    if (!about) return <p>Loading About Page Data...</p>;
+    if (isError) return <p>Error About Page Data...</p>;
     
     const pages = [
         {

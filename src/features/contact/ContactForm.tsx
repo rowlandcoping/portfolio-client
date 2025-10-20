@@ -82,14 +82,15 @@ const ContactForm = ({ projectId }: ContactFormProps) => {
         if (current) current.focus({ preventScroll: true });
     }, [focusedIndex])
 
-    if (isError || isUserError || !user || !projects) return <p>Error loading data...</p>;
+    if (!user || !projects) return <p>Loading Form Data...</p>;
+    if (isError || isUserError) return <p>Error Loading Form Data...</p>;
 
     // If submission succeeded, just show the success message
     if (mutation.isSuccess) {
             return (
             <div className="message-center">
                 <p>Message sent successfully!</p>
-                <p>Press Escape to go back.</p>
+                <p>Press Escape or Back to return.</p>
             </div>
             );
     }
@@ -98,7 +99,7 @@ const ContactForm = ({ projectId }: ContactFormProps) => {
             return (
             <div className="message-center">
                 <p>Error Sending Message</p>
-                <p>Press Escape to go back.</p>
+                <p>Press Escape or Back to return.</p>
             </div>
             );
     }

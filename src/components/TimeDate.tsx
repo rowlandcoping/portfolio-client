@@ -12,10 +12,12 @@ const TimeDate = () => {
     return (
         <>            
             <div className="mobile-time">
-            {now.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', hour12: true })}
+            {now.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit', hour12: true })}
             </div>
             <div className="mobile-date">
-                {now.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}{" "}
+                {now.toLocaleDateString(undefined, { weekday: 'short' })},{" "}
+                {now.toLocaleDateString(undefined, { month: 'short' })}{" "}
+                {now.toLocaleDateString(undefined, { day: 'numeric' })}
             </div>
         </>
     );

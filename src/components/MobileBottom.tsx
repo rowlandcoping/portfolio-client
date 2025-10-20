@@ -2,9 +2,10 @@ import { useKeyboardNavStore } from '../stores/keyboardNavStore';
 import { useMobileNavStore } from '../stores/mobileNavStore';
 import { useEffect } from 'react';
 import { useNavigate } from '@tanstack/react-router';
+import { useMobileOS } from '../hooks/useMobileOS';
 
 const MobileBottom = () => {
-
+    const os = useMobileOS();
     const navigate = useNavigate();    
     const setLastFocused = useMobileNavStore((s) => s.setLastFocused);
     const setMaxIndex = useKeyboardNavStore((s) => s.setMaxIndex);
@@ -99,7 +100,10 @@ const MobileBottom = () => {
                 <div className="mobile-buttons-container">
                     <div className="back-button">
                         <button className="ignore-focus-change" onClick={handleBack}>
-                            <img src="backButton.svg" className="button-large button-press" alt="Back Button"></img>
+                            <img 
+                                src={os === 'ios' ? "backButton.png" : "backButton.svg"}
+                                className="button-large button-press" 
+                                alt="Back Button" />
                         </button>
                     </div>
                     <div className="direction-pad">
@@ -107,7 +111,11 @@ const MobileBottom = () => {
                             <div className="pad-button"></div>
                             <div className="up-button pad-button">
                                 <button onClick={handleUp}>
-                                    <img src="arrow2.svg" className="arrow arrow-up button-press" alt="Up Arrow"></img>
+                                    <img 
+                                        src={os === 'ios' ? 'arrow2.png' : 'arrow2.svg'} 
+                                        className="arrow arrow-up button-press" 
+                                        alt="Up Arrow" 
+                                    />
                                 </button>
                             </div>
                             <div className="pad-button"></div>
@@ -115,14 +123,22 @@ const MobileBottom = () => {
                         <div className="pad-section">
                             <div className="left-button pad-button">
                                 <button className="ignore-focus-change" onClick={handleLeft}>
-                                    <img src="arrow2.svg" className="arrow arrow-left button-press" alt="Left Arrow"></img>
+                                    <img 
+                                        src={os === 'ios' ? 'arrow2.png' : 'arrow2.svg'} 
+                                        className="arrow arrow-left button-press" 
+                                        alt="Left Arrow" 
+                                    />
                                 </button>
                             </div>
                             <div className="pad-button"></div>
 
                             <div className="right-button pad-button">
                                 <button className="ignore-focus-change" onClick={handleRight}>
-                                    <img src="arrow2.svg" className="arrow arrow-right button-press" alt="Right Arrow"></img>
+                                    <img 
+                                        src={os === 'ios' ? 'arrow2.png' : 'arrow2.svg'} 
+                                        className="arrow arrow-right button-press" 
+                                        alt="Right Arrow" 
+                                    />
                                 </button>
                             </div>
 
@@ -131,7 +147,11 @@ const MobileBottom = () => {
                             <div className="pad-button"></div>
                             <div className="down-button pad-button">
                             <button onClick={handleDown}>
-                                <img src="arrow2.svg" className="arrow arrow-down button-press" alt="Down Arrow"></img>
+                                <img 
+                                    src={os === 'ios' ? 'arrow2.png' : 'arrow2.svg'} 
+                                    className="arrow arrow-down button-press" 
+                                    alt="Down Arrow" 
+                                />
                             </button>
                             <div className="pad-button"></div>
                         </div>
@@ -142,7 +162,11 @@ const MobileBottom = () => {
                     <div className="return-button">
                         <div>
                             <button className = "ignore-focus-change" onClick={handleSelect}>
-                                <img src="selectButton.svg" className="button-large button-press" alt="Select Button"></img>
+                                <img 
+                                    src={os === 'ios' ? 'selectButton.png' : "selectButton.svg"} 
+                                    className="button-large button-press" 
+                                    alt="Select Button" 
+                                />
                             </button>
                         </div>
                     </div>

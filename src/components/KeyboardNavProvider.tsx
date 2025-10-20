@@ -3,6 +3,12 @@ import { useKeyboardNavStore } from '../stores/keyboardNavStore';
 import { useMobileNavStore } from '../stores/mobileNavStore';
 import { useNavigate } from '@tanstack/react-router';
 
+declare global {
+  interface Window {
+    __preloadBlocker?: (e: TouchEvent) => void;
+  }
+}
+
 export default function KeyboardNavProvider({ children }: { children: React.ReactNode }) {
 
     const enabled = useKeyboardNavStore(state => state.enabled);
@@ -34,12 +40,17 @@ export default function KeyboardNavProvider({ children }: { children: React.Reac
         if (main) main.scrollTop = 0;
     }, [useMobileNavStore((s) => s.currentRoutePathname), useKeyboardNavStore((s) => s.activePage)]);
 
+
+    //block mobile tap actions,  control mobile scroll.
+    /*
     useEffect(() => {
-        if (enabled) return;
+        if(enabled) return
         const main = document.querySelector('main'); 
 
         const wheel = document.querySelector('.scroll-wheel');
         if (!wheel || !main) return;
+
+        main.offsetHeight;
 
         let startY = 0;
 
@@ -85,6 +96,7 @@ export default function KeyboardNavProvider({ children }: { children: React.Reac
             window.removeEventListener('touchend', handleTouch);
         };
     }, [enabled]);
+   */
 
 
     useEffect(() => {
@@ -134,9 +146,12 @@ export default function KeyboardNavProvider({ children }: { children: React.Reac
                     }
                     break;
                 case 'Escape':
-                    console.log('[Escape] pressed');
-                    const target = useKeyboardNavStore.getState().popPage();
-                    console.log('[Escape] target:', target);
+                    let target;
+                    if (useKeyboardNavStore.getState().previousPages.length > 1) {
+                        target = useKeyboardNavStore.getState().popPage();
+                    } else {
+                        target = useKeyboardNavStore.getState().previousPages[0]
+                    }
                     const last = window.location.pathname
                     useKeyboardNavStore.getState().setReturnPage(last)
                     if (target) {

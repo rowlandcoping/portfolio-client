@@ -15,8 +15,6 @@ const SearchProjects = () => {
     const focusedIndex = useKeyboardNavStore((s) => s.focusedIndex);
     const setLinkCount = useKeyboardNavStore((s) => s.setLinkCount);
     const setFocusedIndex = useKeyboardNavStore((s) => s.setFocusedIndex);
-
-    const maxIndex = useKeyboardNavStore.getState().maxIndex;
     const setMaxIndex = useKeyboardNavStore.getState().setMaxIndex;
     const setActivePage = useKeyboardNavStore.getState().setActivePage;
     const activePage = useKeyboardNavStore((s) => s.activePage);
@@ -143,7 +141,7 @@ const SearchProjects = () => {
                                         to={`/projects/${project.id}`}
                                         className={focusedIndex === adjustedIndex ? 'focussed' : ''}
                                     >
-                                        <h2 className="link-text">
+                                        <h2>
                                             <img
                                                 src={
                                                     enabled
@@ -153,7 +151,7 @@ const SearchProjects = () => {
                                                 alt={project.imageAlt}
                                                 className="project-image-thumb"
                                             />
-                                            {project.name}
+                                             <span className="link-text">{project.name}</span>
                                         </h2>
                                     </Link>
                                 </div>

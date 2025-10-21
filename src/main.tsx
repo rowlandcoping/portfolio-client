@@ -2,6 +2,7 @@ import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import './mobile.css';
 import { RouterProvider } from '@tanstack/react-router';
 import { router } from './app/router';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';

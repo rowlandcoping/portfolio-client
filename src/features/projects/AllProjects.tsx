@@ -61,7 +61,7 @@ const AllProjects = () => {
                         : `${i + 1} of ${projects.length})`}`
                     : `All Projects`}`,
             content: (
-            <div className="projects-page">
+            <div>
                 {slice.map((project, j) => (
                 <div className="profile-links" key={project.id}>
                     <Link

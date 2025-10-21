@@ -9,26 +9,76 @@
 }
 /*root element*/
 :root {
-    font-family: ocr;
+    /*Global*/
     font-style: normal;
     font-weight: 400;
-    color-scheme: light dark;
-    color: rgb(61, 250, 77);
-    background-color: #242424;
+    background-color: rgba(36 36 36);
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    /*COLOR PALATE AND EFFECTS (DESKTOP)*/
+    /*GENERAL*/
+    --BODY-BACKGROUND-FILTER: rgba(40 54 34);
+    --DESKTOP-SCREEN-BACKGROUND: rgba(27 32 25);
+    --DESKTOP-TEXT:  rgba(61, 250, 77);
+    --DESKTOP-FOCUSSED-TEXT:  rgba(0 0 0);
+    --DESKTOP-BUTTON-DISABLED-FOCUS: rgba(36 36 36);
+    --DESKTOP-BUTTON-DISABLED-TEXT: rgba(40 54 34);
+    --SCREEN-FRAME: rgba(208 191 158);
+    --SCREEN-FRAME-DARK: rgba(170 146 97);
+
+    /*MONITOR LOGO*/
+    --MONITOR-LOGO-BLUR: 0.7px;
+    --MONITOR-LOGO-COLOR: rgba(97 71 52);
+    --MONITOR-LOGO-BACKGROUND: rgba(187 170 137);
+    --MONITOR-LOGO-BORDER: inset 1px rgba(231 211 172);
+
+    /*MONITOR BUTTON SHADOWS*/
+    --BUTTON-TOP-SHADOW: 0 -2px 3px rgba(255, 255, 255, 0.2) inset;
+    --BUTTON-TOP-HIGHLIGHT: 0 -1px 2px rgba(255, 255, 255, 0.1);
+    --BUTTON-BOTTOM-SHADOW: 0 2px 3px rgba(26, 19, 10, 0.2) inset;
+    --BUTTON-OUTER-SHADOW: 0 3px 5px rgba(26, 19, 10, 0.3);
+   
+    /*MONITOR LIGHT*/
+    /*soft border*/
+    --LIGHT-BORDER: rgba(32, 32, 32, 0.2);
+    /*initial gradient*/
+    --LIGHT-GRADIENT-20: rgba(255 11 11);
+    --LIGHT-GRADIENT-60: rgba(255 0 0);
+    --LIGHT-GRADIENT-100: rgba(179 0 0);
+    /*box shadow (glow effect)*/
+    --LIGHT-BLUR-INNER: rgba(255, 0, 0, 0.8);
+    --LIGHT-BLUR-MIDDLE: rgba(255, 0, 0, 0.5);
+    --LIGHT-BLUR-OUTER: rgba(255, 0, 0, 0.3);
+     
+    /*LIGHT FLICKER EFFECT(DESKTOP)*/
+    /*frequency*/
+    --LIGHT-FLICKER-FREQUENCY: 0.1s;
+    /*flicker effect*/
+    --LIGHT-FLICKER-0-100-INNER: 5px rgba(153, 0, 0, 0.6);
+    --LIGHT-FLICKER-0-100-OUTER: 10px rgba(153, 0, 0, 0.3);
+    --LIGHT-FLICKER-25-INNER: 6px rgba(153, 0, 0, 0.65);
+    --LIGHT-FLICKER-25-OUTER: 12px rgba(153, 0, 0, 0.35);
+    --LIGHT-FLICKER-50-INNER: 4px rgba(153, 0, 0, 0.55);
+    --LIGHT-FLICKER-50-OUTER: 9px rgba(153, 0, 0, 0.25);
+    --LIGHT-FLICKER-75-INNER: 5px rgba(153, 0, 0, 0.6);
+    --LIGHT-FLICKER-75-OUTER: 11px rgba(153, 0, 0, 0.3);
 }
 #root {
     width: 100%;
 }
+
 /*GLOBAL STYLING*/
 /*body elements*/
 body {
+    font-family: ocr;
     margin: 0;
     display: flex;
     background-image:url("assets/desk.jpg");
+    background-color: var(--BODY-BACKGROUND-FILTER);
+    color: var(--DESKTOP-TEXT);
     background-blend-mode: multiply;
     background-repeat: no-repeat;
     background-size: cover;
@@ -38,12 +88,12 @@ body.desktop {
     pointer-events: none;
 }
 a {
-  text-decoration: inherit;
-  color: rgb(61, 250, 77);
+    text-decoration: inherit;
+    color: var(--DESKTOP-TEXT);
 }
 button {
-  all: unset;         
-  box-sizing: border-box; 
+    all: unset;         
+    box-sizing: border-box; 
 }
 p {
     margin:0;
@@ -67,6 +117,10 @@ h2 {
     margin:0;
     padding-top:4px;
     line-height: 1.2em;
+}
+.focussed h2  {
+    color: var(--DESKTOP-FOCUSSED-TEXT);
+    background-color: var(--DESKTOP-TEXT);
 }
 /*h3 (links)*/
 
@@ -96,19 +150,20 @@ h2 {
 }
 .screen-top, .screen-bottom {
     display:flex;
-    background-image: linear-gradient(to bottom,#AA9261, #D0BF9E);
-    border-radius: 20px 20px 0 0;
-}
+    
+}   
 
 /*TOP*/
 .screen-top {
     place-items: center;
-    height: 50px; 
+    height: 50px;
+    border-radius: 20px 20px 0 0;
+    background-image: linear-gradient(to bottom, var(--SCREEN-FRAME-DARK), var(--SCREEN-FRAME));
 }
 /*LEFT & RIGHT*/
 .screen-left, .screen-right {
     min-width:50px;
-    background-color: #D0BF9E;  
+    background-color: var(--SCREEN-FRAME);  
     height: calc(100vh - 210px);
     flex-grow: 0; 
 }
@@ -119,62 +174,67 @@ h2 {
     justify-content: space-between;
     align-items: center;
     height: 100px;
+    border-radius: 0 0 20px 20px;
+    background-image: linear-gradient(to top, var(--SCREEN-FRAME-DARK), var(--SCREEN-FRAME));
 }
 /*decorative elements*/
 .power-light {
     margin-left: 65px;
     height: 10px;
     width: 20px;
-    background: radial-gradient(ellipse, #ff0b0b 20%, #ff0000 60%, #b30000 100%);
-    border: 1px solid rgba(32, 32, 32, 0.2);
+    background: radial-gradient(ellipse, 
+        var(--LIGHT-GRADIENT-20) 20%, 
+        var(--LIGHT-GRADIENT-60) 60%, 
+        var(--LIGHT-GRADIENT-100) 100%);
+    border: 1px solid var(--LIGHT-BORDER);
     filter: brightness(300%) saturate(150%);
     opacity: 0.92;
     box-shadow: 
-    0 0 8px rgba(255, 0, 0, 0.8),
-    0 0 15px rgba(255, 0, 0, 0.5),
-    0 0 25px rgba(255, 0, 0, 0.3);
+        0 0 8px var(--LIGHT-BLUR-INNER),
+        0 0 15px var(--LIGHT-BLUR-MIDDLE),
+        0 0 25px var(--LIGHT-BLUR-OUTER);
     display: inline-block;
     position: relative;
-    animation: flicker 0.1s ease-in-out infinite;
+    animation: flicker var(--LIGHT-FLICKER-FREQUENCY) ease-in-out infinite;
 }
 /*Flicker animation for monitor light*/
 @keyframes flicker {
-  0%, 100% { 
-    filter: brightness(250%) saturate(150%); 
-    opacity: 0.92; 
-    box-shadow: 
-      0 0 5px rgba(153, 0, 0, 0.6),
-      0 0 10px rgba(153, 0, 0, 0.3);
-  }
-  25% { 
-    filter: brightness(260%) saturate(155%); 
-    opacity: 0.94; 
-    box-shadow: 
-      0 0 6px rgba(153, 0, 0, 0.65),
-      0 0 12px rgba(153, 0, 0, 0.35);
-  }
-  50% { 
-    filter: brightness(240%) saturate(145%); 
-    opacity: 0.91; 
-    box-shadow: 
-      0 0 4px rgba(153, 0, 0, 0.55),
-      0 0 9px rgba(153, 0, 0, 0.25);
-  }
-  75% { 
-    filter: brightness(255%) saturate(152%); 
-    opacity: 0.93; 
-    box-shadow: 
-      0 0 5px rgba(153, 0, 0, 0.6),
-      0 0 11px rgba(153, 0, 0, 0.3);
-  }
+    0%, 100% { 
+        filter: brightness(250%) saturate(150%); 
+        opacity: 0.92; 
+        box-shadow: 
+            0 0 var(--LIGHT-FLICKER-0-100-INNER),
+            0 0 var(--LIGHT-FLICKER-0-100-OUTER);
+    }
+    25% { 
+        filter: brightness(260%) saturate(155%); 
+        opacity: 0.94; 
+        box-shadow: 
+            0 0 var(--LIGHT-FLICKER-25-INNER),
+            0 0 var(--LIGHT-FLICKER-25-OUTER);
+    }
+    50% { 
+        filter: brightness(240%) saturate(145%); 
+        opacity: 0.91; 
+        box-shadow: 
+            0 0 var(--LIGHT-FLICKER-50-INNER),
+            0 0 var(--LIGHT-FLICKER-50-OUTER);
+    }
+    75% { 
+        filter: brightness(255%) saturate(152%); 
+        opacity: 0.93; 
+        box-shadow: 
+            0 0 var(--LIGHT-FLICKER-75-INNER),
+            0 0 var(--LIGHT-FLICKER-75-OUTER);
+    }
 }
 .monitor-logo {
-    border: inset 1px #e7d3ac;
-    background-color:#bbaa89;
+    border: var(--MONITOR-LOGO-BORDER);
+    background-color:var(--MONITOR-LOGO-BACKGROUND);
     padding: 5px;
-    filter: blur(0.7px);
+    filter: blur(var(--MONITOR-LOGO-BLUR));
     opacity: 0.85;
-    color: #614734;
+    color: var(--MONITOR-LOGO-COLOR);
     font-size: 1.5em;
 }
 .button {
@@ -182,13 +242,13 @@ h2 {
     margin-left: -10px;
     height: 20px;
     width: 30px;
-    background-color:#D0BF9E;
+    background-color: var(--SCREEN-FRAME);
     border-radius: 3px; 
     box-shadow: 
-    0 -2px 3px rgba(255, 255, 255, 0.2) inset, /* Top highlight */
-    0 2px 3px rgba(26, 19, 10, 0.2) inset, /* Bottom shadow */
-    0 3px 5px rgba(26, 19, 10, 0.3), /* Outer shadow */
-    0 -1px 2px rgba(255, 255, 255, 0.1); /* Top edge highlight */
+    var(--BUTTON-TOP-SHADOW), /* Top highlight */
+    var(--BUTTON-BOTTOM-SHADOW), /* Bottom shadow */
+    var(--BUTTON-OUTER-SHADOW), /* Outer shadow */
+    var(--BUTTON-TOP-HIGHLIGHT); /* Top edge highlight */
 }
 
 /*CONTENT AREA*/
@@ -196,7 +256,7 @@ h2 {
 .view-area {
     display:flex;
     justify-content: space-between;
-    background-color: #1b2019;
+    background-color: var(--DESKTOP-SCREEN-BACKGROUND);
 }
 /*main element*/
 main {
@@ -220,10 +280,10 @@ main {
     flex-direction: row;
     align-items: center;
     width: 100%;
-    background-color: rgb(61, 250, 77);
+    background-color: var(--DESKTOP-TEXT);
     min-height: 50px;
     margin-bottom: 25px;
-    color: black;
+    color: var(--DESKTOP-FOCUSSED-TEXT);
     padding: 0 20px;
 }
 .control-box div {
@@ -307,14 +367,14 @@ textarea {
 input, textarea {
     font-family: ocr;
     font-size: 1.2em;
-    border: 1px solid rgb(61, 250, 77);
-    background-color: #1b2019;
-    color: rgb(61, 250, 77);
+    border: 1px solid var(--DESKTOP-TEXT);
+    background-color: var(--DESKTOP-SCREEN-BACKGROUND);
+    color: var(--DESKTOP-TEXT);
     padding:5px 0 5px 5px;
     width: 75%;
     box-sizing: border-box;
     margin: 5px 5px 15px 5px;
-    outline: 4px solid #1b2019;
+    outline: 4px solid var(--DESKTOP-SCREEN-BACKGROUND);
 }
 
 input::placeholder, textarea::placeholder {
@@ -322,8 +382,8 @@ input::placeholder, textarea::placeholder {
 }
 
 .input-focus, input:focus, textarea:focus {
-    border: 1px solid rgb(61, 250, 77);
-    outline: 4px solid rgb(61, 250, 77);
+    border: 1px solid var(--DESKTOP-TEXT);
+    outline: 4px solid var(--DESKTOP-TEXT);
 }
 
 .form-button {
@@ -331,36 +391,28 @@ input::placeholder, textarea::placeholder {
     font-family: ocr;
     font-style: normal;
     color-scheme: light dark;
-    color: rgb(61, 250, 77);
+    color: var(--DESKTOP-TEXT);
     border: none;
     font-size: 1.1em;
     padding:0;
-    background-color: #1b2019;
+    background-color: var(--DESKTOP-SCREEN-BACKGROUND);
     width: 100%;
     margin-top: 5px;
 }
-
 .button-focus {        
-    color: black;
-    background-color: rgb(61, 250, 77);
+    color: var(--DESKTOP-FOCUSSED-TEXT);
+    background-color: var(--DESKTOP-TEXT);
 }
-
 .submit-dark {
-    color:#283622;
+    color: var(--DESKTOP-BUTTON-DISABLED-TEXT);
 }
-
 .button-focus-dark {
-    color:#283622;
-    background-color: #242424;
+    color: var(--DESKTOP-BUTTON-DISABLED-TEXT);
+    background-color: var(--DESKTOP-BUTTON-DISABLED-FOCUS);
 }
-
 .form-info {
     margin: -13px 4px 10px;
     display:block
-}
-
-.submit-dark {
-    color:#283622;
 }
 
 /*DESKTOP MEDIA QUERIES*/

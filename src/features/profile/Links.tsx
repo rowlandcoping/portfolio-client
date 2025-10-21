@@ -30,9 +30,9 @@ const Links = ({ links }: LinksProps) => {
     }, [focusedIndex, activePage]);
 
     return (
-        <>
+        <div>
             {links.map((link, i) => (
-                <div className = "profile-links" key={link.id}>
+                <div className="profile-links" key={link.id}>
                     <Link 
                         to={link.url}
                         className={focusedIndex === i ? 'focussed' : ''}
@@ -42,14 +42,15 @@ const Links = ({ links }: LinksProps) => {
                                         ? `${server+link.logoGrn}`
                                         : `${server+link.logoGry}`   
                                     } 
-                                alt={link.logoAlt} />
+                                alt={link.logoAlt} 
+                                className="project-image-thumb"
+                            />
                             <span className="link-text">{link.name}</span>
                         </h2>
-                    
                     </Link>
                 </div>
             ))}
-        </>
+        </div>
     )
 }
 

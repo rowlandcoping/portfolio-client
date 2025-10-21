@@ -91,9 +91,16 @@ const SearchProjects = () => {
     return (
         <main>
             <div className="content">
-                { (filteredProjects.length === 0 || activePage === 0) &&(
-                <h1>Search for a Project</h1>
-                )}
+                { (filteredProjects.length === 0) 
+                    ? <h1>Search for a Project</h1>
+                    : <h1>
+                            Search Results (showing
+                            {currentPageProjects.length === 1
+                                ? ` ${activePage * itemsPerPage + 1} of ${filteredProjects.length}`
+                                : ` ${activePage * itemsPerPage + 1}-${activePage * itemsPerPage + currentPageProjects.length} of ${filteredProjects.length}`
+                            })
+                        </h1>
+                }
                 {/** Only show search box on page 1 */}
                 {activePage === 0 && (
                     <div className="search-form-container">
@@ -115,18 +122,7 @@ const SearchProjects = () => {
 
                 {currentPageProjects.length > 0 && (
                     
-                    <div className="projects-page">
-
-                        {currentPageProjects.length > 0 && (
-                            <h2>
-                                Search Results (
-                                {currentPageProjects.length === 1
-                                    ? `${activePage * itemsPerPage + 1} of ${filteredProjects.length}`
-                                    : `${activePage * itemsPerPage + 1}-${activePage * itemsPerPage + currentPageProjects.length} of ${filteredProjects.length}`
-                                })
-                            </h2>
-                        )}
-                        
+                    <div>
                         
                         {currentPageProjects.map((project, i) => {
 

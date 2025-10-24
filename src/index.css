@@ -107,22 +107,35 @@ p {
 
 /*HEADLINES*/
 /*h1 (page headings)*/
-h1 {
+h1, .section-headline {
     font-size: 1.6em;
     line-height: 1.1em;
 }
+
+h2, h3 {
+    margin:0;
+}
+
 /*h2 (sub-headings)*/
 h2 {
     font-size: 1.4em;
-    margin:0;
-    padding-top:4px;
-    line-height: 1.2em;
 }
-.focussed h2  {
+.section-headline {
+    margin-top:17px;
+    padding-bottom:15px;
+}
+
+/*h3 (links)*/
+h3 {
+    font-size: 1.4em;
+    padding-top:4px;
+    line-height: 1.4em;
+}
+.focussed h3 {
     color: var(--DESKTOP-FOCUSSED-TEXT);
     background-color: var(--DESKTOP-TEXT);
 }
-/*h3 (links)*/
+
 
 /*HELPER CLASSES*/
 .selected {
@@ -304,7 +317,7 @@ main {
 
 /*NAVIGATION PAGES*/
 /*thumbnail navigation links*/
-.profile-links h2 {
+.profile-links h3 {
     display:flex;
     align-items: center;
     padding: 4px 5px; 
@@ -323,17 +336,17 @@ main {
 /*PROJECT / PROFILE PAGES*/
 /*SKILLS & TECH SECTIONS*/
 .skills-wrapper p:first-child {
-    margin-top: 10px;
+    margin-top: 5px;
 }
 .skills-wrapper p:last-child {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 /*MAIN IMAGE*/
 .project-image-container
  {
     display: flex;
     flex-shrink: 0;
-    padding: 10px;
+    padding: 10px 0;
     margin-bottom: 10px;
 }
 .project-image-container img {
@@ -355,8 +368,13 @@ body.desktop .project-image-container img {
     flex: 1; /*NB keep an eye on this, for some reason was separated for desktop*/
 }
 /*project details*/
+
+.details-container:first-of-type {
+    margin: 5px 0 10px;
+}
+
 .details-container {
-    margin: 10px 0;
+    margin:10px 0;
 }
 
 /*CONTACT FORM*/
@@ -411,8 +429,9 @@ input::placeholder, textarea::placeholder {
     background-color: var(--DESKTOP-BUTTON-DISABLED-FOCUS);
 }
 .form-info {
-    margin: -13px 4px 10px;
-    display:block
+    font-size:0.8em;
+    margin: -9px 4px 10px;
+    display:block;
 }
 
 /*DESKTOP MEDIA QUERIES*/
@@ -439,7 +458,7 @@ input::placeholder, textarea::placeholder {
         margin-bottom: 5px;
     }
     
-    body.desktop h2 {
+    body.desktop h3 {
         font-size: 1.2em;
         padding-top:2px;
     }

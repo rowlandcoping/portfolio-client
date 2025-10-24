@@ -63,7 +63,7 @@ const Skills = ({ skills }: SkillsProps) => {
         <>
             {others.length > 0 && (<>
 
-            <h2>Frameworks and Platforms</h2>
+            <h3>Frameworks and Platforms</h3>
             <div className="skills-wrapper">
                 {others.map(s => (
                 <p key={s.id}>
@@ -75,7 +75,7 @@ const Skills = ({ skills }: SkillsProps) => {
             </>)}
             {languages.length > 0 && (<>
             
-            <h2>Languages</h2>
+            <h3>Languages</h3>
             <div className="skills-wrapper">
                 <p>
                     {languages.map((s, i) => (<Fragment key={s.id}>                    
@@ -89,7 +89,7 @@ const Skills = ({ skills }: SkillsProps) => {
             
             {databases.length > 0 && (<>
 
-            <h2>Databases</h2>
+            <h3>Databases</h3>
             <div className="skills-wrapper">
                 <p>
                     {databases.map((s, i) => (<Fragment key={s.id}>                    

@@ -11,6 +11,7 @@ const Profile = () => {
     const activePage = useKeyboardNavStore((s) => s.activePage);
     const setMaxIndex = useKeyboardNavStore.getState().setMaxIndex;
     const setActivePage = useKeyboardNavStore.getState().setActivePage;
+    const enabled = useKeyboardNavStore((s) => s.enabled);
 
     const {
         data: profile,
@@ -63,24 +64,45 @@ const Profile = () => {
     ];
    
     return (
-        <main>
-            
+        <main aria-describedby={enabled ? 'navigation-instructions' : undefined}>
+            {enabled &&(
+                <>
+                    <p className="sr-only" id="navigation-instructions">
+                        Use the left and right arrow keys to move between pages.
+                        Press Escape to return to the homepage.
+                    </p>
+                    <p className="sr-only" id="links-navigation-instructions">
+                        Use up and down arrow keys to cycle between links.
+                        Press Enter to select a link.
+                    </p>
+                </>
+            )}         
             <div>                
                 {pages.map((page, index) => (
-                    <div
+                    <section
                         key={index}
                         className={index === activePage ? 'selected' : 'hidden'}
+                        aria-hidden={index !== activePage}
+                        aria-labelledby={`section-title-${index}`}
                     >
-                        <h1>{page.title}</h1>
+                        <h2 
+                            id={`section-title-${index}`}
+                            className="section-headline"
+                        >
+                            {page.title}
+                        </h2>
                         {page.content}
-                    </div>
+                    </section>
                 ))}
             </div>
             <div>
-                <div className="current-page page-one selected">
+                <div className="current-page" aria-hidden="true">
                     page { activePage + 1 } of 3
                 </div>
-                <div className="control-container">
+                <span className="sr-only" aria-live="polite">
+                    You are on page {activePage + 1} of 3
+                </span>
+                <div className="control-container" aria-hidden="true">
                     <div className="control-box">
                         <div>
                             exit<br />

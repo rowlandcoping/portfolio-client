@@ -37,33 +37,38 @@ const Home = () => {
         <main>
             <div className="content">
                 <h1>{user.name}'s Portfolio</h1>
-            
-                <Link 
-                    to="/profile"
-                    className={focusedIndex === 0 ? 'focussed' : ''}
-                >
-                    <h2>View Profile</h2>
-                </Link>
-                <Link 
-                    to="/projects"
-                    className={focusedIndex === 1 ? 'focussed' : ''}
-                >
-                    <h2>Explore Projects</h2>
-                </Link>
-                <Link 
-                    to="/profile/contact"
-                    className={focusedIndex === 2 ? 'focussed' : ''}
-                >
-                    <h2>Contact {user.name}</h2>
-                </Link>
-                <Link 
-                    to="/about"
-                    className={focusedIndex === 3 ? 'focussed' : ''}
-                >
-                    <h2>About This Site</h2>
-                </Link>
+                <nav aria-describedby="navigation-instructions">
+                    <p className="sr-only" id="navigation-instructions">
+                        Use up and down arrow keys to cycle between links.
+                        Press Enter to select a link.
+                    </p>               
+                    <Link 
+                        to="/profile"
+                        className={focusedIndex === 0 ? 'focussed' : ''}
+                    >
+                        <h3>View Profile</h3>
+                    </Link>
+                    <Link 
+                        to="/projects"
+                        className={focusedIndex === 1 ? 'focussed' : ''}
+                    >
+                        <h3>Explore Projects</h3>
+                    </Link>
+                    <Link 
+                        to="/profile/contact"
+                        className={focusedIndex === 2 ? 'focussed' : ''}
+                    >
+                        <h3>Contact {user.name}</h3>
+                    </Link>
+                    <Link 
+                        to="/about"
+                        className={focusedIndex === 3 ? 'focussed' : ''}
+                    >
+                        <h3>About This Site</h3>
+                    </Link>
+                </nav>
             </div>
-            <div className="control-container">
+            <div className="control-container" aria-hidden="true">
                 <div className="control-box">
                     <div>
                         next<br />

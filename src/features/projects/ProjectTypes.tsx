@@ -53,21 +53,28 @@ const ProjectTypes = () => {
         <main>
             <div className="content">
                 <h1>Select a Category</h1>
-                {filteredCategories.map((category, i) => (
-                    <div className = "profile-links" key={category.id}>
-                        <Link 
-                            to={`/projects/project-categories/${category.id}`}
-                            className={focusedIndex === i ? 'focussed' : ''}
-                        >                                                
-                            <h2>
-                                <span className="link-text">{category.name}</span>
-                            </h2>
-                        
-                        </Link>
-                    </div>
-                ))}
+                <nav aria-describedby="navigation-instructions">
+                    <p className="sr-only" id="navigation-instructions">
+                        Use up and down arrow keys to cycle between project types.
+                        Press Enter to select a project type.
+                        Press Escape to return to the projects page.
+                    </p>
+                    {filteredCategories.map((category, i) => (
+                        <div className = "profile-links" key={category.id}>
+                            <Link 
+                                to={`/projects/project-categories/${category.id}`}
+                                className={focusedIndex === i ? 'focussed' : ''}
+                            >                                                
+                                <h3>
+                                    <span className="link-text">{category.name}</span>
+                                </h3>
+                            
+                            </Link>
+                        </div>
+                    ))}
+                </nav>
             </div>
-            <div className="control-container">
+            <div className="control-container" aria-hidden="true">
                 <div className="control-box">
                     <div>
                         exit<br />

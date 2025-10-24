@@ -23,9 +23,11 @@ export type KeyboardNavState = {
     prev: () => void;
 };
 
+
+
 export const useKeyboardNavStore = create<KeyboardNavState>((set, get) => ({
     enabled: true,
-    itemsPerPage: 4,
+    itemsPerPage: 2,
     focusedIndex: 0,
     setFocusedIndex: (focusedIndex) => set({ focusedIndex }),
     linkCount: 0,       // new

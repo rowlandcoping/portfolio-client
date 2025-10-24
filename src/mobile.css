@@ -59,18 +59,30 @@ body.mobile a {
 
 /*HEADLINES*/
 /*h1 (page headings)*/
-body.mobile h1 {
+body.mobile h1, body.mobile .section-headline {
     font-size: 1.4em;
 }
+
 /*h2 (sub-headings)*/
 body.mobile h2 {
+    font-size: 1.25em;
+    line-height: 1.1em;
+}
+
+/*h3 (links)*/
+body.mobile h3 {
+    padding-top:4px;
+    line-height: 1.3em;
+}
+/*h2 (sub-headings)*/
+body.mobile h3 {
     padding-top:0;
     margin-top:2px;
 
     line-height: 1em;
-    font-size: 1.15em;
+    font-size: 1.2em;
 }
-body.mobile .focussed h2  {
+body.mobile .focussed h3  {
     color: var(--MOBILE-SCREEN-BACKGROUND);
     background-color: var(--MOBILE-TEXT);
 }
@@ -99,7 +111,7 @@ body.mobile .project-image-container {
 body.mobile .project-image-container img {
     width: 210px;
     height:140px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     mix-blend-mode: multiply;
     opacity: 0.9;
 }
@@ -431,6 +443,7 @@ body.mobile .control-container {
     text-align:right;
 }
 .mobile-monitor img {
+    height:15px;
     width:30px;
     filter: brightness(0) saturate(100%) invert(25%) grayscale(100%);
 }
@@ -474,10 +487,43 @@ body.mobile .control-container {
 
 /*FORM STYLING*/
 
+body.mobile .input-focus, 
+body.mobile input:focus, 
+body.mobile textarea:focus {
+    border: 1px solid var(--MOBILE-TEXT);
+    outline: 4px solid var(--MOBILE-TEXT);
+}
 
+body.mobile textarea {
+    height: 240px;
+}
+body.mobile input, body.mobile textarea {
+    font-family: slate;
+    border: 1px solid var(--MOBILE-TEXT);
+    background-color: var(--MOBILE-SCREEN-BACKGROUND);
+    color: var(--MOBILE-TEXT);
+    width:98%;
+    margin: 5px 3px 15px 3px;
+    outline: 4px solid var(--MOBILE-SCREEN-BACKGROUND);
+}
 
-
-
+body.mobile .form-button {
+    font-family: slate;
+    color: var(--MOBILE-TEXT);
+    padding:2px 2px;
+    background-color: var(--MOBILE-SCREEN-BACKGROUND);
+}
+body.mobile .button-focus {        
+    color: var(--MOBILE-SCREEN-BACKGROUND);
+    background-color: var(--MOBILE-TEXT);
+}
+body.mobile .submit-dark {
+    color: var(--MOBILE-SCREEN-DARK);
+}
+body.mobile .button-focus-dark {
+    color: var(--MOBILE-SCREEN-BACKGROUND);
+    background-color: var(--MOBILE-SCREEN-DARK);
+}
 
 /*MOBILE MEDIA QUERIES*/
 /*Landscape (NB will probably require tinkering!*/

@@ -6,12 +6,21 @@ import { useMobileOS } from '../hooks/useMobileOS';
 
 const MobileBottom = () => {
     const os = useMobileOS();
-    const navigate = useNavigate();    
+    const navigate = useNavigate();  
+
     const setLastFocused = useMobileNavStore((s) => s.setLastFocused);
+    const setFocusWithButtons = useMobileNavStore((s) => s.setFocusWithButtons);
+
     const setMaxIndex = useKeyboardNavStore((s) => s.setMaxIndex);
 
-    const handleUp = () => useKeyboardNavStore.getState().prev();
-    const handleDown = () => useKeyboardNavStore.getState().next();
+    const handleUp = () => {
+        setFocusWithButtons(true)
+        useKeyboardNavStore.getState().prev();
+    }
+    const handleDown = () => {
+        setFocusWithButtons(true)
+        useKeyboardNavStore.getState().next();
+    }
     const handleLeft = () => useKeyboardNavStore.getState().decrementPage();
     const handleRight = () => useKeyboardNavStore.getState().incrementPage();
     const handleBack = () => {
@@ -95,26 +104,36 @@ const MobileBottom = () => {
 
     return (
         <div className="mobile-bottom-container">
-            <div className="mobile-frame mobile-bottom-left"></div>
+            <div className="mobile-frame mobile-bottom-left" aria-hidden="true"></div>
             <div className="mobile-frame mobile-bottom">
-                <div className="mobile-buttons-container">
+                <nav className="mobile-buttons-container" aria-label="Navigation buttons">
                     <div className="back-button">
-                        <button className="ignore-focus-change" onClick={handleBack}>
+                        <button 
+                            className="ignore-focus-change" 
+                            onClick={handleBack}
+                            aria-label="Escape button — takes you back to the previous page"
+                        >
                             <img 
                                 src={os === 'ios' ? "backButton.png" : "backButton.svg"}
                                 className="button-large button-press" 
-                                alt="Back Button" />
+                                alt="Back Button"
+                                aria-hidden="true"
+                            />
                         </button>
                     </div>
                     <div className="direction-pad">
                         <div className="pad-section">
                             <div className="pad-button"></div>
                             <div className="up-button pad-button">
-                                <button onClick={handleUp}>
+                                <button 
+                                    onClick={handleUp}
+                                    aria-label="Up button — cycles through links or form inputs"
+                                >
                                     <img 
                                         src={os === 'ios' ? 'arrow2.png' : 'arrow2.svg'} 
                                         className="arrow arrow-up button-press" 
-                                        alt="Up Arrow" 
+                                        alt="Up Arrow"
+                                        aria-hidden="true"
                                     />
                                 </button>
                             </div>
@@ -122,22 +141,32 @@ const MobileBottom = () => {
                         </div>
                         <div className="pad-section">
                             <div className="left-button pad-button">
-                                <button className="ignore-focus-change" onClick={handleLeft}>
+                                <button 
+                                    className="ignore-focus-change" 
+                                    onClick={handleLeft}
+                                    aria-label="Left button — goes back a page"
+                                >
                                     <img 
                                         src={os === 'ios' ? 'arrow2.png' : 'arrow2.svg'} 
                                         className="arrow arrow-left button-press" 
-                                        alt="Left Arrow" 
+                                        alt="Left Arrow"
+                                        aria-hidden="true" 
                                     />
                                 </button>
                             </div>
                             <div className="pad-button"></div>
 
                             <div className="right-button pad-button">
-                                <button className="ignore-focus-change" onClick={handleRight}>
+                                <button 
+                                    className="ignore-focus-change" 
+                                    onClick={handleRight}
+                                    aria-label="Right button — goes forward a page"
+                                >
                                     <img 
                                         src={os === 'ios' ? 'arrow2.png' : 'arrow2.svg'} 
                                         className="arrow arrow-right button-press" 
-                                        alt="Right Arrow" 
+                                        alt="Right Arrow"
+                                        aria-hidden="true"
                                     />
                                 </button>
                             </div>
@@ -146,33 +175,38 @@ const MobileBottom = () => {
                         <div className="pad-section">
                             <div className="pad-button"></div>
                             <div className="down-button pad-button">
-                            <button onClick={handleDown}>
-                                <img 
-                                    src={os === 'ios' ? 'arrow2.png' : 'arrow2.svg'} 
-                                    className="arrow arrow-down button-press" 
-                                    alt="Down Arrow" 
-                                />
-                            </button>
+                                <button
+                                    aria-label="Down button — cycles through links or form inputs"
+                                    onClick={handleDown}
+                                >
+                                    <img 
+                                        src={os === 'ios' ? 'arrow2.png' : 'arrow2.svg'} 
+                                        className="arrow arrow-down button-press" 
+                                        alt="Down Arrow"
+                                        aria-hidden="true"
+                                    />
+                                </button>
                             <div className="pad-button"></div>
-                        </div>
-                            
-                        </div>
-                        
+                        </div>                            
+                    </div>                        
                     </div>
                     <div className="return-button">
-                        <div>
-                            <button className = "ignore-focus-change" onClick={handleSelect}>
-                                <img 
-                                    src={os === 'ios' ? 'selectButton.png' : "selectButton.svg"} 
-                                    className="button-large button-press" 
-                                    alt="Select Button" 
-                                />
-                            </button>
-                        </div>
+                        <button 
+                            className="ignore-focus-change" 
+                            onClick={handleSelect}
+                            aria-label="Enter button — selects focussed link or activates a submit button"
+                        >
+                            <img 
+                                src={os === 'ios' ? 'selectButton.png' : "selectButton.svg"} 
+                                className="button-large button-press" 
+                                alt="Select Button"
+                                aria-hidden="true"
+                            />
+                        </button>
                     </div>
-                </div>               
+                </nav>               
             </div>
-            <div className="mobile-frame mobile-bottom-right"></div>
+            <div className="mobile-frame mobile-bottom-right" aria-hidden="true"></div>
         </div>
     )
 }

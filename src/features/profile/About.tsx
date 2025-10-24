@@ -23,12 +23,18 @@ const About = ({ name, description, imageGrn, imageGry, imageAlt, jobTitle }: Ab
                     className="project-image"
                 />
                 <div className="">
-                    <h2>
-                        NAME: {name}
-                    </h2> 
-                    <h2>
-                        TITLE: {jobTitle}
-                    </h2>                   
+                    <h3>
+                        { enabled 
+                            ? `NAME: ${name}`
+                            : <>Name: &nbsp;&nbsp;{name}</>
+                        }                        
+                    </h3> 
+                    <h3>
+                        { enabled 
+                            ? `TITLE: ${jobTitle}`
+                            : <>Title: &nbsp;&nbsp;{jobTitle}</>
+                        }                        
+                    </h3>                   
                 </div>
             </div>
             <div className="project-text">

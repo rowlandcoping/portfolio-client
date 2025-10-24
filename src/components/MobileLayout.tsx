@@ -74,7 +74,7 @@ const MobileLayout = () => {
 
     return (
         <div className="mobile-container">            
-            <div className="mobile-top-container">
+            <div className="mobile-top-container" aria-hidden="true">
                 <div className="mobile-frame mobile-top-left">
 
                 </div>
@@ -88,13 +88,13 @@ const MobileLayout = () => {
                 </div>                
             </div>            
             <div className="mobile-view-area">
-                <div className="mobile-frame mobile-left"></div>
+                <div className="mobile-frame mobile-left" aria-hidden="true"></div>
                 <div className="mobile-content-container">
                     <div className="mobile-pda-info">
                         <div className="time-date">
                             <TimeDate />
                         </div>
-                        <div className="mobile-monitor">
+                        <div className="mobile-monitor" aria-hidden="true">
                             <div className="mobile-battery">
                                 <img src="battery.svg" alt="battery life indicator" />
                             </div>
@@ -105,14 +105,14 @@ const MobileLayout = () => {
                     </div>
                     <Outlet />
                     {maxIndex > 0 &&(
-                        <div className="mobile-page-info">
+                        <div className="mobile-page-info" aria-hidden="true">
                         
                             page { activePage + 1 } of { maxIndex + 1 }
                         
                         </div>
                     )}
                 </div>
-                <div className="mobile-frame mobile-right">
+                <div className="mobile-frame mobile-right" aria-hidden="true">
                     <MobileScrollWheel />
                 </div>
             </div>       

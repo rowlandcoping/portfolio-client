@@ -69,14 +69,14 @@ const ProjectsByType = () => {
                         : `${i + 1} of ${filteredProjects.length})`}`
                     : `All Projects`}`,
             content: (
-            <div>
+            <nav aria-describedby="links-navigation-instructions">
                 {slice.map((project, j) => (
                 <div className="profile-links" key={project.id}>
                     <Link
                     to={`/projects/${project.id}`}
                     className={focusedIndex === j ? 'focussed' : ''}
                     >
-                    <h2>
+                    <h3>
                         <img
                             src = { enabled
                                 ? `${server+project.imageGrn}`
@@ -86,35 +86,62 @@ const ProjectsByType = () => {
                             className="project-image-thumb"
                         />
                         <span className="link-text">{project.name}</span>
-                    </h2>
+                    </h3>
                     </Link>
                 </div>
                 ))}
-            </div>
+            </nav>
             )
         });
     }
 
     return (
-        <main>
+        <main aria-describedby={enabled ? 'navigation-instructions' : undefined}>
+            {enabled &&(
+                <>
+                    <p className="sr-only" id="navigation-instructions">
+                        {totalPages > 1 &&(
+                        `Use the left and right arrow keys to move between pages.`
+                        )}
+                        Press Escape to return to project types page.
+                    </p>
+                    <p className="sr-only" id="links-navigation-instructions">
+                        Use up and down arrow keys to cycle between projects.
+                        Press Enter to select a project.
+                        Press Escape to return to project types page.
+                    </p>
+                </>
+            )}
             <div className="content">
                 {pages.map((page, index) => (
-                    <div
+                    <section
                         key={index}
                         className={index === activePage ? 'selected' : 'hidden'}
+                        aria-hidden={index !== activePage}
+                        aria-labelledby={`section-title-${index}`}
                     >
-                        <h1>{page.title}</h1>
+                        <h2 
+                            id={`section-title-${index}`}
+                            className="section-headline"
+                        >
+                            {page.title}
+                        </h2>
                         {page.content}
-                    </div>
+                    </section>
                 ))}
             </div>
             <div>
                 { totalPages > 1 &&(
-                <div className="current-page page-one selected">
-                        page { activePage + 1 } of {pages.length}
-                </div>
+                    <>
+                        <div className="current-page" aria-hidden="true">
+                            Page {activePage + 1} of {totalPages}
+                        </div>
+                        <span className="sr-only" aria-live="polite">
+                            You are on page {activePage + 1} of {totalPages}
+                        </span>
+                    </>
                 )}
-                <div className="control-container">
+                <div className="control-container" aria-hidden="true">
                     <div className="control-box">
                         <div>
                             exit<br />

@@ -89,7 +89,27 @@ const SearchProjects = () => {
     if (isError) return <p>Error Loading Project Data...</p>;
 
     return (
-        <main>
+        <main aria-describedby={enabled ? 'navigation-instructions' : undefined}>
+            {enabled &&(
+                <>
+                    <p className="sr-only" id="navigation-instructions">
+                        {totalPages > 1 &&(
+                        `Use the left and right arrow keys to move between pages.`
+                        )}
+                        Press Escape to return to projects page.
+                    </p>
+                    <p className="sr-only" id="search-navigation-instructions">
+                        Use up and down arrow keys to navigate from the search bar through the search results.
+                        Press Enter on a link to select a project to view.
+                        Press Escape to return to projects page.
+                    </p>
+                    <p className="sr-only" id="links-navigation-instructions">
+                        Use up and down arrow keys to cycle between projects.
+                        Press Enter to select a project.
+                        Press Escape to return to projects page.
+                    </p>
+                </>
+            )}
             <div className="content">
                 { (filteredProjects.length === 0) 
                     ? <h1>Search for a Project</h1>
@@ -101,43 +121,41 @@ const SearchProjects = () => {
                             })
                         </h1>
                 }
-                {/** Only show search box on page 1 */}
                 {activePage === 0 && (
-                    <div className="search-form-container">
-                        <form className="search-form" onSubmit={(e) => e.preventDefault()}>
-                            <label className="sr-only" htmlFor="search">Search Here</label>
-                            <input
-                                id="search"
-                                ref={searchInputRef}
-                                type="text"
-                                role="searchbox"
-                                className={focusedIndex === 0 ? 'input-focus' : ''}
-                                placeholder="search"
-                                value={search}
-                                onChange={(e) => setSearch(e.target.value)}
-                            />
-                        </form>
-                    </div>
-                )}
-
-                {currentPageProjects.length > 0 && (
-                    
-                    <div>
-                        
+                    <nav 
+                        aria-label="Project search results with search box"
+                        aria-describedby={enabled ? "search-navigation-instructions" : undefined}
+                    >
+                        <div className="search-form-container">
+                            <form className="search-form" onSubmit={(e) => e.preventDefault()}>
+                                <label className="sr-only" htmlFor="search">Search Here</label>
+                                <input
+                                    id="search"
+                                    ref={searchInputRef}
+                                    type="text"
+                                    role="searchbox"
+                                    className={focusedIndex === 0 ? 'input-focus' : ''}
+                                    placeholder="search"
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                />
+                            </form>
+                        </div>
+                        <span className="sr-only" aria-live="polite">
+                            {filteredProjects.length > 0
+                                ? `${currentPageProjects.length} projects shown`
+                                : 'No projects found'}
+                        </span>
                         {currentPageProjects.map((project, i) => {
-
                             // offset index by 1 if we're on page 0 (because input takes index 0)
-                            const adjustedIndex = activePage === 0 ? i + 1 : i;
-
-                            
-                            return (
-                                
+                            const adjustedIndex = activePage === 0 ? i + 1 : i;                            
+                            return (                                
                                 <div className="profile-links" key={project.id}>
                                     <Link
                                         to={`/projects/${project.id}`}
                                         className={focusedIndex === adjustedIndex ? 'focussed' : ''}
                                     >
-                                        <h2>
+                                        <h3>
                                             <img
                                                 src={
                                                     enabled
@@ -147,24 +165,61 @@ const SearchProjects = () => {
                                                 alt={project.imageAlt}
                                                 className="project-image-thumb"
                                             />
-                                             <span className="link-text">{project.name}</span>
-                                        </h2>
+                                            <span className="link-text">{project.name}</span>
+                                        </h3>
+                                    </Link>
+                                </div>
+                            )
+                        })}
+                    </nav>
+                )}                
+
+                {activePage > 0 && currentPageProjects.length > 0 && (
+                    <nav 
+                        aria-label="Project search results without search box"
+                        aria-describedby={enabled ? "links-navigation-instructions" : undefined}
+                    >                        
+                        {currentPageProjects.map((project, i) => {
+
+                            // offset index by 1 if we're on page 0 (because input takes index 0)
+                            const adjustedIndex = activePage === 0 ? i + 1 : i;
+                            return (
+                                <div className="profile-links" key={project.id}>
+                                    <Link
+                                        to={`/projects/${project.id}`}
+                                        className={focusedIndex === adjustedIndex ? 'focussed' : ''}
+                                    >
+                                        <h3>
+                                            <img
+                                                src={
+                                                    enabled
+                                                        ? `${server + project.imageGrn}`
+                                                        : `${server + project.imageGry}`
+                                                }
+                                                alt={project.imageAlt}
+                                                className="project-image-thumb"
+                                            />
+                                            <span className="link-text">{project.name}</span>
+                                        </h3>
                                     </Link>
                                 </div>
                             );
                         })}
-                    </div>
+                    </nav>
                 )}
-
-                
             </div>
             <div>
                 {totalPages > 1 && (
-                    <div className="current-page">
-                        Page {activePage + 1} of {totalPages}
-                    </div>
+                    <>
+                        <div className="current-page" aria-hidden="true">
+                            Page {activePage + 1} of {totalPages}
+                        </div>
+                        <span className="sr-only" aria-live="polite">
+                            You are on page {activePage + 1} of {totalPages}
+                        </span>
+                    </>
                 )}
-                <div className="control-container">
+                <div className="control-container" aria-hidden="true">
                     <div className="control-box">
                         <div>
                             exit<br />
@@ -187,8 +242,6 @@ const SearchProjects = () => {
                             </>
                         )}
                     </div>
-                    <div>
-
                     {totalPages > 1 && (
                         <div className="control-box control-right">
                             {activePage > 0 && (
@@ -205,7 +258,6 @@ const SearchProjects = () => {
                             )}
                         </div>
                     )}
-                    </div>
                 </div>
             </div>
         </main>

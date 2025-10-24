@@ -14,6 +14,7 @@ const Links = ({ clientRepo, serverRepo }: LinksProps) => {
     const setLinkCount = useKeyboardNavStore((s) => s.setLinkCount);
     const setFocusedIndex = useKeyboardNavStore((s) => s.setFocusedIndex);
     const activePage = useKeyboardNavStore((s) => s.activePage);
+    const enabled = useKeyboardNavStore((s) => s.enabled);
 
     useEffect(() => {
         if (activePage !== 1) return;
@@ -32,24 +33,26 @@ const Links = ({ clientRepo, serverRepo }: LinksProps) => {
 
     return (
         <div className="details-container">
-            <Link 
-                to={clientRepo}
-                className={focusedIndex === 0 ? 'focussed' : ''}
-            >
-                <h2>View Client Repository</h2>
-            </Link>
-            <Link 
-                to={serverRepo}
-                className={focusedIndex === 1 ? 'focussed' : ''}
-            >
-                <h2>View Server Repository</h2>
-            </Link>
-            <Link 
-                to="/profile/contact"
-                className={focusedIndex === 2 ? 'focussed' : ''}
-            >
-                <h2>Site Feedback</h2>
-            </Link>
+            <nav aria-describedby={enabled ? "links-navigation-instructions": undefined}>
+                <Link 
+                    to={clientRepo}
+                    className={focusedIndex === 0 ? 'focussed' : ''}
+                >
+                    <h3>View Client Repository</h3>
+                </Link>
+                <Link 
+                    to={serverRepo}
+                    className={focusedIndex === 1 ? 'focussed' : ''}
+                >
+                    <h3>View Server Repository</h3>
+                </Link>
+                <Link 
+                    to="/profile/contact"
+                    className={focusedIndex === 2 ? 'focussed' : ''}
+                >
+                    <h3>Site Feedback</h3>
+                </Link>
+            </nav>
         </div>  
     )
 }

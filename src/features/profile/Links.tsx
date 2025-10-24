@@ -30,14 +30,14 @@ const Links = ({ links }: LinksProps) => {
     }, [focusedIndex, activePage]);
 
     return (
-        <div>
+        <nav aria-describedby={enabled ? "links-navigation-instructions": undefined}>
             {links.map((link, i) => (
                 <div className="profile-links" key={link.id}>
                     <Link 
                         to={link.url}
                         className={focusedIndex === i ? 'focussed' : ''}
                     >                                                
-                        <h2>
+                        <h3>
                             <img src = { enabled
                                         ? `${server+link.logoGrn}`
                                         : `${server+link.logoGry}`   
@@ -46,11 +46,11 @@ const Links = ({ links }: LinksProps) => {
                                 className="project-image-thumb"
                             />
                             <span className="link-text">{link.name}</span>
-                        </h2>
+                        </h3>
                     </Link>
                 </div>
             ))}
-        </div>
+        </nav>
     )
 }
 

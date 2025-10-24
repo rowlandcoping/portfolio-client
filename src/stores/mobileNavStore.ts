@@ -5,7 +5,8 @@ interface MobileNavState {
     setLastFocused: (el: HTMLElement | null) => void
     currentRoutePathname: string,
     setCurrentRoutePathname: (path: string) => void,
-  
+    focusWithButtons: boolean;
+    setFocusWithButtons: (path: boolean) => void,
 }
 
 export const useMobileNavStore = create<MobileNavState>((set) => ({
@@ -13,4 +14,6 @@ export const useMobileNavStore = create<MobileNavState>((set) => ({
     setCurrentRoutePathname: (el) => set({ currentRoutePathname: el }),
     lastFocused: null,
     setLastFocused: (el) => set({ lastFocused: el }),
+    focusWithButtons: false,    
+    setFocusWithButtons: (el) => set({ focusWithButtons: el }),
 }))

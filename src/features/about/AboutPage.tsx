@@ -1,10 +1,16 @@
 import { useEffect } from 'react';
 import { useAbout } from './useAboutApi';
 import { useKeyboardNavStore } from '../../stores/keyboardNavStore';
+import useTitle from '../../hooks/useTitle';
 import Overview from '../about/Overview';
 import Links from '../about/Links';
+import Error from '../../components/Error';
+import Loading from '../../components/Loading';
+import NotFound from '../../components/NotFound';
 
 const AboutPage = () => {
+
+    useTitle('About This Site');
 
     const activePage = useKeyboardNavStore((s) => s.activePage);
     const setMaxIndex = useKeyboardNavStore.getState().setMaxIndex;
@@ -14,6 +20,7 @@ const AboutPage = () => {
     const {
         data: about,
         isError,
+        isLoading
     } = useAbout();
 
     useEffect (() => {
@@ -24,8 +31,9 @@ const AboutPage = () => {
         setMaxIndex(1);
     }, [about])
     
-    if (!about) return <p>Loading About Page Data...</p>;
-    if (isError) return <p>Error About Page Data...</p>;
+    if (isLoading) return <Loading />;
+    if (isError) return <Error />;
+    if (!about) return <NotFound />
     
     const pages = [
         {
@@ -95,7 +103,7 @@ const AboutPage = () => {
                             exit<br />
                             <kbd>Esc</kbd>
                         </div>
-                        {activePage === 2 && (<>                        
+                        {activePage === 1 && (<>                        
                         <div>
                             next<br />
                             &darr;                    

@@ -7,8 +7,10 @@ import { useProjectTypes } from './useProjectTypesApi';
 import Overview from './Overview';
 import Details from './Details';
 import Links from './Links';
-
-
+import Error from '../../components/Error';
+import Loading from '../../components/Loading';
+import NotFound from '../../components/NotFound';
+import useTitle from '../../hooks/useTitle';
 
 const ViewProject = () => {
 
@@ -23,11 +25,13 @@ const ViewProject = () => {
     const {
         data: projects,
         isError,
+        isLoading: isLoadingProjects
     } = useProjects();
 
     const {
         data: projectTypes,
         isError: isTypesError,
+        isLoading: isLoadingTypes
     } = useProjectTypes();
 
     const project = projects?.find((p) => Number(p.id) === Number(id));
@@ -46,8 +50,11 @@ const ViewProject = () => {
         setMaxIndex(2);
     }, [])
 
-    if (!project || !type) return <p>Loading Project Data...</p>;
-    if (isError || isTypesError) return <p>Error Loading Project Data...</p>;
+    useTitle(project ? `View Project - ${project.name}` : 'View Project');
+
+    if (isLoadingTypes || isLoadingProjects) return <Loading />;
+    if (isError || isTypesError) return <Error />;
+    if (!project || !type) return <NotFound />         
     
     
     const pages = [

@@ -2,10 +2,10 @@ import { createRoute, createRootRoute, createRouter } from '@tanstack/react-rout
 import DeviceModeWrapper from '../components/DeviceModeWrapper';
 import Prefetch from '../components/Prefetch';
 import Home from '../components/Home';
+import NotFound from '../components/NotFound';
 
 import Profile from '../features/profile/Profile';
 import AboutPage from '../features/about/AboutPage';
-
 import Projects from '../features/projects/Projects';
 import AllProjects from '../features/projects/AllProjects';
 import ProjectTypes from '../features/projects/ProjectTypes';
@@ -96,7 +96,14 @@ export const contactProjectRoute = createRoute({
   component: ProjectContact,
 });
 
+const notFoundRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/$path*', // <-- catch-all
+  component: NotFound,
+});
+
 const router = createRouter({
+    notFoundMode: 'root',
     routeTree: rootRoute.addChildren([
         homeRoute,
         profileRoute,
@@ -108,7 +115,8 @@ const router = createRouter({
         searchProjectsRoute,
         viewProjectRoute,
         contactRoute,
-        contactProjectRoute
+        contactProjectRoute,
+        notFoundRoute
     ])
 });
 

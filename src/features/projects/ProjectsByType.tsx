@@ -4,8 +4,15 @@ import { projectsByTypeRoute } from '../../app/router';
 import { useEffect, useMemo, useState } from "react";
 import { useKeyboardNavStore } from "../../stores/keyboardNavStore";
 import { useProjects } from './useProjectsApi';
+import { useProjectTypes } from './useProjectTypesApi';
+import useTitle from '../../hooks/useTitle';
+import Error from '../../components/Error';
+import Loading from '../../components/Loading';
+import NotFound from '../../components/NotFound';
 
 const ProjectsByType = () => {
+
+    useTitle(`Find a Project`);
 
     const { id } = useParams({from: projectsByTypeRoute.id})
     const server = import.meta.env.VITE_SERVER_URL
@@ -23,7 +30,14 @@ const ProjectsByType = () => {
     const {
         data: projects,
         isError,
+        isLoading: isLoadingProjects
     } = useProjects();
+
+    const {
+        data: projectTypes,
+        isError: isTypesError,
+        isLoading: isLoadingTypes
+    } = useProjectTypes();    
 
     const filteredProjects = useMemo(() => {
         if (!projects) return [];
@@ -54,8 +68,12 @@ const ProjectsByType = () => {
         setMaxIndex(total-1);
     }, [])
 
-    if (!projects) return <p>Loading Project Data...</p>;
-    if (isError) return <p>Error Loading Project Data...</p>;
+    const selectedType = projectTypes?.find(t => (t.id === Number(id)));
+    useTitle(selectedType ? `Select a Project - ${selectedType.name}` : 'Select a Project');
+
+    if (isLoadingTypes || isLoadingProjects) return <Loading />;
+    if (isError || isTypesError) return <Error />;
+    if (!projects || !projectTypes) return <NotFound />    
 
     const pages = [];
 
@@ -63,11 +81,13 @@ const ProjectsByType = () => {
         const slice = filteredProjects.slice(i, i + itemsPerPage);
         pages.push({
             title: `${
-                filteredProjects.length > itemsPerPage 
-                    ? `All Projects (${ itemsPerPage > 1 
-                        ? `${i + 1}-${i + slice.length} of ${filteredProjects.length})`
-                        : `${i + 1} of ${filteredProjects.length})`}`
-                    : `All Projects`}`,
+                filteredProjects.length > itemsPerPage
+                    ? `${selectedType ? `${selectedType.name} Projects` : 'Projects'} (${itemsPerPage > 1 
+                        ? `${i + 1}-${i + slice.length} of ${filteredProjects.length}`
+                        : `${i + 1} of ${filteredProjects.length}`
+                    })`
+                    : selectedType ? `${selectedType.name} Projects` : 'Projects'
+                }`,
             content: (
             <nav aria-describedby="links-navigation-instructions">
                 {slice.map((project, j) => (

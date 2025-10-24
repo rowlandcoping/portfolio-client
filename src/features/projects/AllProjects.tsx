@@ -3,8 +3,14 @@ import { Link } from '@tanstack/react-router';
 import { useEffect, useState } from "react";
 import { useKeyboardNavStore } from "../../stores/keyboardNavStore";
 import { useProjects } from './useProjectsApi';
+import useTitle from '../../hooks/useTitle';
+import Error from '../../components/Error';
+import Loading from '../../components/Loading';
+import NotFound from '../../components/NotFound';
 
 const AllProjects = () => {
+
+    useTitle(`Find a Project - All Projects`);
 
     const server = import.meta.env.VITE_SERVER_URL
     const focusedIndex = useKeyboardNavStore((s) => s.focusedIndex);
@@ -21,6 +27,7 @@ const AllProjects = () => {
     const {
         data: projects,
         isError,
+        isLoading
     } = useProjects();
 
     useEffect(() => {
@@ -45,9 +52,10 @@ const AllProjects = () => {
         setMaxIndex(total-1);
     }, [])
 
-   
-    if (!projects) return <p>Loading Project Data...</p>;
-    if (isError) return <p>Error Loading Project Data...</p>;
+
+    if (isLoading) return <Loading />;
+    if (isError) return <Error />;
+    if (!projects) return <NotFound />
 
     const pages = [];
 

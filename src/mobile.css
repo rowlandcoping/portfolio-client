@@ -58,6 +58,11 @@ body.mobile a {
 }
 
 /*HEADLINES*/
+
+body.mobile .section-headline {
+    margin-top:15px;
+    padding-bottom:10px;
+}
 /*h1 (page headings)*/
 body.mobile h1, body.mobile .section-headline {
     font-size: 1.4em;
@@ -71,22 +76,17 @@ body.mobile h2 {
 
 /*h3 (links)*/
 body.mobile h3 {
-    padding-top:4px;
-    line-height: 1.3em;
-}
-/*h2 (sub-headings)*/
-body.mobile h3 {
     padding-top:0;
-    margin-top:2px;
-
+    margin-top:4px;
     line-height: 1em;
     font-size: 1.2em;
 }
+
 body.mobile .focussed h3  {
     color: var(--MOBILE-SCREEN-BACKGROUND);
     background-color: var(--MOBILE-TEXT);
 }
-/*h3 (links)*/
+
 
 /*IMAGES*/
 /*thumbnails*/
@@ -485,6 +485,13 @@ body.mobile .control-container {
   display: none;
 }
 
+/*CONTENT PAGES*/
+/*project details*/
+
+.details-container:first-of-type {
+    margin: 5px 0 10px;
+}
+
 /*FORM STYLING*/
 
 body.mobile .input-focus, 
@@ -495,7 +502,7 @@ body.mobile textarea:focus {
 }
 
 body.mobile textarea {
-    height: 240px;
+    height: 190px;
 }
 body.mobile input, body.mobile textarea {
     font-family: slate;
@@ -523,6 +530,10 @@ body.mobile .submit-dark {
 body.mobile .button-focus-dark {
     color: var(--MOBILE-SCREEN-BACKGROUND);
     background-color: var(--MOBILE-SCREEN-DARK);
+}
+body.mobile .form-info {
+    font-size:0.7em;
+    margin-top: -11px;
 }
 
 /*MOBILE MEDIA QUERIES*/

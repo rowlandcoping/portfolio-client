@@ -5,6 +5,10 @@ import { useKeyboardNavStore } from '../../stores/keyboardNavStore';
 import About from './About';
 import Skills from './Skills';
 import Links from './Links';
+import useTitle from '../../hooks/useTitle';
+import Error from '../../components/Error';
+import Loading from '../../components/Loading';
+import NotFound from '../../components/NotFound';
 
 const Profile = () => {
 
@@ -16,11 +20,13 @@ const Profile = () => {
     const {
         data: profile,
         isError: isProfileError,
+        isLoading: isLoadingProfile
     } = useProfile();
 
     const {
         data: user,
         isError: isUserError,
+        isLoading: isLoadingUser
     } = useUser();
 
     useEffect (() => {
@@ -30,9 +36,13 @@ const Profile = () => {
         //max index is the length of the pages array, sets this in the store for navigation purposes
         setMaxIndex(2);
     }, [profile, user])
+
+
+    useTitle(user ? `${user.name}'s Profile` : 'Profile');
     
-    if (!profile || !user) return <p>Loading Profile Data...</p>;
-    if (isProfileError || isUserError) return <p>Error Loading Profile Data...</p>;
+    if (isLoadingProfile || isLoadingUser) return <Loading />;
+    if (isProfileError || isUserError) return <Error />;
+    if (!profile || !user) return <NotFound />
 
     const pages = [
         {

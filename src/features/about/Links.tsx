@@ -32,28 +32,26 @@ const Links = ({ clientRepo, serverRepo }: LinksProps) => {
     }, [focusedIndex, activePage]);
 
     return (
-        <div className="details-container">
-            <nav aria-describedby={enabled ? "links-navigation-instructions": undefined}>
-                <Link 
-                    to={clientRepo}
-                    className={focusedIndex === 0 ? 'focussed' : ''}
-                >
-                    <h3>View Client Repository</h3>
-                </Link>
-                <Link 
-                    to={serverRepo}
-                    className={focusedIndex === 1 ? 'focussed' : ''}
-                >
-                    <h3>View Server Repository</h3>
-                </Link>
-                <Link 
-                    to="/profile/contact"
-                    className={focusedIndex === 2 ? 'focussed' : ''}
-                >
-                    <h3>Site Feedback</h3>
-                </Link>
-            </nav>
-        </div>  
+        <nav aria-describedby={enabled ? "links-navigation-instructions": undefined}>
+            <Link 
+                to={clientRepo}
+                className={focusedIndex === 0 ? 'focussed' : ''}
+            >
+                <h3>View Client Repository</h3>
+            </Link>
+            <Link 
+                to={serverRepo}
+                className={focusedIndex === 1 ? 'focussed' : ''}
+            >
+                <h3>View Server Repository</h3>
+            </Link>
+            <Link 
+                to="/profile/contact"
+                className={focusedIndex === 2 ? 'focussed' : ''}
+            >
+                <h3>Site Feedback</h3>
+            </Link>
+        </nav>
     )
 }
 

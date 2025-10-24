@@ -2,7 +2,11 @@ import { Link } from '@tanstack/react-router';
 import { useEffect } from "react";
 import { useKeyboardNavStore } from "../../stores/keyboardNavStore";
 
+import useTitle from '../../hooks/useTitle';
+
 const Home = () => {
+
+    useTitle(`Find a Project`);
 
     const focusedIndex = useKeyboardNavStore((s) => s.focusedIndex);
     const setLinkCount = useKeyboardNavStore((s) => s.setLinkCount);

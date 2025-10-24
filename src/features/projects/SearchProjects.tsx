@@ -3,8 +3,15 @@ import type { ProjectTypes } from '../../types/projectTypes';
 import { Link } from '@tanstack/react-router';
 import { useKeyboardNavStore } from "../../stores/keyboardNavStore";
 import { useProjects } from './useProjectsApi';
+import useTitle from '../../hooks/useTitle';
+import Error from '../../components/Error';
+import Loading from '../../components/Loading';
+import NotFound from '../../components/NotFound';
 
 const SearchProjects = () => {
+
+    useTitle(`Search for a Project`);
+
     const [search, setSearch] = useState('');
     const [filteredProjects, setFilteredProjects] = useState<ProjectTypes[]>([]);
     const [totalPages, setTotalPages] = useState(0);
@@ -21,7 +28,11 @@ const SearchProjects = () => {
     const itemsPerPage = useKeyboardNavStore((s) => s.itemsPerPage);
     const enabled = useKeyboardNavStore((s) => s.enabled);
 
-    const { data: projects, isError } = useProjects();
+    const { 
+        data: projects, 
+        isError, 
+        isLoading
+    } = useProjects();
 
     // Focus search input on mount (page 0)
     useEffect(() => {
@@ -87,6 +98,10 @@ const SearchProjects = () => {
 
     if (!projects) return <p>Loading Project Data...</p>;
     if (isError) return <p>Error Loading Project Data...</p>;
+
+    if (isLoading) return <Loading />;
+    if (isError) return <Error />;
+    if (!projects) return <NotFound />
 
     return (
         <main aria-describedby={enabled ? 'navigation-instructions' : undefined}>

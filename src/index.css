@@ -360,23 +360,6 @@ body.desktop .project-image-container img {
     object-fit: cover;
 }
 
-/*OTHER SECTIONS*/
-/*project overview*/
-.project-overview {
-    display: flex;
-    flex-direction: column;
-    flex: 1; /*NB keep an eye on this, for some reason was separated for desktop*/
-}
-/*project details*/
-
-.details-container:first-of-type {
-    margin: 5px 0 10px;
-}
-
-.details-container {
-    margin:10px 0;
-}
-
 /*CONTACT FORM*/
 textarea {
     height: 150px;
@@ -433,6 +416,29 @@ input::placeholder, textarea::placeholder {
     margin: -9px 4px 10px;
     display:block;
 }
+
+/*OTHER SECTIONS*/
+/*project overview*/
+.project-overview {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /*NB keep an eye on this, for some reason was separated for desktop*/
+}
+/*project details*/
+.details-container:first-of-type {
+    margin: 5px 0 10px;
+}
+.details-container {
+    margin:10px 0;
+}
+/*404 page*/
+.centered {
+    text-align:center;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
 
 /*DESKTOP MEDIA QUERIES*/
 /*1630*/

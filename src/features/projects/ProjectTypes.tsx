@@ -3,11 +3,15 @@ import { Link } from '@tanstack/react-router';
 import { useEffect, useMemo } from "react";
 import { useKeyboardNavStore } from "../../stores/keyboardNavStore";
 import { useProjectTypes } from './useProjectTypesApi';
-
 import { useProjects } from './useProjectsApi';
-
+import useTitle from '../../hooks/useTitle';
+import Error from '../../components/Error';
+import Loading from '../../components/Loading';
+import NotFound from '../../components/NotFound';
 
 const ProjectTypes = () => {
+
+    useTitle(`Find a Project by Type`);
 
     const focusedIndex = useKeyboardNavStore((s) => s.focusedIndex);
     const setLinkCount = useKeyboardNavStore((s) => s.setLinkCount);
@@ -16,11 +20,13 @@ const ProjectTypes = () => {
     const {
         data: projectTypes,
         isError: isTypesError,
+        isLoading: isLoadingTypes
     } = useProjectTypes();
 
     const {
         data: projects,
         isError: isProjectsError,
+        isLoading: isLoadingProjects
     } = useProjects();
 
     //Applying use memo means the entire array will be built before it is updated, rather than updating it on every item added.
@@ -46,8 +52,9 @@ const ProjectTypes = () => {
         if (current) current.focus({ preventScroll: true });
     }, [focusedIndex]);
 
-    if (!projects || !projectTypes) return <p>Loading Project Data...</p>;
-    if (isTypesError || isProjectsError) return <p>Error Loading Project Data...</p>;
+    if (isLoadingTypes || isLoadingProjects) return <Loading />;
+    if (isTypesError || isProjectsError) return <Error />;
+    if (!projects || !projectTypes) return <NotFound />
     
     return (
         <main>

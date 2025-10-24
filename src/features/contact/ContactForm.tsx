@@ -1,19 +1,27 @@
 import { useState, useEffect } from 'react';
 import { usePostContact } from './useContactApi';
+import type { ProjectTypes } from '../../types/projectTypes';
 import type { ContactTypes } from '../../types/contactTypes';
 import { useUser } from '../../features/profile/useUserApi';
-import { useProjects } from '../../features/projects/useProjectsApi';
 import { useKeyboardNavStore } from "../../stores/keyboardNavStore";
 import { useMobileNavStore } from '../../stores/mobileNavStore';
 
+
+import Error from '../../components/Error';
+import Loading from '../../components/Loading';
+import NotFound from '../../components/NotFound';
+import useTitle from '../../hooks/useTitle';
+
 interface ContactFormProps {
-  projectId?: ContactTypes['projectId'];
+  project?: ProjectTypes;
 };
 
 const EMAIL_REGEX = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
+const ContactForm = ({ project }: ContactFormProps) => {
 
-const ContactForm = ({ projectId }: ContactFormProps) => {
+    useTitle('Contact Form');
+
     const [message, setMessage] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -34,19 +42,14 @@ const ContactForm = ({ projectId }: ContactFormProps) => {
 
     const {
         data: user,
-        isError: isUserError,
+        isError,
+        isLoading
     } = useUser();
 
-    const {
-        data: projects,
-        isError,
-    } = useProjects();
-
-    const project = projects?.find((p) => Number(p.id) === Number(projectId));
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const payload: ContactTypes = {
-            projectId: projectId,
+            projectId: project?.id || undefined,
             message,
             name,
             email,
@@ -83,8 +86,6 @@ const ContactForm = ({ projectId }: ContactFormProps) => {
             document.removeEventListener("focusout", handleFocusChange);
             console.log("focusout listener removed");
         };
-        
-
     }, [setFocusedIndex]);
 
     useEffect(() => {
@@ -101,7 +102,7 @@ const ContactForm = ({ projectId }: ContactFormProps) => {
     }, [message, characterLimit])
     
     useEffect(() => {
-        if (!user && !projectId) return;
+        if (!user) return;
         const pageLinks = Array.from(document.querySelectorAll<
             HTMLInputElement | 
             HTMLButtonElement |
@@ -112,7 +113,7 @@ const ContactForm = ({ projectId }: ContactFormProps) => {
         setTimeout(() => {
         pageLinks[0].focus();
         }, 100);
-    }, [user, projectId]);    
+    }, [user]);    
 
     useEffect(() => {
         const pageLinks = Array.from(document.querySelectorAll<
@@ -133,25 +134,38 @@ const ContactForm = ({ projectId }: ContactFormProps) => {
         }
     }, [focusedIndex])
 
-    if (!user || !projects) return <p>Loading Form Data...</p>;
-    if (isError || isUserError) return <p>Error Loading Form Data...</p>;
+    if (isLoading) return <Loading />;
+    if (isError) return <Error />;
+    if (!user) return <NotFound />;
 
     // If submission succeeded, just show the success message
     if (mutation.isSuccess) {
             return (
-            <div className="message-center">
-                <p>Message sent successfully!</p>
-                <p>Press Escape or Back to return.</p>
+            <div className="centered">
+                <div>
+                <h1>Message sent successfully!</h1>
+                <p>
+                    {enabled
+                        ? `Press Esc to go back to the previous page`
+                        : `Press the back button to go back to the previous page`
+                    }
+                </p>
+                </div>
             </div>
             );
     }
 
     if (mutation.isError) {
             return (
-            <div className="message-center">
-                <p>Error Sending Message</p>
-                <p>Press Escape or Back to return.</p>
-            </div>
+                <div className="centered">
+                    <h1>Error Sending Message</h1>
+                    <p>
+                        {enabled
+                            ? `Press Esc to go back to the previous page`
+                            : `Press the back button to go back to the previous page`
+                        }
+                    </p>
+                </div>
             );
     }
 

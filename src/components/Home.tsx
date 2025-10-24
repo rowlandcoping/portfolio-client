@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router';
 import { useEffect } from "react";
 import { useKeyboardNavStore } from "../stores/keyboardNavStore";
 import { useUser } from '../features/profile/useUserApi';
+import useTitle from '../hooks/useTitle';
 
 const Home = () => {
 
@@ -29,9 +30,13 @@ const Home = () => {
         const current = pageLinks[focusedIndex % pageLinks.length];            
         if (current) current.focus({ preventScroll: true });
     }, [focusedIndex])
+
+    useTitle(user ? `Portfolio - ${user.name}` : 'Portfolio');
     
     if (!user) return <p>Loading user data...</p>;
     if (isError) return <p>Error loading user data...</p>;
+
+    
 
     return (
         <main>

@@ -4,7 +4,7 @@ Welcome to the Readme for my personal portfolio website. The site itself contain
 
 ## Inspiration
 
-The concept itself goes back to the days when my Dad purchased a pure word processing machine with very similar navigation (admittedly in black and white!) which led to a pinterest crawl for further inspiration.  The choice to use keyboard navigation was one I didn't realise the full implications of at the time but needless to say a very simple initial visual design choice has since become a lot more complex under the hood.
+The concept itself goes back to the days when my Dad purchased a pure word processing machine with very similar navigation (admittedly in black and white!) which led to a pinterest crawl for further inspiration.  The choice to use keyboard navigation was one which I didn't realise the full implications of at the time - needless to say a very simple visual design choice has since become a lot more complex under the hood.
 
 ## Live Platform
 You can view the live version of my portfolio [here](https://rowlandnet.online).

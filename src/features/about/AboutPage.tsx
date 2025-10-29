@@ -24,16 +24,19 @@ const AboutPage = () => {
     } = useAbout();
 
     useEffect (() => {
-        if (!about) return;
-        //resets the active page to the first in the pages array
-        setActivePage(0);
-        //max index is the length of the pages array, sets this in the store for navigation purposes
-        setMaxIndex(1);
+        if (!about || isError) {
+            setMaxIndex(0);
+        } else {
+            //resets the active page to the first in the pages array
+            setActivePage(0);
+            //max index is the length of the pages array, sets this in the store for navigation purposes
+            setMaxIndex(1);
+        }
     }, [about])
     
     if (isLoading) return <Loading />;
     if (isError) return <Error />;
-    if (!about) return <NotFound />
+    if (!about) return <NotFound />;
     
     const pages = [
         {

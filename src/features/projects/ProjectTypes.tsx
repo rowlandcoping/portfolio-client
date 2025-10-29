@@ -67,15 +67,12 @@ const ProjectTypes = () => {
                         Press Escape to return to the projects page.
                     </p>
                     {filteredCategories.map((category, i) => (
-                        <div className = "profile-links" key={category.id}>
+                        <div key={category.id}>
                             <Link 
                                 to={`/projects/project-categories/${category.id}`}
                                 className={focusedIndex === i ? 'focussed' : ''}
                             >                                                
-                                <h3>
-                                    <span className="link-text">{category.name}</span>
-                                </h3>
-                            
+                                <h3>{category.name}</h3>                            
                             </Link>
                         </div>
                     ))}

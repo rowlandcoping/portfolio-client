@@ -155,7 +155,6 @@ export default function KeyboardNavProvider({ children }: { children: React.Reac
                     const last = window.location.pathname
                     useKeyboardNavStore.getState().setReturnPage(last)
                     if (target) {
-                        console.log('[Escape] navigating to:', target);
                         navigate({ to: target });
                     };
                     break;

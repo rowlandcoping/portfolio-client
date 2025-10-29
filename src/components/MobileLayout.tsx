@@ -3,11 +3,30 @@ import { useKeyboardNavStore } from '../stores/keyboardNavStore';
 import MobileScrollWheel from './MobileScrollWheel';
 import MobileBottom from './MobileBottom';
 import TimeDate from './TimeDate';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const MobileLayout = () => {
     const activePage = useKeyboardNavStore((s) => s.activePage);
     const maxIndex = useKeyboardNavStore((s) => s.maxIndex);
+
+    const [isLandscape, setIsLandscape] = useState(window.matchMedia("(orientation: landscape)").matches);
+
+    useEffect(() => {
+        const handleOrientationChange = () => {
+            const isLandscapeMode = window.matchMedia("(orientation: landscape)").matches;
+            const viewportHeight = window.innerHeight;
+
+            setIsLandscape(isLandscapeMode && viewportHeight <= 550);
+        };
+
+        window.addEventListener('resize', handleOrientationChange);
+        window.addEventListener('orientationchange', handleOrientationChange);
+
+        return () => {
+            window.removeEventListener('resize', handleOrientationChange);
+            window.removeEventListener('orientationchange', handleOrientationChange);
+        };
+    }, []);
 
     useEffect(() => {
         let isMounted = true;
@@ -22,19 +41,19 @@ const MobileLayout = () => {
             }
             main.offsetHeight;
     
-            let startY = 0;
+            let startCoord = 0;
     
             const onTouchStart = (e: TouchEvent) => {
-                startY = e.touches[0].clientY;
+                startCoord = isLandscape ? e.touches[0].clientX : e.touches[0].clientY;
             };
     
             const onTouchMove = (e: TouchEvent) => {
                 const main = document.querySelector('main');
                 if (!main) return;    
-                const currentY = e.touches[0].clientY;
-                const deltaY = startY - currentY;
-                main.scrollTop -= deltaY;
-                startY = currentY;
+                const currentCoord = isLandscape ? e.touches[0].clientX : e.touches[0].clientY;
+                const delta = startCoord - currentCoord;
+                main.scrollTop -= delta;
+                startCoord = currentCoord;
                 e.preventDefault();                    
             };
     
@@ -69,7 +88,7 @@ const MobileLayout = () => {
             isMounted = false;
             if (cleanup) cleanup();    
         };
-    }, []);
+    }, [isLandscape]);
 
 
     return (
@@ -81,7 +100,6 @@ const MobileLayout = () => {
                 <div className="mobile-frame mobile-top">
                     <div className="mobile-power-light"></div>
                     <div className="mobile-logo"><em>{`[ ]RowlandBerry`}</em></div>
-                    <div className="mobile-button"></div>
                 </div>
                 <div className="mobile-frame mobile-top-right">
 
@@ -96,10 +114,10 @@ const MobileLayout = () => {
                         </div>
                         <div className="mobile-monitor" aria-hidden="true">
                             <div className="mobile-battery">
-                                <img src="battery.svg" alt="battery life indicator" />
+                                <img src="/battery.svg" alt="battery life indicator" />
                             </div>
                             <div>
-                                <img src="wifi.svg" alt="signal strength indicator" />
+                                <img src="/wifi.svg" alt="signal strength indicator" />
                             </div>
                         </div>
                     </div>
@@ -113,7 +131,7 @@ const MobileLayout = () => {
                     )}
                 </div>
                 <div className="mobile-frame mobile-right" aria-hidden="true">
-                    <MobileScrollWheel />
+                    <MobileScrollWheel isLandscape={isLandscape}/>
                 </div>
             </div>       
                 

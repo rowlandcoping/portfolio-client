@@ -3,13 +3,10 @@ import { useKeyboardNavStore } from '../stores/keyboardNavStore';
 import DesktopLayout from '../components/Layout'; // existing Layout
 import MobileLayout from '../components/MobileLayout';
 
-function detectMobile() {
-    
+function detectMobile() {    
     const isMobileUA = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     const isTouchCapable = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     return isMobileUA && isTouchCapable;
-    
-    return true
 }
 
 export default function DeviceModeWrapper() {

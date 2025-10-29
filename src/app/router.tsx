@@ -27,7 +27,8 @@ const rootRoute = createRootRoute({
                 <DeviceModeWrapper />
             </KeyboardNavProvider>
         </Prefetch>
-    )
+    ),
+    notFoundComponent: () => <NotFound />,
 });
 
 const homeRoute = createRoute({
@@ -96,14 +97,7 @@ export const contactProjectRoute = createRoute({
   component: ProjectContact,
 });
 
-const notFoundRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/$path*', // <-- catch-all
-  component: NotFound,
-});
-
 const router = createRouter({
-    notFoundMode: 'root',
     routeTree: rootRoute.addChildren([
         homeRoute,
         profileRoute,
@@ -115,9 +109,8 @@ const router = createRouter({
         searchProjectsRoute,
         viewProjectRoute,
         contactRoute,
-        contactProjectRoute,
-        notFoundRoute
-    ])
+        contactProjectRoute
+    ]),
 });
 
 export { router };

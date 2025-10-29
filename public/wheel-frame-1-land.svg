@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="53.799995"
+   height="16.799999"
+   viewBox="0 0 53.799995 16.799999"
+   version="1.1"
+   id="svg38"
+   sodipodi:docname="wheel-frame-1-land.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview40"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="1.9375"
+     inkscape:cx="-106.58064"
+     inkscape:cy="37.16129"
+     inkscape:window-width="1920"
+     inkscape:window-height="1008"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg38" />
+  <defs
+     id="defs22">
+    <radialGradient
+       id="wheelGradient"
+       cx="10.737118"
+       cy="13.690823"
+       r="15.031965"
+       gradientTransform="scale(0.55880915,1.7895197)"
+       fx="10.737118"
+       fy="13.690823"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         stop-color="#999"
+         id="stop2" />
+      <stop
+         offset="50%"
+         stop-color="#666"
+         id="stop4" />
+      <stop
+         offset="100%"
+         stop-color="#333"
+         id="stop6" />
+    </radialGradient>
+    <filter
+       id="innerShadow"
+       x="-0.2"
+       y="-0.05"
+       width="1.4"
+       height="1.1208333">
+      <feOffset
+         dx="0"
+         dy="1"
+         id="feOffset9" />
+      <feGaussianBlur
+         stdDeviation="1"
+         result="offset-blur"
+         id="feGaussianBlur11" />
+      <feComposite
+         operator="out"
+         in="SourceGraphic"
+         in2="offset-blur"
+         result="inverse"
+         id="feComposite13" />
+      <feFlood
+         flood-color="black"
+         flood-opacity="0.2"
+         result="shadow"
+         id="feFlood15" />
+      <feComposite
+         operator="in"
+         in="shadow"
+         in2="inverse"
+         result="shadow"
+         id="feComposite17" />
+      <feComposite
+         operator="over"
+         in="shadow"
+         in2="SourceGraphic"
+         id="feComposite19" />
+    </filter>
+  </defs>
+  <g
+     id="g864"
+     transform="rotate(-90,8.3999999,5.9999998)">
+    <rect
+       x="0"
+       y="0"
+       width="12"
+       height="48"
+       rx="6"
+       fill="url(#wheelGradient)"
+       filter="url(#innerShadow)"
+       id="rect24"
+       style="fill:url(#wheelGradient)" />
+    <line
+       x1="2"
+       y1="3"
+       x2="10"
+       y2="3"
+       stroke="#444444"
+       stroke-width="1"
+       id="line26" />
+    <line
+       x1="2"
+       y1="11"
+       x2="10"
+       y2="11"
+       stroke="#444444"
+       stroke-width="1"
+       id="line28" />
+    <line
+       x1="2"
+       y1="19"
+       x2="10"
+       y2="19"
+       stroke="#444444"
+       stroke-width="1"
+       id="line30" />
+    <line
+       x1="2"
+       y1="27"
+       x2="10"
+       y2="27"
+       stroke="#444444"
+       stroke-width="1"
+       id="line32" />
+    <line
+       x1="2"
+       y1="35"
+       x2="10"
+       y2="35"
+       stroke="#444444"
+       stroke-width="1"
+       id="line34" />
+    <line
+       x1="2"
+       y1="43"
+       x2="10"
+       y2="43"
+       stroke="#444444"
+       stroke-width="1"
+       id="line36" />
+  </g>
+</svg>

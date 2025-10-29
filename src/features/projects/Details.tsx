@@ -11,7 +11,7 @@ const Details = ({ features, issues, projectEcosystem }:DetailProps) => {
     return (
         <>
         <div className="skills-wrapper">
-            <h2>Technologies</h2>
+            <h3>Technologies</h3>
             <div className="details-container">
                 {projectEcosystem.map((s,i) => (
                 <Fragment key={s.ecosystem.id}>
@@ -27,7 +27,7 @@ const Details = ({ features, issues, projectEcosystem }:DetailProps) => {
             </div>
         </div>
         <div className="fissues-wrapper">
-            <h2>Features</h2>
+            <h3>Features</h3>
             <div className="details-container">                
                     {features.map(s => (
                     <p key={s.id}>
@@ -35,7 +35,7 @@ const Details = ({ features, issues, projectEcosystem }:DetailProps) => {
                     </p>            
                 ))}
             </div>
-            <h2>Issues</h2>
+            <h3>Issues</h3>
             <div className="details-container">                            
                 {issues.map(s => (
                 <p key={s.id}>

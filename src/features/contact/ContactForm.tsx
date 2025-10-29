@@ -66,7 +66,6 @@ const ContactForm = ({ project }: ContactFormProps) => {
         )); 
 
         const handleFocusChange = (e: FocusEvent) => {
-            console.log("listener function firing")
             const target = e.target as HTMLElement;
             if (!(target instanceof HTMLInputElement) && !(target instanceof HTMLTextAreaElement)) return;            
             const index = pageLinks.indexOf(target);
@@ -84,7 +83,6 @@ const ContactForm = ({ project }: ContactFormProps) => {
         return () => {
             clearTimeout(t);
             document.removeEventListener("focusout", handleFocusChange);
-            console.log("focusout listener removed");
         };
     }, [setFocusedIndex]);
 
@@ -141,19 +139,20 @@ const ContactForm = ({ project }: ContactFormProps) => {
     // If submission succeeded, just show the success message
     if (mutation.isSuccess) {
             return (
-            <div className="centered">
+            <main className="centered">
                 <div>
-                <h1>Message sent successfully!</h1>
-                <p>
-                    {enabled
-                        ? `Press Esc to go back to the previous page`
-                        : `Press the back button to go back to the previous page`
-                    }
-                </p>
+                    <h1>Message sent successfully!</h1>
+                    <p>
+                        {enabled
+                            ? `Press Esc to go back to the previous page`
+                            : `Press the back button to go back to the previous page`
+                        }
+                    </p>
                 </div>
-            </div>
+            </main>
             );
     }
+    
 
     if (mutation.isError) {
             return (

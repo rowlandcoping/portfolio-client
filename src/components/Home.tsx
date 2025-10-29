@@ -3,6 +3,9 @@ import { useEffect } from "react";
 import { useKeyboardNavStore } from "../stores/keyboardNavStore";
 import { useUser } from '../features/profile/useUserApi';
 import useTitle from '../hooks/useTitle';
+import Error from '../components/Error';
+import Loading from '../components/Loading';
+import NotFound from '../components/NotFound';
 
 const Home = () => {
 
@@ -13,6 +16,7 @@ const Home = () => {
     const {
         data: user,
         isError,
+        isLoading
     } = useUser();
 
     useEffect(() => {
@@ -33,10 +37,9 @@ const Home = () => {
 
     useTitle(user ? `Portfolio - ${user.name}` : 'Portfolio');
     
-    if (!user) return <p>Loading user data...</p>;
-    if (isError) return <p>Error loading user data...</p>;
-
-    
+    if (isLoading) return <Loading />
+    if (isError) return <Error />;
+    if (!user) return <NotFound />;    
 
     return (
         <main>

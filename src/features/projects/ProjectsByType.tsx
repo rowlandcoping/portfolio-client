@@ -61,19 +61,22 @@ const ProjectsByType = () => {
     }, [focusedIndex, activePage]);
 
     useEffect (() => {
-        if (!filteredProjects) return
-        const total = Math.ceil(filteredProjects.length / itemsPerPage);
-        setTotalPages(total);   
-        setActivePage(0);
-        setMaxIndex(total-1);
-    }, [])
+        if (!filteredProjects.length || !projects || !projectTypes || isError || isTypesError) {
+            setMaxIndex(0);
+        } else {
+            const total = Math.ceil(filteredProjects.length / itemsPerPage);
+            setTotalPages(total);   
+            setActivePage(0);
+            setMaxIndex(total-1);
+        }
+    }, [filteredProjects, projects, projectTypes, isError, isTypesError])
 
     const selectedType = projectTypes?.find(t => (t.id === Number(id)));
     useTitle(selectedType ? `Select a Project - ${selectedType.name}` : 'Select a Project');
 
     if (isLoadingTypes || isLoadingProjects) return <Loading />;
     if (isError || isTypesError) return <Error />;
-    if (!projects || !projectTypes) return <NotFound />    
+    if (!projects || !projectTypes || !filteredProjects.length) return <NotFound />    
 
     const pages = [];
 

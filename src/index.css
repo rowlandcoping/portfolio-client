@@ -28,6 +28,8 @@
     --DESKTOP-BUTTON-DISABLED-TEXT: rgba(40 54 34);
     --SCREEN-FRAME: rgba(208 191 158);
     --SCREEN-FRAME-DARK: rgba(170 146 97);
+    --SCREEN-FRAME-SHADING-INNER: rgb(85, 71, 42);
+    --SCREEN-FRAME-SHADING-OUTER: rgb(138, 118, 79);
 
     /*MONITOR LOGO*/
     --MONITOR-LOGO-BLUR: 0.7px;
@@ -135,6 +137,17 @@ h3 {
     color: var(--DESKTOP-FOCUSSED-TEXT);
     background-color: var(--DESKTOP-TEXT);
 }
+.details-container h3 {
+    margin-top:5px;
+}
+.skills-wrapper h3:first-of-type {
+    margin-bottom:7px;
+}
+
+.fissues-wrapper h3:first-of-type {
+    margin-bottom:7px;
+}
+
 
 
 /*HELPER CLASSES*/
@@ -159,37 +172,208 @@ h3 {
 /**************MONITOR STYLING**************/
 /*outer elements*/
 .screen-container {
-    margin: 30px 300px;
+    margin: 75px 350px;
+}
+body.desktop .view-area {
+    overflow:hidden;
+    height: calc(100dvh - 300px);
+}
+.desktop-frame {
+    position: relative;
 }
 .screen-top, .screen-bottom {
     display:flex;
     
-}   
-
-/*TOP*/
-.screen-top {
-    place-items: center;
-    height: 50px;
-    border-radius: 20px 20px 0 0;
+}
+.screen-top-container, .screen-bottom-container {
+    display:flex;
+}
+.top-frame {
     background-image: linear-gradient(to bottom, var(--SCREEN-FRAME-DARK), var(--SCREEN-FRAME));
 }
+.bottom-frame {
+    background-image: linear-gradient(to top, var(--SCREEN-FRAME-DARK), var(--SCREEN-FRAME));
+}
+
+/*sets shading for all frame pseudo-elements*/
+.desktop-frame::after, .desktop-frame::before {
+    content: '';
+    position: absolute;    
+    filter: blur(2px);
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+
+/*TOP*/
+/*Top left corner and shading*/
+.screen-top-left {   
+    min-width:50px;
+    border-radius: 10px 0px 0 0px;
+    height: 50px;
+    overflow:hidden;
+}
+.screen-top-left::after {
+    background-color: var(--SCREEN-FRAME-SHADING-OUTER);
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 3px;
+    overflow:hidden;
+}
+.screen-top-left::before {
+    background-color: var(--SCREEN-FRAME-SHADING-OUTER);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 3px;
+    
+}
+/*Top right corner and shading*/
+.screen-top-right {
+    min-width: 50px;
+    border-radius: 0px 10px 0 0px;
+    height: 50px;
+    overflow:hidden;
+}
+.screen-top-right::after {
+    background-color: var(--SCREEN-FRAME-SHADING-OUTER);
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 3px;
+}
+.screen-top-right::before {
+    background-color: var(--SCREEN-FRAME-SHADING-OUTER);
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 3px;
+}
+/*top center and shading*/
+.screen-top {
+    display:flex;
+    flex: 1 1 0;
+    place-items: center;
+    height: 50px;
+}
+.screen-top::after {
+    background-color: var(--SCREEN-FRAME-SHADING-INNER);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+}
+.screen-top::before {
+    background-color: var(--SCREEN-FRAME-SHADING-OUTER);
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 3px;
+}
+
 /*LEFT & RIGHT*/
 .screen-left, .screen-right {
     min-width:50px;
     background-color: var(--SCREEN-FRAME);  
-    height: calc(100vh - 210px);
-    flex-grow: 0; 
+    height: calc(100vh - 300px);
+    flex-grow: 0;
+}
+.screen-left::after {
+    background-color: var(--SCREEN-FRAME-SHADING-INNER);
+    top: -3px;
+    bottom: -3px;
+    right: 0;
+    width: 3px;
+}
+.screen-left::before {
+    background-color: var(--SCREEN-FRAME-SHADING-OUTER);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 3px;
+}
+.screen-right::after {
+    background-color: var(--SCREEN-FRAME-SHADING-INNER);
+    top: -3px;
+    bottom: -3px;
+    left: 0;
+    width: 3px;
+}
+.screen-right::before {
+    background-color: var(--SCREEN-FRAME-SHADING-OUTER);
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 3px;
 }
 /*BOTTOM*/
-/*parent element*/
+/*Bottom left corner and shading*/
+.screen-bottom-left {
+    min-width: 50px;
+    height: 100px;
+    border-radius: 0 0 0 20px;
+    overflow: hidden;
+}
+.screen-bottom-left::after {
+    background-color: var(--SCREEN-FRAME-SHADING-OUTER);
+    top: 0;
+    bottom: 2px;
+    left: 0;
+    width: 3px;
+}
+.screen-bottom-left::before {
+    background-color: var(--SCREEN-FRAME-SHADING-OUTER);
+    left:2px;
+    right:0;
+    bottom: 0;
+    height: 3px;
+}
+/*Bottom right corner and shading*/
+.screen-bottom-right {
+    min-width: 50px;
+    border-radius: 0  0 20px 0;
+    height: 100px;
+    overflow:hidden
+}
+.screen-bottom-right::after {
+    background-color: var(--SCREEN-FRAME-SHADING-OUTER);
+    top: 0;
+    bottom: 2px;
+    right: 0;
+    width: 3px;
+}
+.screen-bottom-right::before {
+    background-color: var(--SCREEN-FRAME-SHADING-OUTER);
+    left:0;
+    right:2px;
+    bottom: 0;
+    height: 3px;
+}
+/*BOTTOM SECTION*/
+/*parent element and shading*/
 .screen-bottom {
+    flex: 1 1 0;
     font-family: monitor;
     justify-content: space-between;
     align-items: center;
     height: 100px;
-    border-radius: 0 0 20px 20px;
-    background-image: linear-gradient(to top, var(--SCREEN-FRAME-DARK), var(--SCREEN-FRAME));
 }
+.screen-bottom::after {
+    background-color: var(--SCREEN-FRAME-SHADING-INNER);
+    left: -3px;
+    right: -3px;
+    top: 0px;
+    height: 3px;
+}
+.screen-bottom::before {
+    background-color: var(--SCREEN-FRAME-SHADING-OUTER);
+    left: 0;
+    right: 0;
+    bottom: 0px;
+    height: 3px;
+}
+
 /*decorative elements*/
 .power-light {
     margin-left: 65px;
@@ -276,7 +460,7 @@ main {
     display:flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 15px 150px;
+    padding: 20px 50px;
     width:100%;
     overflow:hidden;
 }
@@ -372,7 +556,7 @@ input, textarea {
     background-color: var(--DESKTOP-SCREEN-BACKGROUND);
     color: var(--DESKTOP-TEXT);
     padding:5px 0 5px 5px;
-    width: 75%;
+    width: 90%;
     box-sizing: border-box;
     margin: 5px 5px 15px 5px;
     outline: 4px solid var(--DESKTOP-SCREEN-BACKGROUND);
@@ -441,170 +625,140 @@ input::placeholder, textarea::placeholder {
 
 
 /*DESKTOP MEDIA QUERIES*/
-/*1630*/
-
-@media screen and (max-width:1630px)  {
+/*HEIGHT QUERIES*/
+/*
+NB we calculate the heights first where that breaks.
+Then we can adjust for screen width without an excess of messing around.
+*/
+@media screen and (max-height:850px) {
     .screen-container {
-        margin: 30px 150px;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
-    main {        
-        padding: 15px 100px;
+    body.desktop main {        
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .screen-left, .screen-right, body.desktop .view-area {
+        height: calc(100vh - 190px);
     }
 }
-
-@media screen and (max-width:1630px) and (max-height:768px) {
-
-    body.desktop main {        
-        padding: 0 100px;
+@media screen and (max-height:750px) {
+    /*containers*/
+    body.desktop h1, body.desktop .section-headline {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+        padding-bottom: 3px;
     }
-    
-    
-    body.desktop h1 {
-        font-size: 1.4em;
-        margin-bottom: 5px;
+    body.desktop h2 {
+        font-size: 1.3em;
     }
-    
     body.desktop h3 {
-        font-size: 1.2em;
-        padding-top:2px;
+        font-size: 1.3em;
     }
-
-    body.desktop .details-container {
-        margin-top: 3px;
+    body.desktop .details-container:first-of-type {
+        margin-top: 0;
     }
-
-    body.desktop input, textarea {
-        margin-bottom: 8px;
-    }
-
-    body.desktop .form-info {
-        margin-top: -6px;
-        margin-bottom: 0;
-    }
-
     body.desktop textarea { 
-        height: 100px;
+        height: 110px;
     }
+    body.desktop input, textarea {
+        margin-bottom: 15px;
+    }
+    body.desktop .form-info {
+        margin-top: -10px;
+        margin-bottom: 5px;
+    }    
     body.desktop body.desktop .search-form input, body.desktop .search-form textarea {
         font-size: 0.95em
     }
+    body.desktop .search-form textarea {
+        font-size: 1.1em
+    }
+    body.desktop .form-button {
+        margin-top: 0;
+    }   
     body.desktop .content, body.desktop .current-page {
         font-size: 0.95em;   
-    }
-    
+    }    
     body.desktop .details-container {
+        margin: 7px 0;
         font-size: 0.9em;   
     }
     body.desktop .project-image-thumb {
-        max-width: 30px;
-        height: 30px;
+        max-width: 40px;
+        height: 40px;
     }
-
     body.desktop .project-image-container img {
         width: 175px;
         height:115px;
         object-fit: cover
-    }
-    
-    body.desktop .screen-container {
-        margin: 10px 50px;
     } 
-
-    body.desktop .screen-top {
-        height: 30px;
+    .screen-left, .screen-right, body.desktop .view-area {
+        height: calc(100vh - 180px);
     }
-    body.desktop .screen-left {
-        min-width:30px;
-
-        height: calc(100vh - 150px);
-    }
-    body.desktop .screen-right {
-        min-width:30px;
-        height: calc(100vh - 150px);
-    }
-    body.desktop .screen-bottom {
-        height: 60px;
+    .screen-bottom, .screen-bottom-left, .screen-bottom-right {
+        height: 80px;
     }
 }
 
-/*1460*/
-@media screen and (max-width:1460px) {
+/*WIDTH QUERIES*/
+/*
+Adjust for wherever it breaks with the height adjustments
+*/
+@media screen and (max-width:1630px) {
     .screen-container {
-        margin: 30px 100px;
+        margin-right: 200px;
+        margin-left: 200px;
     }
-    main {        
-        padding: 15px 50px;
+    body.desktop main {        
+        padding-left: 100px;
+        padding-right: 100px;
     }
 }
 
-/*1260*/
-@media screen and (max-width:1260px) {
+@media screen and (max-width:1346px) {
     .screen-container {
-        margin: 30px 50px;
+        margin-right: 75px;
+        margin-left: 75px;       
     }
-    main {        
-        padding: 15px 25px;
+    body.desktop main {
+        padding-left: 25px;
+        padding-right: 25px;        
     }
 }
 
-@media screen and (max-width:1260px) and (max-height:805px) {
-    
-}
-
-@media screen and (max-width:1260px) and (max-height:600px) {
-    
-}
-
-
-/*1126*/
 @media screen and (max-width:1024px) {
     .screen-container {
-        margin: 30px 25px;
-    } 
-
-    .screen-top {
-        height: 30px;
+        margin-right: 35px;
+        margin-left: 35px; 
     }
-    
-    .screen-bottom {
-        height: 75px;
+    body.desktop main {
+        padding-left: 15px;
+        padding-right: 15px;        
     }
-}
-
-@media screen and (max-width:1024px) and (max-height:805px) {
-    
-}
-
-@media screen and (max-width:1024px) and (max-height:600px) {
-    body.desktop .screen-left {
-        min-width:30px; 
-        height: calc(100vh - 165px);
+    body.desktop h1, body.desktop .section-headline {
+        font-size: 1.4em;
     }
-    body.desktop .screen-right {
-        min-width:30px;
-        height: calc(100vh - 165px);
+    body.desktop h2 {
+        font-size: 1.25em;
+    }
+    body.desktop h3 {
+        font-size: 1.25em;
     }
 }
 
-@media screen and (max-width:450px) {
+@media screen and (max-width:1024px) and (max-height:750px) {
+    body.desktop main {        
+        padding: 0 15px;
+    }
+    body.desktop .project-image-container {
+        padding: 5px 0;
+    }
+}
+
+@media screen and (max-width:504px) {
     body.desktop .power-light, body.desktop .monitor-logo, body.desktop .button {
         display: none;
     }
 }
-
-@media screen and (max-height:599px) {
-    body.desktop main {        
-        max-height: calc(100vh - 180px - 60px); /* Ensure consistent height if resizing too much*/
-    }
-}
-
-@media screen and (max-height:250px) {
-    body.desktop .screen-left { 
-        height: 28vh;
-    }
-    body.desktop .screen-right {
-        height: 28vh;
-    }
-}
-
-/* MEDIA QUERIES (Mobile) */

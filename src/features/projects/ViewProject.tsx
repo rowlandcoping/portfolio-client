@@ -15,8 +15,8 @@ import useTitle from '../../hooks/useTitle';
 const ViewProject = () => {
 
     const { id } = useParams({from: viewProjectRoute.id});
-    const setMaxIndex = useKeyboardNavStore.getState().setMaxIndex;
-    const setActivePage = useKeyboardNavStore.getState().setActivePage;
+    const setMaxIndex = useKeyboardNavStore((s) => s.setMaxIndex);
+    const setActivePage = useKeyboardNavStore((s) => s.setActivePage);
     const enabled = useKeyboardNavStore((s) => s.enabled);
 
     const activePage = useKeyboardNavStore((s) => s.activePage);
@@ -39,23 +39,26 @@ const ViewProject = () => {
     const page = returnPage.split("/")[2];
     
     useEffect (() => {
-        //resets the active page to the first in the pages array
-        //also returns user to the page they were on if they return from specific routes
-        if (page === "contact") {
-            setActivePage(2);
-        } else {
-            setActivePage(0);
-        }
-        //max index is the length of the pages array, sets this in the store for navigation purposes
-        setMaxIndex(2);
-    }, [])
+        if (!project || !type || isError || isTypesError) {
+            setMaxIndex(0);
+            } else {
+                //resets the active page to the first in the pages array
+                //also returns user to the page they were on if they return from specific routes
+                if (page === "contact") {
+                    setActivePage(2);
+                } else {
+                    setActivePage(0);
+                }
+                //max index is the length of the pages array, sets this in the store for navigation purposes
+                setMaxIndex(2);
+            }
+    }, [project, type, isError, isTypesError])
 
     useTitle(project ? `View Project - ${project.name}` : 'View Project');
 
     if (isLoadingTypes || isLoadingProjects) return <Loading />;
     if (isError || isTypesError) return <Error />;
-    if (!project || !type) return <NotFound />         
-    
+    if (!project || !type) return <NotFound />    
     
     const pages = [
         {

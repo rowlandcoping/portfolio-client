@@ -30,19 +30,20 @@ const Profile = () => {
     } = useUser();
 
     useEffect (() => {
-        if (!profile || !user) return;
-        //resets the active page to the first in the pages array
-        setActivePage(0);
-        //max index is the length of the pages array, sets this in the store for navigation purposes
-        setMaxIndex(2);
-    }, [profile, user])
-
+        if (!profile || !user || isProfileError || isUserError) {
+            setMaxIndex(0);
+        } else {
+            setMaxIndex(2);
+            setActivePage(0);
+        };
+        
+    }, [profile, user, isProfileError, isUserError])
 
     useTitle(user ? `${user.name}'s Profile` : 'Profile');
     
     if (isLoadingProfile || isLoadingUser) return <Loading />;
     if (isProfileError || isUserError) return <Error />;
-    if (!profile || !user) return <NotFound />
+    if (!profile || !user) { return <NotFound /> };
 
     const pages = [
         {

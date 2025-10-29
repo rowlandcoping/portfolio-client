@@ -45,12 +45,15 @@ const AllProjects = () => {
     }, [focusedIndex, activePage]);
 
     useEffect (() => {
-        if (!projects) return
-        const total = Math.ceil(projects.length / itemsPerPage);
-        setTotalPages(total);   
-        setActivePage(0);
-        setMaxIndex(total-1);
-    }, [])
+        if (!projects || isError) {
+            setMaxIndex(0);
+        } else {
+            const total = Math.ceil(projects.length / itemsPerPage);
+            setTotalPages(total);   
+            setActivePage(0);
+            setMaxIndex(total-1);
+        }
+    }, [projects, isError])
 
 
     if (isLoading) return <Loading />;

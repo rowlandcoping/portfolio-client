@@ -17,7 +17,7 @@ const Overview = ({ overview, projectEcosystem, copyYear, copyName }: OverviewPr
                     {overview}
                 </p>
             </div>
-            <h2>Technologies</h2>
+            <h3>Technologies</h3>
             <div className="details-container">                
                 <p>
                     {projectEcosystem.map((s,i) => (
@@ -33,7 +33,7 @@ const Overview = ({ overview, projectEcosystem, copyYear, copyName }: OverviewPr
                     ))}
                 </p>
             </div>
-            <h2>Legal</h2>
+            <h3>Legal</h3>
             <div className="details-container">
                 &#169; {copyYear} {copyName}
             </div>

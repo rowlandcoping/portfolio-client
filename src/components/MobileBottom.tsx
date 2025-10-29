@@ -113,12 +113,22 @@ const MobileBottom = () => {
                             onClick={handleBack}
                             aria-label="Escape button — takes you back to the previous page"
                         >
-                            <img 
-                                src={os === 'ios' ? "backButton.png" : "backButton.svg"}
-                                className="button-large button-press" 
-                                alt="Back Button"
-                                aria-hidden="true"
-                            />
+                            <div className="portrait-button-wrapper">
+                                <img 
+                                    src={os === 'ios' ? "/backButton.png" : "/backButton.svg"}
+                                    className="button-large button-press" 
+                                    alt="Back Button"
+                                    aria-hidden="true"
+                                />
+                            </div>
+                            <div className="landscape-button-wrapper hidden">
+                                <img 
+                                    src={os === 'ios' ? "/backButtonLand.png" : "/backButtonLand.svg"}
+                                    className="button-large-landscape button-press" 
+                                    alt="Back Button"
+                                    aria-hidden="true"
+                                />
+                            </div>
                         </button>
                     </div>
                     <div className="direction-pad">
@@ -130,7 +140,7 @@ const MobileBottom = () => {
                                     aria-label="Up button — cycles through links or form inputs"
                                 >
                                     <img 
-                                        src={os === 'ios' ? 'arrow2.png' : 'arrow2.svg'} 
+                                        src={os === 'ios' ? '/arrow2.png' : '/arrow2.svg'} 
                                         className="arrow arrow-up button-press" 
                                         alt="Up Arrow"
                                         aria-hidden="true"
@@ -147,10 +157,10 @@ const MobileBottom = () => {
                                     aria-label="Left button — goes back a page"
                                 >
                                     <img 
-                                        src={os === 'ios' ? 'arrow2.png' : 'arrow2.svg'} 
+                                        src={os === 'ios' ? '/arrow2.png' : '/arrow2.svg'} 
                                         className="arrow arrow-left button-press" 
                                         alt="Left Arrow"
-                                        aria-hidden="true" 
+                                        aria-hidden="true"
                                     />
                                 </button>
                             </div>
@@ -163,7 +173,7 @@ const MobileBottom = () => {
                                     aria-label="Right button — goes forward a page"
                                 >
                                     <img 
-                                        src={os === 'ios' ? 'arrow2.png' : 'arrow2.svg'} 
+                                        src={os === 'ios' ? '/arrow2.png' : '/arrow2.svg'} 
                                         className="arrow arrow-right button-press" 
                                         alt="Right Arrow"
                                         aria-hidden="true"
@@ -180,7 +190,7 @@ const MobileBottom = () => {
                                     onClick={handleDown}
                                 >
                                     <img 
-                                        src={os === 'ios' ? 'arrow2.png' : 'arrow2.svg'} 
+                                        src={os === 'ios' ? '/arrow2.png' : '/arrow2.svg'} 
                                         className="arrow arrow-down button-press" 
                                         alt="Down Arrow"
                                         aria-hidden="true"
@@ -196,12 +206,22 @@ const MobileBottom = () => {
                             onClick={handleSelect}
                             aria-label="Enter button — selects focussed link or activates a submit button"
                         >
-                            <img 
-                                src={os === 'ios' ? 'selectButton.png' : "selectButton.svg"} 
-                                className="button-large button-press" 
-                                alt="Select Button"
-                                aria-hidden="true"
-                            />
+                            <div className="portrait-button-wrapper">
+                                <img 
+                                    src={os === 'ios' ? '/selectButton.png' : "/selectButton.svg"} 
+                                    className="button-large button-press" 
+                                    alt="Select Button"
+                                    aria-hidden="true"
+                                />
+                            </div>
+                            <div className="landscape-button-wrapper hidden">
+                                <img 
+                                    src={os === 'ios' ? '/selectButtonLand.png' : "/selectButtonLand.svg"} 
+                                    className="button-large-landscape button-press" 
+                                    alt="Select Button"
+                                    aria-hidden="true"
+                                />
+                            </div>
                         </button>
                     </div>
                 </nav>               

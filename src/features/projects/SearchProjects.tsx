@@ -53,11 +53,15 @@ const SearchProjects = () => {
 
     // Pagination recalculation when filteredProjects change
     useEffect(() => {
-        const total = Math.ceil(filteredProjects.length / itemsPerPage);
-        setTotalPages(total);
-        setActivePage(0);
-        setMaxIndex(total - 1);
-    }, [filteredProjects, itemsPerPage]);
+        if (!projects || isError) {
+            setMaxIndex(0);
+        } else {
+            const total = Math.ceil(filteredProjects.length / itemsPerPage);
+            setTotalPages(total);
+            setActivePage(0);
+            setMaxIndex(total - 1);
+        }
+    }, [filteredProjects, itemsPerPage, projects, isError]);
 
     // Slice results for the current page
     const currentPageProjects = useMemo(() => {
@@ -96,12 +100,10 @@ const SearchProjects = () => {
         current?.focus({ preventScroll: true });
     }, [focusedIndex, activePage, currentPageProjects]);
 
-    if (!projects) return <p>Loading Project Data...</p>;
-    if (isError) return <p>Error Loading Project Data...</p>;
-
+    
     if (isLoading) return <Loading />;
     if (isError) return <Error />;
-    if (!projects) return <NotFound />
+    if (!projects) return <NotFound />;
 
     return (
         <main aria-describedby={enabled ? 'navigation-instructions' : undefined}>

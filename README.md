@@ -6,7 +6,7 @@ Welcome to the Readme for my personal portfolio website. The site itself contain
 
 The concept itself goes back to the days when my Dad purchased a pure word processing machine with very similar navigation (admittedly in black and white!) which led to a pinterest crawl for further inspiration.  The choice to use keyboard navigation was one I didn't realise the full implications of at the time but needless to say a very simple initial visual design choice has since become a lot more complex under the hood.
 
-## Live Demo
+## Live Platform
 You can view the live version of my portfolio [here](https://rowlandnet.online).
 
 ## Features
@@ -35,7 +35,7 @@ Keep in mind this project was build with Vite so setting up is extremely straigh
     - `crtl/shift/p`
     - `git:Clone` (please note you will need to connect VS Code to Github first)
     - select your cloned repository and where you want to save it locally.
-3) I've been using node version manager to keep the version updated and also avoid clutter, so once you have the repo open, in the terminal:
+3) I've been using Node Version Manager to keep the version updated and also avoid clutter, so once you have the repo open, in the terminal:
     - `nvm install node`
     - `npm install`
     - `npm run dev`

@@ -64,12 +64,18 @@ const Skills = ({ skills }: SkillsProps) => {
             {others.length > 0 && (<>
 
             <h3>Frameworks and Platforms</h3>
-            <div className="skills-wrapper">
-                {others.map(s => (
-                <p key={s.id}>
-                    {s.name} <kbd>({s.tech.map(t => t.name).join(', ')})</kbd>
+            <div className="skills-wrapper">                
+                <p>
+                    {others.map((s, i) => (<Fragment key={s.id}>
+                        {s.name} 
+                        {s.tech.length > 0 && (
+                            <span className="skill-info"> 
+                                &nbsp;({s.tech.map(t => t.name).join(', ')})
+                            </span>
+                        )}
+                        {i < others.length - 1 ? ', ' : ''}
+                    </Fragment>))}
                 </p>
-                ))}
             </div>
 
             </>)}
@@ -79,7 +85,12 @@ const Skills = ({ skills }: SkillsProps) => {
             <div className="skills-wrapper">
                 <p>
                     {languages.map((s, i) => (<Fragment key={s.id}>                    
-                        {s.name} <kbd>({s.tech.map(t => t.name).join(', ')})</kbd>
+                        {s.name}
+                        {s.tech.length > 0 && (
+                            <span className="skill-info"> 
+                                &nbsp;({s.tech.map(t => t.name).join(', ')})
+                            </span>
+                        )}
                         {i < languages.length - 1 ? ', ' : ''}                    
                     </Fragment>))}
                 </p>
@@ -93,7 +104,12 @@ const Skills = ({ skills }: SkillsProps) => {
             <div className="skills-wrapper">
                 <p>
                     {databases.map((s, i) => (<Fragment key={s.id}>                    
-                        {s.name} <kbd>({s.tech.map(t => t.name).join(', ')})</kbd>
+                        {s.name}
+                        {s.tech.length > 0 && (
+                            <span className="skill-info"> 
+                                ({s.tech.map(t => t.name).join(', ')})
+                            </span>
+                        )}
                         {i < databases.length - 1 ? ', ' : ''}                    
                     </Fragment>))}
                 </p>

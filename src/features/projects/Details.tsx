@@ -10,26 +10,28 @@ type DetailProps = {
 const Details = ({ features, issues, projectEcosystem }:DetailProps) => {
     return (
         <>
-        <div className="skills-wrapper">
+        <div className="technologies-wrapper">
             <h3>Technologies</h3>
-            <div className="details-container">
-                {projectEcosystem.map((s,i) => (
-                <Fragment key={s.ecosystem.id}>
-                    {i > 0 && ', '}
-                    {s.ecosystem.name}  
-                    <kbd>
+            <div className="skills-wrapper">
+                <p>
+                    {projectEcosystem.map((s,i) => (
+                    <Fragment key={s.ecosystem.id}>
+                        {i > 0 && ', '}
+                        {s.ecosystem.name}
                         {s.tech.length > 0 && (
-                        <> ({s.tech.map(t => t.name).join(', ')})</>
+                            <span className="skill-info">
+                                &nbsp;({s.tech.map(t => t.name).join(', ')})   
+                            </span>
                         )}
-                    </kbd>
-                </Fragment>
-                ))}
+                    </Fragment>
+                    ))}
+                </p>
             </div>
         </div>
         <div className="fissues-wrapper">
             <h3>Features</h3>
             <div className="details-container">                
-                    {features.map(s => (
+                {features.map(s => (
                     <p key={s.id}>
                         - {s.description}
                     </p>            
@@ -38,9 +40,9 @@ const Details = ({ features, issues, projectEcosystem }:DetailProps) => {
             <h3>Issues</h3>
             <div className="details-container">                            
                 {issues.map(s => (
-                <p key={s.id}>
-                    - {s.description}
-                </p>
+                    <p key={s.id}>
+                        - {s.description}
+                    </p>
                 ))}
             </div>
         </div>

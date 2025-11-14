@@ -23,12 +23,12 @@ const Overview = ({ overview, projectEcosystem, copyYear, copyName }: OverviewPr
                     {projectEcosystem.map((s,i) => (
                         <Fragment key={s.ecosystem.id}>
                             {i > 0 && ', '}
-                            {s.ecosystem.name}  
-                            <kbd>
-                                {s.tech.length > 0 && (
-                                <> ({s.tech.map(t => t.name).join(', ')})</>
-                                )}
-                            </kbd>
+                            {s.ecosystem.name}
+                            {s.tech.length > 0 && ( 
+                                <span className="skill-info">                                
+                                    &nbsp;({s.tech.map(t => t.name).join(', ')})                                
+                                </span>
+                            )}
                         </Fragment>
                     ))}
                 </p>

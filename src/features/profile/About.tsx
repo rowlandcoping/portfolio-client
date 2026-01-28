@@ -37,7 +37,7 @@ const About = ({ name, description, imageGrn, imageGry, imageAlt, jobTitle }: Ab
                     </h3>                   
                 </div>
             </div>
-            <div className="project-text">
+            <div className="project-text preserve-newlines">
 
                 {description}
 

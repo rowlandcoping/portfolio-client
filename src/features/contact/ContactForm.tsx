@@ -138,34 +138,34 @@ const ContactForm = ({ project }: ContactFormProps) => {
 
     // If submission succeeded, just show the success message
     if (mutation.isSuccess) {
-            return (
-            <main className="centered">
-                <div>
-                    <h1>Message sent successfully!</h1>
-                    <p>
-                        {enabled
-                            ? `Press Esc to go back to the previous page`
-                            : `Press the back button to go back to the previous page`
-                        }
-                    </p>
-                </div>
-            </main>
-            );
+        return (
+        <main className="centered">
+            <div>
+                <h1>Message sent successfully!</h1>
+                <p>
+                    {enabled
+                        ? `Press Esc to go back to the previous page`
+                        : `Press the back button to go back to the previous page`
+                    }
+                </p>
+            </div>
+        </main>
+        );
     }
     
 
     if (mutation.isError) {
-            return (
-                <div className="centered">
-                    <h1>Error Sending Message</h1>
-                    <p>
-                        {enabled
-                            ? `Press Esc to go back to the previous page`
-                            : `Press the back button to go back to the previous page`
-                        }
-                    </p>
-                </div>
-            );
+        return (
+            <div className="centered">
+                <h1>Error Sending Message</h1>
+                <p>
+                    {enabled
+                        ? `Press Esc to go back to the previous page`
+                        : `Press the back button to go back to the previous page`
+                    }
+                </p>
+            </div>
+        );
     }
 
     

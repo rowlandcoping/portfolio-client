@@ -70,7 +70,7 @@ const Overview = ( {name, overview, imageGrn, imageGry, imageAlt, dateMvp, dateP
                     }                  
                 </div>
             </div>
-            <div className="project-text">
+            <div className="project-text preserve-newlines">
 
                 {overview}
 

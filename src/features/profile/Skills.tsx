@@ -39,6 +39,7 @@ const Skills = ({ skills }: SkillsProps) => {
         ecoTypes.map((ecotype: EcoTypeTypes) => [ecotype.id, ecotype.name])
     );
 
+    const frameworks: Skill[] = [];
     const databases: Skill[] = [];
     const languages: Skill[] = [];
     const others: Skill[] = [];
@@ -54,10 +55,14 @@ const Skills = ({ skills }: SkillsProps) => {
             databases.push(skill);
         } else if (typeName === "language") {
             languages.push(skill);
+        } else if (typeName === "framework") {
+            frameworks.push(skill);        
         } else {
             others.push(skill);
         }
     }
+
+    others.unshift(...frameworks);
 
     return (
         <>

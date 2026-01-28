@@ -92,7 +92,7 @@ const Profile = () => {
                 {pages.map((page, index) => (
                     <section
                         key={index}
-                        className={index === activePage ? 'selected' : 'hidden'}
+                        className={`preserve-newlines ${index === activePage ? 'selected' : 'hidden'}`}
                         aria-hidden={index !== activePage}
                         aria-labelledby={`section-title-${index}`}
                     >

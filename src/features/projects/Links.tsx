@@ -31,30 +31,35 @@ const Links = ({ id, name, url, repo, activePage }:LinksProps) => {
         const current = pageLinks[focusedIndex % pageLinks.length];            
         if (current) current.focus({ preventScroll: true });
     }, [focusedIndex])
-       
+
+    const links = [
+        {
+            to: url,
+            name: `Visit ${name}`
+        },
+        repo && {
+            to: repo,
+            name: 'Open Github Repository'
+        },
+        {
+            to: `/projects/contact/${id}`,
+            name: `${name} Feedback`
+        }
+    ].filter((link): link is { to: string; name: string } => Boolean(link));
+
     return (
         <nav aria-describedby={enabled ? "links-navigation-instructions" : undefined}>
-            <Link 
-                to={url}
-                className={focusedIndex === 0 ? 'focussed' : ''}
+            {links.map((link, index) => (
+            <Link
+                key={index}
+                to={link.to}
+                className={focusedIndex === index ? 'focussed' : ''}
             >
-                <h3>Visit {name}</h3>
+                <h3>{link.name}</h3>
             </Link>
-            <Link 
-                to={repo}
-                className={focusedIndex === 1 ? 'focussed' : ''}
-            >
-                <h3>Open Github Repo</h3>
-            </Link>
-            <Link 
-                to={`/projects/contact/${id}`}
-                className={focusedIndex === 2 ? 'focussed' : ''}
-            >
-                <h3>{ name } Feedback</h3>
-
-            </Link>
+            ))}
         </nav>
-    )
+    );
 }
 
 export default Links

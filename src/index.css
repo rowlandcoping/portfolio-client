@@ -150,6 +150,9 @@ h3 {
 
 
 /*HELPER CLASSES*/
+.preserve-newlines {
+    white-space: pre-line;
+}
 .selected {
     display: block;
 }

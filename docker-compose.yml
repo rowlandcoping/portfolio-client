@@ -1,13 +1,10 @@
 services:
-  client:
-    build: .
+  web:
+    build:
+      context: .
+      target: prod
     container_name: portfolio-client
     restart: unless-stopped
-    ports:
-      - "5173:5173"
-    volumes:
-      - ./:/app
-      - /app/node_modules
     networks:
       - shared-network
 

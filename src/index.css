@@ -754,6 +754,9 @@ Adjust for wherever it breaks with the height adjustments
     body.desktop h3 {
         font-size: 1.25em;
     }
+    .control-box {
+        margin-bottom: 5px;
+    }
 }
 
 @media screen and (max-width:1024px) and (max-height:750px) {

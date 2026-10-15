@@ -190,7 +190,7 @@ const ContactForm = ({ project }: ContactFormProps) => {
                     }
                     </h1>
                     <form className='search-form' onSubmit={(e) => e.preventDefault()}>
-                        <label className="sr-only" htmlFor='search'>Enter Name</label>
+                        <label className="sr-only" htmlFor='name'>Enter Name</label>
                         <input
                             id="name"
                             name="name"
@@ -211,7 +211,7 @@ const ContactForm = ({ project }: ContactFormProps) => {
                         {!name &&
                         <span className="form-info" aria-hidden="true">Name Required</span>
                         }
-                        <label className="sr-only" htmlFor='search'>Enter Email</label>
+                        <label className="sr-only" htmlFor='email'>Enter Email</label>
                         <input
                             id="email"
                             name="email"
@@ -232,8 +232,9 @@ const ContactForm = ({ project }: ContactFormProps) => {
                         {!validEmail &&
                         <span className="form-info" aria-hidden="true">Invalid Email Address</span>
                         }
-                        <label className="sr-only" htmlFor='search'>Write a Message ({characterMinimum} - {characterLimit} characters)</label>
+                        <label className="sr-only" htmlFor='message'>Write a Message ({characterMinimum} - {characterLimit} characters)</label>
                         <textarea
+                            id="message"
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}                            
                             className={enabled
@@ -246,7 +247,11 @@ const ContactForm = ({ project }: ContactFormProps) => {
                             aria-invalid={!(messageLength >= characterMinimum)}
                         />
                         
-                        <span className="form-info" aria-hidden="true">{messageLength}/{characterLimit}</span>
+                        <span className="form-info" aria-hidden="true">
+                            {messageLength}/{characterLimit}
+                            {!(messageLength >= characterMinimum) && ` - Must be ${characterMinimum} Characters Minimum`}
+                        </span>
+                        
                         <button
                             className={
                                 !name || mutation.isPending || !validEmail || !(messageLength >= characterMinimum)

@@ -99,7 +99,7 @@ const MobileLayout = () => {
                 </div>
                 <div className="mobile-frame mobile-top">
                     <div className="mobile-power-light"></div>
-                    <div className="mobile-logo"><em>{`[ ]RowlandBerry`}</em></div>
+                    <div className="mobile-logo"><em>{`[ ]JohnBerry`}</em></div>
                 </div>
                 <div className="mobile-frame mobile-top-right">
 
